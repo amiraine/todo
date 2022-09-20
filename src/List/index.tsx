@@ -1,25 +1,29 @@
 import React, { useState } from "react";
 import { v4 } from "uuid";
 import { Reorder } from "framer-motion";
-// local files
+// local
 import { useListData } from "../Context";
-import { ListData, ListItem } from "../types";
-import { Checkbox } from "../Components";
-import { Container, StyledListItem, StyledTextInput, Text } from "./styled";
+import { ListData, ListItem as ListItemType } from "../types";
+import { useKeyboardShortcut } from "../hooks";
+// components and styles
+import ListItem from "./ListItem";
+import { Container } from "./styled";
 
 interface ListProps {}
-type UpdateKey = keyof ListItem;
+export type UpdateKey = keyof ListItemType;
 
 const List: React.FC<ListProps> = () => {
   // local state
   const [editable, setEditable] = useState<string>("");
+  // hooks
+
   // get context
   const [listData, listDispatch] = useListData();
   const { items, sort, selected } = listData;
 
   // helper functions
   const handleAddNewItem = () => {
-    const newItem: ListItem = {
+    const newItem: ListItemType = {
       id: v4(),
       value: "",
       isDone: false,
@@ -33,9 +37,10 @@ const List: React.FC<ListProps> = () => {
 
     listDispatch({ type: "ADD", payload });
   };
+  useKeyboardShortcut({ key: "Enter", ctrlKey: false }, handleAddNewItem);
 
   const handleUpdateItem = (id: string, key: UpdateKey, newValue: any) => {
-    const itemCopy: ListItem = { ...items[id], [key]: newValue };
+    const itemCopy: ListItemType = { ...items[id], [key]: newValue };
     const payload: ListData = {
       ...listData,
       items: { ...items, [id]: itemCopy },
@@ -65,25 +70,16 @@ const List: React.FC<ListProps> = () => {
 
           return (
             <Reorder.Item key={itemId} value={itemId}>
-              <StyledListItem
-                selected={isSelected}
-                onClick={() => handleSelectItem(itemId)}
-                onDoubleClick={() => setEditable(itemId)}
-              >
-                {isEditable ? (
-                  <StyledTextInput
-                    type="text"
-                    defaultValue={value}
-                    onChange={(e) => {
-                      console.log(e);
-                      handleUpdateItem(itemId, "value", e.target.value);
-                    }}
-                  />
-                ) : (
-                  <Text isDone={isDone}>{value}</Text>
-                )}
-                <Checkbox name={itemId} value={isDone} />
-              </StyledListItem>
+              <ListItem
+                value={value}
+                isDone={isDone}
+                isSelected={isSelected}
+                isEditable={isEditable}
+                id={itemId}
+                handleSelectItem={handleSelectItem}
+                handleUpdateItem={handleUpdateItem}
+                setEditable={setEditable}
+              />
             </Reorder.Item>
           );
         })}
