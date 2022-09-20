@@ -1,9 +1,9 @@
 import React, { useReducer } from "react";
-
-import { Container } from "./styled";
-import { initialData } from "./initialdata";
-import Book from "./Book";
 import { listReducer, listContext } from "./Context";
+import { initialData } from "./initialdata";
+
+import Book from "./Book";
+import { Container } from "./styled";
 
 const App = () => {
   const [todoList, updateTodoList] = useReducer(listReducer, {
