@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Book, Container, Page } from "./styled";
+import { Container } from "./styled";
 import { initialData } from "./initialdata";
+import Book from "./components/Book";
+import { BaseMap, ListItem } from "./types";
 // import { v4 } from "uuid";
 const App = () => {
-  const [listData, setListData] = useState<any>();
+  const [listData, setListData] = useState<BaseMap<ListItem>>({
+    items: {},
+    sort: [],
+    selected: "",
+  });
 
   useEffect(() => {
     setListData(initialData);
   }, []);
 
+  // handlers
+
   return (
     <Container>
-      <Book>
-        <Page orientation="left"></Page>
-        <Page orientation="right"></Page>
-      </Book>
+      <Book todoList={listData} />
     </Container>
   );
 };
