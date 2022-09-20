@@ -1,24 +1,48 @@
 import React from "react";
 import { BaseMap, ListItem } from "../../types";
-import List from "../List";
-import { BookContainer, Page, PageTitle } from "./styled";
+import DragAndDrop from "./DragAndDrop";
+import {
+  Checkbox,
+  StyledListItem,
+  StyledTextInput,
+} from "./DragAndDrop/styled";
 
-interface BookProps {
-  todoList: BaseMap<ListItem>;
+interface ListProps {
+  tasks: ListData;
 }
-const Book: React.FC<BookProps> = (props) => {
-  const { todoList } = props;
+const List: React.FC<ListProps> = (props) => {
+  const { tasks } = props;
   return (
-    <BookContainer>
-      <Page orientation="left">
-        <PageTitle>To-do list</PageTitle>
-        <List tasks={todoList} />
-      </Page>
-      <Page orientation="right">
-        <PageTitle>Stats</PageTitle>
-      </Page>
-    </BookContainer>
+    <DragAndDrop
+      dragVariants={{
+        drag: {
+          zIndex: 99,
+          position: "relative",
+          transition: {
+            duration: 0,
+          },
+        },
+        drop: {
+          zIndex: 0,
+        },
+      }}
+      positionTransition={{
+        type: "spring",
+        damping: 15,
+        stiffness: 100,
+      }}
+    >
+      {tasks.sort.map((taskId, i) => {
+        const { value, isDone } = tasks.items[taskId];
+        return (
+          <StyledListItem>
+            <StyledTextInput type="text" value={value} />
+            <Checkbox type="checkbox" checked={isDone} />
+          </StyledListItem>
+        );
+      })}
+    </DragAndDrop>
   );
 };
 
-export default Book;
+export default List;

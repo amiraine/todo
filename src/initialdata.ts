@@ -1,6 +1,6 @@
-import { BaseMap, ListItem } from "./types";
+import { ListData } from "./types";
 
-export const initialData: BaseMap<ListItem> = {
+export const initialData: ListData = {
   items: {
     "a711664b-e246-4108-a058-84fe00fb98a1": {
       id: "a711664b-e246-4108-a058-84fe00fb98a1",

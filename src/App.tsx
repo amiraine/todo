@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { Container } from "./styled";
 import { initialData } from "./initialdata";
-import Book from "./components/Book";
-import { BaseMap, ListItem } from "./types";
+import Book from "./Components/Book";
+import { ListData } from "./types";
 // import { v4 } from "uuid";
 const App = () => {
-  const [listData, setListData] = useState<BaseMap<ListItem>>({
+  const [listData, setListData] = useState<ListData>({
     items: {},
     sort: [],
     selected: "",
