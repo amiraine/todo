@@ -2,7 +2,8 @@ import React, { useCallback } from "react";
 import { v4 } from "uuid";
 import { useListData } from "../../Context";
 import { ListData, ListItem } from "../../types";
-import DragAndDrop from "./DragAndDrop";
+// import DragAndDrop from "./DragAndDrop";
+import { Reorder } from "framer-motion";
 import { Checkbox, Container, StyledListItem, StyledTextInput } from "./styled";
 
 interface ListProps {}
@@ -48,52 +49,33 @@ const List: React.FC<ListProps> = () => {
     listDispatch({ type: "REMOVE", payload: id });
   };
 
-  const handleReorder = useCallback(
-    (from: number, to: number) => {
-      const tempItems = [...sort];
-      tempItems.splice(to, 0, tempItems.splice(from, 1)[0]);
-      listDispatch({ type: "REORDER", payload: tempItems });
-    },
-    [listDispatch, sort]
-  );
+  const handleReorder = (payload: string[]) => {
+    listDispatch({ type: "REORDER", payload });
+  };
 
   return (
     <Container>
-      <DragAndDrop
-        dragVariants={{
-          drag: {
-            zIndex: 99,
-            position: "relative",
-            transition: {
-              duration: 0,
-            },
-          },
-          drop: {
-            zIndex: 0,
-          },
-        }}
-        onDragEnd={handleReorder}
-      >
-        {sort.map((itemId, i) => {
+      <Reorder.Group axis="y" values={sort} onReorder={handleReorder}>
+        {sort.map((itemId) => {
           const { value, isDone } = items[itemId];
           const isSelected = itemId === selected;
           return (
-            <StyledListItem
-              key={itemId}
-              selected={isSelected}
-              onClick={() => handleSelectItem(itemId)}
-            >
-              {isSelected ? (
-                <StyledTextInput type="text" defaultValue={value} />
-              ) : (
-                <span>{value}</span>
-              )}
-              <Checkbox type="checkbox" defaultChecked={isDone} />
-            </StyledListItem>
+            <Reorder.Item key={itemId} value={itemId}>
+              <StyledListItem
+                selected={isSelected}
+                onClick={() => handleSelectItem(itemId)}
+              >
+                {isSelected ? (
+                  <StyledTextInput type="text" defaultValue={value} />
+                ) : (
+                  <span>{value}</span>
+                )}
+                <Checkbox type="checkbox" defaultChecked={isDone} />
+              </StyledListItem>
+            </Reorder.Item>
           );
         })}
-        {/* <button onClick={handleAddNewItem}>add</button> */}
-      </DragAndDrop>
+      </Reorder.Group>
     </Container>
   );
 };
