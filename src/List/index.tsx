@@ -1,10 +1,11 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { v4 } from "uuid";
-import { useListData } from "../../Context";
-import { ListData, ListItem } from "../../types";
-// import DragAndDrop from "./DragAndDrop";
+import { useListData } from "../Context";
+import { ListData, ListItem } from "../types";
 import { Reorder } from "framer-motion";
-import { Checkbox, Container, StyledListItem, StyledTextInput } from "./styled";
+
+import { Checkbox } from "../Components";
+import { Container, StyledListItem, StyledTextInput } from "./styled";
 
 interface ListProps {}
 type UpdateKey = keyof ListItem;
@@ -70,7 +71,7 @@ const List: React.FC<ListProps> = () => {
                 ) : (
                   <span>{value}</span>
                 )}
-                <Checkbox type="checkbox" defaultChecked={isDone} />
+                <Checkbox name={itemId} value={isDone} />
               </StyledListItem>
             </Reorder.Item>
           );
