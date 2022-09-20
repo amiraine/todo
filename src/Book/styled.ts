@@ -4,7 +4,7 @@ export const BookContainer = styled.div`
   height: 800px;
   max-height: 75vh;
   width: 75vw;
-  max-width: 1200;
+  max-width: 1200px;
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -27,7 +27,7 @@ export const Page = styled.div<{ orientation: "left" | "right" }>`
   background: ${({ orientation }) =>
     `linear-gradient(${
       orientation === "left" ? "90deg" : "270deg"
-    }, #faf8e8, #f5e3bc)`};
+    }, #faf8e8, #faf0cf)`};
   border-radius: 3px;
   ${({ orientation }) =>
     orientation === "left"
