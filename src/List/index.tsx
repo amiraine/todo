@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { v4 } from "uuid";
+import { Reorder } from "framer-motion";
+// local files
 import { useListData } from "../Context";
 import { ListData, ListItem } from "../types";
-import { Reorder } from "framer-motion";
-
 import { Checkbox } from "../Components";
-import { Container, StyledListItem, StyledTextInput } from "./styled";
+import { Container, StyledListItem, StyledTextInput, Text } from "./styled";
 
 interface ListProps {}
 type UpdateKey = keyof ListItem;
 
 const List: React.FC<ListProps> = () => {
   // local state
+  const [editable, setEditable] = useState<string>("");
   // get context
   const [listData, listDispatch] = useListData();
   const { items, sort, selected } = listData;
@@ -60,16 +61,26 @@ const List: React.FC<ListProps> = () => {
         {sort.map((itemId) => {
           const { value, isDone } = items[itemId];
           const isSelected = itemId === selected;
+          const isEditable = itemId === editable;
+
           return (
             <Reorder.Item key={itemId} value={itemId}>
               <StyledListItem
                 selected={isSelected}
                 onClick={() => handleSelectItem(itemId)}
+                onDoubleClick={() => setEditable(itemId)}
               >
-                {isSelected ? (
-                  <StyledTextInput type="text" defaultValue={value} />
+                {isEditable ? (
+                  <StyledTextInput
+                    type="text"
+                    defaultValue={value}
+                    onChange={(e) => {
+                      console.log(e);
+                      handleUpdateItem(itemId, "value", e.target.value);
+                    }}
+                  />
                 ) : (
-                  <span>{value}</span>
+                  <Text isDone={isDone}>{value}</Text>
                 )}
                 <Checkbox name={itemId} value={isDone} />
               </StyledListItem>

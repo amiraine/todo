@@ -33,7 +33,16 @@ interface IIndicatorContainerProps {
 }
 export const IndicatorContainer = styled.div<IIndicatorContainerProps>`
   margin-right: 10px;
-  height: 100%;
   display: flex;
   align-items: center;
+  border: 2px solid #171717;
+  height: 18px;
+  width: 18px;
+  border-radius: 3px;
+  position: relative;
+
+  svg {
+    position: absolute;
+    stroke-width: 3px;
+  }
 `;

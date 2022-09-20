@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CheckSquare, Square } from "react-feather";
+import { Check } from "react-feather";
 
 import { Container, Input, IndicatorContainer } from "./styled";
 
@@ -42,7 +42,7 @@ export const Checkbox: React.FC<CheckboxProps> = (props) => {
         id={name}
       />
       <IndicatorContainer hasLabel={Boolean(label)}>
-        {checked ? <CheckSquare size={14} /> : <Square size={14} />}
+        {checked ? <Check size={19} /> : null}
       </IndicatorContainer>
       {label || null}
     </Container>
