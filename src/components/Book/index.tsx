@@ -1,48 +1,24 @@
 import React from "react";
-import { BaseMap, ListItem } from "../../types";
-import DragAndDrop from "./DragAndDrop";
-import {
-  Checkbox,
-  StyledListItem,
-  StyledTextInput,
-} from "./DragAndDrop/styled";
+import { ListData } from "../../types";
+import List from "../List";
+import { BookContainer, Page, PageTitle } from "./styled";
 
-interface ListProps {
-  tasks: ListData;
+interface BookProps {
+  todoList: ListData;
 }
-const List: React.FC<ListProps> = (props) => {
-  const { tasks } = props;
+const Book: React.FC<BookProps> = (props) => {
+  const { todoList } = props;
   return (
-    <DragAndDrop
-      dragVariants={{
-        drag: {
-          zIndex: 99,
-          position: "relative",
-          transition: {
-            duration: 0,
-          },
-        },
-        drop: {
-          zIndex: 0,
-        },
-      }}
-      positionTransition={{
-        type: "spring",
-        damping: 15,
-        stiffness: 100,
-      }}
-    >
-      {tasks.sort.map((taskId, i) => {
-        const { value, isDone } = tasks.items[taskId];
-        return (
-          <StyledListItem>
-            <StyledTextInput type="text" value={value} />
-            <Checkbox type="checkbox" checked={isDone} />
-          </StyledListItem>
-        );
-      })}
-    </DragAndDrop>
+    <BookContainer>
+      <Page orientation="left">
+        <PageTitle>To-do list</PageTitle>
+        <List tasks={todoList} />
+      </Page>
+      <Page orientation="right">
+        <PageTitle>Stats</PageTitle>
+      </Page>
+    </BookContainer>
   );
 };
 
-export default List;
+export default Book;
