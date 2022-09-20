@@ -79,6 +79,7 @@ export const useListData: UseListSignature = () => {
   const context = useContext(listContext);
 
   if (context) {
+    console.log("context found");
     const {
       todoList = {
         selected: "",
@@ -89,7 +90,7 @@ export const useListData: UseListSignature = () => {
     } = context;
     return [todoList, updateTodoList];
   }
-
+  console.log("context not found");
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   return [
     {

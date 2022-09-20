@@ -1,27 +1,21 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useReducer } from "react";
+
 import { Container } from "./styled";
 import { initialData } from "./initialdata";
 import Book from "./Components/Book";
-import { ListData } from "./types";
-// import { v4 } from "uuid";
+import { listReducer, listContext } from "./Context";
+
 const App = () => {
-  const [listData, setListData] = useState<ListData>({
-    items: {},
-    sort: [],
-    selected: "",
+  const [todoList, updateTodoList] = useReducer(listReducer, {
+    ...initialData,
   });
 
-  useEffect(() => {
-    setListData(initialData);
-  }, []);
-
-  // handlers
-
   return (
-    <Container>
-      <Book todoList={listData} />
-    </Container>
+    <listContext.Provider value={{ todoList, updateTodoList }}>
+      <Container>
+        <Book todoList={todoList} />
+      </Container>
+    </listContext.Provider>
   );
 };
 
