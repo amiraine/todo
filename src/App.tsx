@@ -13,7 +13,7 @@ const App = () => {
   return (
     <listContext.Provider value={{ todoList, updateTodoList }}>
       <Container>
-        <Book todoList={todoList} />
+        <Book />
       </Container>
     </listContext.Provider>
   );

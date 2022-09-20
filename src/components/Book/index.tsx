@@ -1,18 +1,14 @@
 import React from "react";
-import { ListData } from "../../types";
 import List from "../List";
 import { BookContainer, Page, PageTitle } from "./styled";
 
-interface BookProps {
-  todoList: ListData;
-}
-const Book: React.FC<BookProps> = (props) => {
-  const { todoList } = props;
+interface BookProps {}
+const Book: React.FC<BookProps> = () => {
   return (
     <BookContainer>
       <Page orientation="left">
         <PageTitle>To-do list</PageTitle>
-        <List tasks={todoList} />
+        <List />
       </Page>
       <Page orientation="right">
         <PageTitle>Stats</PageTitle>
