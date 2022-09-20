@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { v4 } from "uuid";
 import { useListData } from "../../Context";
 import { ListData, ListItem } from "../../types";
@@ -6,7 +6,11 @@ import DragAndDrop from "./DragAndDrop";
 import { Checkbox, Container, StyledListItem, StyledTextInput } from "./styled";
 
 interface ListProps {}
+type UpdateKey = keyof ListItem;
+
 const List: React.FC<ListProps> = () => {
+  // local state
+  // get context
   const [listData, listDispatch] = useListData();
   const { items, sort, selected } = listData;
 
@@ -27,8 +31,8 @@ const List: React.FC<ListProps> = () => {
     listDispatch({ type: "ADD", payload });
   };
 
-  const handleUpdateItemValue = (id: string, newValue: string) => {
-    const itemCopy: ListItem = { ...items[id], value: newValue };
+  const handleUpdateItem = (id: string, key: UpdateKey, newValue: any) => {
+    const itemCopy: ListItem = { ...items[id], [key]: newValue };
     const payload: ListData = {
       ...listData,
       items: { ...items, [id]: itemCopy },
@@ -43,6 +47,15 @@ const List: React.FC<ListProps> = () => {
   const handleDeleteItem = (id: string) => {
     listDispatch({ type: "REMOVE", payload: id });
   };
+
+  const handleReorder = useCallback(
+    (from: number, to: number) => {
+      const tempItems = [...sort];
+      tempItems.splice(to, 0, tempItems.splice(from, 1)[0]);
+      listDispatch({ type: "REORDER", payload: tempItems });
+    },
+    [listDispatch, sort]
+  );
 
   return (
     <Container>
@@ -59,19 +72,19 @@ const List: React.FC<ListProps> = () => {
             zIndex: 0,
           },
         }}
-        positionTransition={{
-          type: "spring",
-          damping: 15,
-          stiffness: 100,
-        }}
+        onDragEnd={handleReorder}
       >
         {sort.map((itemId, i) => {
           const { value, isDone } = items[itemId];
           const isSelected = itemId === selected;
           return (
-            <StyledListItem onDoubleClick={() => handleSelectItem(itemId)}>
+            <StyledListItem
+              key={itemId}
+              selected={isSelected}
+              onClick={() => handleSelectItem(itemId)}
+            >
               {isSelected ? (
-                <StyledTextInput type="text" value={value} />
+                <StyledTextInput type="text" defaultValue={value} />
               ) : (
                 <span>{value}</span>
               )}
