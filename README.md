@@ -21,3 +21,5 @@ Key functions of this app include:
 - Use of the following keyboard shortcuts:
   - Enter key while in a text input creates a new task
   - Delete key while in an empty text input deletes the item and changes keyboard focus to the preceding task
+
+### Todo: include setup instructions
