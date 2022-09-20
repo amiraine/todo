@@ -5,6 +5,7 @@ export interface ListItem {
   value: string;
   isDone: boolean;
   category?: Marker;
+  dueDate?: string;
 }
 
 export type Marker = "star" | "zap";
