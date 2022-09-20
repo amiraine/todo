@@ -1,3 +1,5 @@
+import { BaseMap } from "./BaseMap";
+
 export interface ListItem {
   id: string;
   value: string;
@@ -6,3 +8,5 @@ export interface ListItem {
 }
 
 export type Marker = "star" | "zap";
+
+export interface ListData extends BaseMap<ListItem> {}
