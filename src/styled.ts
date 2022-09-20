@@ -13,7 +13,7 @@ export const Book = styled.div`
   height: 800px;
   max-height: 75vh;
   width: 75vw;
-  max-width: 1200;
+  max-width: 1200px;
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
