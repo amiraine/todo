@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 
 import { Container } from "./styled";
 import { initialData } from "./initialdata";
-import Book from "./Components/Book";
+import Book from "./Book";
 import { listReducer, listContext } from "./Context";
 
 const App = () => {
