@@ -4,10 +4,15 @@ export interface ListItem {
   id: string;
   value: string;
   isDone: boolean;
-  category?: Marker;
+  marker?: Marker;
   dueDate?: string;
 }
 
-export type Marker = "star" | "zap";
+export enum Marker {
+  "star" = "star",
+  "zap" = "zap",
+  "heart" = "heart",
+  "moon" = "moon",
+}
 
 export interface ListData extends BaseMap<ListItem> {}

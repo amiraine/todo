@@ -7,6 +7,7 @@ import { ListItem as ListItemType } from "../types";
 import { useKeyboardShortcut } from "../hooks";
 // components and styles
 import ListItem from "./ListItem";
+import SubMenu from "./SubMenu";
 import { Container } from "./styled";
 
 interface ListProps {}
@@ -103,6 +104,7 @@ const List: React.FC<ListProps> = () => {
   useKeyboardShortcut({ key: "Enter", ctrlKey: false }, handleAddNewItem);
   useKeyboardShortcut({ key: "Escape" }, handleDeselectItem);
   useKeyboardShortcut({ key: "Backspace" }, handleDeleteItemBackspace);
+
   return (
     <Container>
       <Reorder.Group axis="y" values={sort} onReorder={handleReorder}>
@@ -126,7 +128,13 @@ const List: React.FC<ListProps> = () => {
                 handleCopyItem={handleCopyItem}
                 setOpenSubMenu={setOpenSubMenu}
               />
-              {hasSubMenu}
+              {hasSubMenu && (
+                <SubMenu
+                  listItem={items[itemId]}
+                  isOpen={hasSubMenu}
+                  handleUpdateItem={handleUpdateItem}
+                />
+              )}
             </Reorder.Item>
           );
         })}
