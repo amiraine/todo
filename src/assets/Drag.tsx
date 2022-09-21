@@ -8,9 +8,9 @@ export const Drag = () => (
     viewBox="0 0 250 250"
     fill="#525252"
     stroke="#525252"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
   >
     <title id="Drag-icon">Drag</title>
     <circle cx="172.5" cy="47.5" r="17.5" fill="#525252"></circle>
