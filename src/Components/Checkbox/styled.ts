@@ -26,13 +26,17 @@ export const Container = styled.label<CheckedProps>`
 `;
 export const Input = styled.input`
   opacity: 0;
+  position: relative;
+  height: 0;
+  width: 0;
+  margin: 0;
 `;
 
 interface IIndicatorContainerProps {
   hasLabel: boolean;
 }
 export const IndicatorContainer = styled.div<IIndicatorContainerProps>`
-  margin-right: 10px;
+  margin: 0 10px;
   display: flex;
   align-items: center;
   border: 2px solid #171717;
