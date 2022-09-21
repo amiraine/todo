@@ -37,11 +37,8 @@ const List: React.FC<ListProps> = () => {
   useKeyboardShortcut({ key: "Enter", ctrlKey: false }, handleAddNewItem);
 
   const handleUpdateItem = (id: string, key: UpdateKey, newValue: any) => {
-    const itemCopy: ListItemType = { ...items[id], [key]: newValue };
-    const payload: ListData = {
-      ...listData,
-      items: { ...items, [id]: itemCopy },
-    };
+    const payload: ListItemType = { ...items[id], [key]: newValue };
+
     listDispatch({ type: "UPDATE", payload });
   };
 
