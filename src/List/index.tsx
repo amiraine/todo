@@ -23,8 +23,9 @@ const List: React.FC<ListProps> = () => {
 
   // helper functions
   const handleAddNewItem = () => {
+    const id = v4();
     const newItem: ListItemType = {
-      id: v4(),
+      id,
       value: "",
       isDone: false,
     };
@@ -36,6 +37,8 @@ const List: React.FC<ListProps> = () => {
     };
 
     listDispatch({ type: "ADD", payload });
+    setEditable(newItem.id);
+    return;
   };
   useKeyboardShortcut({ key: "Enter", ctrlKey: false }, handleAddNewItem);
 
@@ -52,6 +55,16 @@ const List: React.FC<ListProps> = () => {
     listDispatch({ type: "SETACTIVE", payload: id });
   };
 
+  const handleDeselectItem = () => {
+    if (selected && selected !== "") {
+      // if the selected item is also editable, deselect there as well
+      if (selected === editable) {
+        setEditable("");
+      }
+      handleSelectItem("");
+    }
+  };
+  useKeyboardShortcut({ key: "Escape" }, handleDeselectItem);
   const handleDeleteItem = (id: string) => {
     listDispatch({ type: "REMOVE", payload: id });
   };
@@ -79,6 +92,7 @@ const List: React.FC<ListProps> = () => {
                 handleSelectItem={handleSelectItem}
                 handleUpdateItem={handleUpdateItem}
                 setEditable={setEditable}
+                handleDeleteItem={handleDeleteItem}
               />
             </Reorder.Item>
           );
