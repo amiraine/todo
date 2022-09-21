@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 import { Reorder } from "framer-motion";
 // local
 import { useListData } from "../Context";
-import { ListData, ListItem as ListItemType } from "../types";
+import { ListItem as ListItemType } from "../types";
 import { useKeyboardShortcut } from "../hooks";
 // components and styles
 import ListItem from "./ListItem";
@@ -15,14 +15,14 @@ export type UpdateKey = keyof ListItemType;
 const List: React.FC<ListProps> = () => {
   // local state
   const [editable, setEditable] = useState<string>("");
+  const [openSubMenu, setOpenSubMenu] = useState<string>("");
   // hooks
 
-  // get context
+  // get context and destructure
   const [listData, listDispatch] = useListData();
-  console.log(listData);
   const { items, sort, selected } = listData;
 
-  // helper functions
+  // Basic CRUD helpers
   const handleAddNewItem = () => {
     const payload: ListItemType = {
       id: v4(),
@@ -34,16 +34,11 @@ const List: React.FC<ListProps> = () => {
     setEditable(payload.id);
     return;
   };
-  useKeyboardShortcut({ key: "Enter", ctrlKey: false }, handleAddNewItem);
 
   const handleUpdateItem = (id: string, key: UpdateKey, newValue: any) => {
     const payload: ListItemType = { ...items[id], [key]: newValue };
 
     listDispatch({ type: "UPDATE", payload });
-  };
-
-  const handleSelectItem = (id: string) => {
-    listDispatch({ type: "SETACTIVE", payload: id });
   };
 
   const handleDeselectItem = () => {
@@ -55,8 +50,22 @@ const List: React.FC<ListProps> = () => {
       handleSelectItem("");
     }
   };
-  useKeyboardShortcut({ key: "Escape" }, handleDeselectItem);
+
+  // Other basic helpers
+  const resetLocalState = () => {
+    setEditable("");
+    setOpenSubMenu("");
+  };
+
+  const handleSelectItem = (id: string) => {
+    listDispatch({ type: "SETACTIVE", payload: id });
+  };
+
   const handleDeleteItem = (id: string) => {
+    // clear editable
+    if (editable === id) {
+      resetLocalState();
+    }
     listDispatch({ type: "REMOVE", payload: id });
   };
 
@@ -64,6 +73,36 @@ const List: React.FC<ListProps> = () => {
     listDispatch({ type: "REORDER", payload });
   };
 
+  // additional helpers
+
+  const handleCopyItem = (id: string) => {
+    const payload = { ...items[id] };
+    // reassign the id and set it to "not done"
+    payload.id = v4();
+    payload.isDone = false;
+    listDispatch({ type: "ADD", payload });
+  };
+
+  const handleDeleteItemBackspace = () => {
+    if (editable !== "") {
+      const item = items[editable];
+      const itemIndex = sort.indexOf(editable);
+      if (itemIndex === 0) {
+        // if this item is at the top of the list, do nothing
+        return;
+      }
+      if (item.value === "") {
+        handleDeleteItem(editable);
+        const prevItemId = sort[itemIndex - 1];
+        handleSelectItem(prevItemId);
+        setEditable(prevItemId);
+      }
+    }
+  };
+  // register shortcuts
+  useKeyboardShortcut({ key: "Enter", ctrlKey: false }, handleAddNewItem);
+  useKeyboardShortcut({ key: "Escape" }, handleDeselectItem);
+  useKeyboardShortcut({ key: "Backspace" }, handleDeleteItemBackspace);
   return (
     <Container>
       <Reorder.Group axis="y" values={sort} onReorder={handleReorder}>
@@ -71,7 +110,7 @@ const List: React.FC<ListProps> = () => {
           const { value, isDone } = items[itemId];
           const isSelected = itemId === selected;
           const isEditable = itemId === editable;
-
+          const hasSubMenu = itemId === openSubMenu;
           return (
             <Reorder.Item key={itemId} value={itemId}>
               <ListItem
@@ -84,7 +123,10 @@ const List: React.FC<ListProps> = () => {
                 handleUpdateItem={handleUpdateItem}
                 setEditable={setEditable}
                 handleDeleteItem={handleDeleteItem}
+                handleCopyItem={handleCopyItem}
+                setOpenSubMenu={setOpenSubMenu}
               />
+              {hasSubMenu}
             </Reorder.Item>
           );
         })}

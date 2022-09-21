@@ -11,7 +11,7 @@ import {
 import { Checkbox } from "../../Components";
 import { UpdateKey } from "..";
 import { Drag } from "../../assets/Drag";
-import { Trash, Save } from "react-feather";
+import { Trash, Copy, MoreHorizontal } from "react-feather";
 
 interface ListItemProps {
   id: string;
@@ -22,7 +22,9 @@ interface ListItemProps {
   handleSelectItem: (id: string) => void;
   setEditable: (id: string) => void;
   handleDeleteItem: (id: string) => void;
+  handleCopyItem: (id: string) => void;
   handleUpdateItem: (id: string, key: UpdateKey, value: any) => void;
+  setOpenSubMenu: (id: string) => void;
 }
 
 const ListItem: React.FC<ListItemProps> = (props) => {
@@ -31,11 +33,13 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     isDone,
     isEditable,
     isSelected,
-    handleSelectItem,
+    handleCopyItem,
     handleDeleteItem,
+    handleSelectItem,
     handleUpdateItem,
     setEditable,
     value,
+    setOpenSubMenu,
   } = props;
 
   // deselect todo item on outside click
@@ -63,20 +67,21 @@ const ListItem: React.FC<ListItemProps> = (props) => {
           <StyledTextInput
             type="text"
             defaultValue={value}
-            onChange={(e) => {
-              console.log(e);
-              handleUpdateItem(id, "value", e.target.value);
-            }}
+            onChange={(e) => handleUpdateItem(id, "value", e.target.value)}
+            autoFocus={isEditable}
           />
         ) : (
           <Text isDone={isDone}>{value}</Text>
         )}
         <IconContainer isEditable={isEditable}>
-          <IconButton>
-            <Save />
+          <IconButton onClick={() => handleCopyItem(id)}>
+            <Copy />
           </IconButton>
           <IconButton onClick={() => handleDeleteItem(id)}>
             <Trash />
+          </IconButton>
+          <IconButton onClick={() => setOpenSubMenu(id)}>
+            <MoreHorizontal />
           </IconButton>
         </IconContainer>
       </ListItemContent>
