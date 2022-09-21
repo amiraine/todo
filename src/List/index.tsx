@@ -19,25 +19,19 @@ const List: React.FC<ListProps> = () => {
 
   // get context
   const [listData, listDispatch] = useListData();
+  console.log(listData);
   const { items, sort, selected } = listData;
 
   // helper functions
   const handleAddNewItem = () => {
-    const id = v4();
-    const newItem: ListItemType = {
-      id,
+    const payload: ListItemType = {
+      id: v4(),
       value: "",
       isDone: false,
     };
 
-    const payload: ListData = {
-      items: { ...items, [newItem.id]: newItem },
-      sort: [...sort, newItem.id],
-      selected: newItem.id,
-    };
-
     listDispatch({ type: "ADD", payload });
-    setEditable(newItem.id);
+    setEditable(payload.id);
     return;
   };
   useKeyboardShortcut({ key: "Enter", ctrlKey: false }, handleAddNewItem);
