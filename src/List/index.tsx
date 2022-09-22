@@ -89,6 +89,7 @@ const List: React.FC<ListProps> = () => {
         // if this item is at the top of the list, do nothing
         return;
       }
+
       if (item.value === "") {
         handleDeleteItem(editable);
         const prevItemId = sort[itemIndex - 1];
