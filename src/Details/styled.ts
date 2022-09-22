@@ -65,9 +65,9 @@ export const TabText = styled.span`
 
 export const ContentWrapper = styled.section`
   background: #ebfaff;
-  height: 100%;
-  width: 100%;
-  padding: 12px;
+  max-height: 100%;
+  max-width: 100%;
+  padding: 24px;
   box-shadow: 1px 1px 4px #00000050;
 `;
 
