@@ -3,6 +3,7 @@ import { useListData } from "../Context/ListDataContext";
 import { Container, ContentWrapper, Tab, TabText, TabWrapper } from "./styled";
 import { BarChart2, Edit3, HelpCircle } from "react-feather";
 import Summary from "./Summary";
+import Stats from "./Stats";
 
 export enum TabType {
   "Summary" = "Summary",
@@ -42,6 +43,7 @@ const Details: React.FC = () => {
           <Summary listItem={listItem} handleSaveTitle={handleSaveTitle} />
         );
       case TabType.Stats:
+        return <Stats />;
       case TabType.Notes:
       default:
         return null;
