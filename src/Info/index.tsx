@@ -1,8 +1,25 @@
 import React from "react";
-import { Container } from "./styled";
+import { Account, AccountName, Container, Header, InfoGroup } from "./styled";
 
 const Info: React.FC = () => {
-  return <Container />;
+  return (
+    <Container>
+      <InfoGroup>
+        <Header>☆</Header>
+        <Header>
+          Created by
+          <br />
+          Ami Cooper
+        </Header>
+        <Header>☆</Header>
+      </InfoGroup>
+      <InfoGroup>
+        <Account>
+          <AccountName>/amiraine</AccountName>
+        </Account>
+      </InfoGroup>
+    </Container>
+  );
 };
 
 export default Info;
