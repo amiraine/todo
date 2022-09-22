@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  Container,
+  // Container,
   DragHandleContainer,
   IconButton,
   IconContainer,
@@ -12,7 +12,7 @@ import {
 import { Checkbox } from "../../Components";
 import { UpdateKey } from "..";
 import { Drag } from "../../assets/Drag";
-import { Trash, Copy, MoreHorizontal } from "react-feather";
+import { Trash, Copy } from "react-feather";
 import { ListItem as ListItemType } from "../../types";
 import SubMenu from "../SubMenu";
 
@@ -79,9 +79,9 @@ const ListItem: React.FC<ListItemProps> = (props) => {
             <IconButton onClick={() => handleDeleteItem(id)}>
               <Trash />
             </IconButton>
-            <IconButton onClick={() => setSubmenuIsOpen(!submenuIsOpen)}>
+            {/* <IconButton onClick={() => setSubmenuIsOpen(!submenuIsOpen)}>
               <MoreHorizontal />
-            </IconButton>
+            </IconButton> */}
           </IconContainer>
         </ListItemContent>
         <Checkbox name={id} value={isDone} />

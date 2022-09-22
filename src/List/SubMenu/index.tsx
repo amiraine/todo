@@ -26,15 +26,15 @@ interface SubMenuProps {
 
 const SubMenu: React.FC<SubMenuProps> = (props) => {
   const { isOpen, listItem, handleUpdateItem } = props;
-  const { marker, id } = listItem;
+  const { id } = listItem;
 
-  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleUpdateItem(id, "marker", event.target.value);
-  };
+  // const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   handleUpdateItem(id, "marker", event.target.value);
+  // };
 
   return (
     <Container isOpen={isOpen}>
-      <MarkerContainer>
+      {/* <MarkerContainer>
         {MARKER_OPTIONS.map((item) => {
           const { icon, value } = item;
           const isChecked = marker === value;
@@ -50,7 +50,7 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
             </RadioButton>
           );
         })}
-      </MarkerContainer>
+      </MarkerContainer> */}
     </Container>
   );
 };
