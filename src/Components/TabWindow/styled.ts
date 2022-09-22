@@ -53,7 +53,7 @@ export const Tab = styled.button<{
   border: 0;
   padding: 0 30px;
   background: #70dbff;
-  z-index: ${({ selected }) => (selected ? 9 : 1)};
+  z-index: ${({ selected, index }) => (selected ? 9 : index)};
   clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
 
   ${TabText} {

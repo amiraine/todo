@@ -11,6 +11,7 @@ export const InfoLine = styled.div`
   color: #1e1e1e75;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   height: 34px;
 `;
 
