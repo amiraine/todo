@@ -6,7 +6,7 @@ export interface ListItem {
   isDone: boolean;
   created: Date;
   // marker?: Marker;
-  due?: string;
+  due?: Date;
   categories: string[];
 }
 

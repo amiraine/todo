@@ -12,7 +12,7 @@ import {
 import { Checkbox } from "../../Components";
 import { UpdateKey } from "..";
 import { Drag } from "../../assets/Drag";
-import { Trash, Copy } from "react-feather";
+import { Trash, Copy, Flag } from "react-feather";
 import { ListItem as ListItemType } from "../../types";
 import SubMenu from "../SubMenu";
 
@@ -38,7 +38,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     handleUpdateItem,
     setEditable,
   } = props;
-  const { id, value, isDone } = listItem;
+  const { id, value, isDone, due } = listItem;
   const [submenuIsOpen, setSubmenuIsOpen] = useState<boolean>(false);
   // deselect todo item on outside click
   // useEffect(() => {
@@ -55,6 +55,8 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     const { checked } = e.target;
     handleUpdateItem(id, "isDone", checked);
   };
+  const dueDate = due?.toDateString();
+  const now = new Date().toDateString();
 
   return (
     <>
@@ -77,6 +79,11 @@ const ListItem: React.FC<ListItemProps> = (props) => {
           ) : (
             <Text isDone={isDone}>{value}</Text>
           )}
+          {due && dueDate === now && (
+            <IconButton>
+              <Flag />
+            </IconButton>
+          )}
           <IconContainer isEditable={isEditable}>
             <IconButton onClick={() => handleCopyItem(id)}>
               <Copy />
@@ -84,9 +91,6 @@ const ListItem: React.FC<ListItemProps> = (props) => {
             <IconButton onClick={() => handleDeleteItem(id)}>
               <Trash />
             </IconButton>
-            {/* <IconButton onClick={() => setSubmenuIsOpen(!submenuIsOpen)}>
-              <MoreHorizontal />
-            </IconButton> */}
           </IconContainer>
         </ListItemContent>
         <Checkbox name={id} value={isDone} onChange={handleToggleDone} />
