@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useListData } from "../Context/ListDataContext";
 import { Container, ContentWrapper, Tab, TabText, TabWrapper } from "./styled";
-import { Clock, Edit3, HelpCircle } from "react-feather";
+import { BarChart2, Edit3, HelpCircle } from "react-feather";
 import Summary from "./Summary";
 
 export enum TabType {
   "Summary" = "Summary",
-  "History" = "History",
+  "Stats" = "Stats",
   "Notes" = "Notes",
 }
 const ICON_MAP = {
   [TabType.Summary]: <HelpCircle size={18} />,
-  [TabType.History]: <Clock size={18} />,
+  [TabType.Stats]: <BarChart2 size={18} />,
   [TabType.Notes]: <Edit3 size={18} />,
 };
 const Details: React.FC = () => {
@@ -41,7 +41,7 @@ const Details: React.FC = () => {
         return (
           <Summary listItem={listItem} handleSaveTitle={handleSaveTitle} />
         );
-      case TabType.History:
+      case TabType.Stats:
       case TabType.Notes:
       default:
         return null;

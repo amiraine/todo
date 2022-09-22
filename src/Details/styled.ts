@@ -13,6 +13,19 @@ export const TabWrapper = styled.div`
   width: 100%;
 `;
 
+export const TabText = styled.span`
+  display: flex;
+  text-align: center;
+  width: 100%;
+  z-index: 10;
+  align-items: center;
+  user-select: none;
+
+  svg {
+    margin-right: 8px;
+  }
+`;
+
 export const Tab = styled.button<{ selected: boolean; index: number }>`
   position: relative;
   height: 100%;
@@ -26,40 +39,26 @@ export const Tab = styled.button<{ selected: boolean; index: number }>`
   width: 100%;
   height: 32px;
   border: 0;
-  padding: 0 50px;
+  padding: 0 32px;
   background: #70dbff;
   z-index: ${({ selected }) => (selected ? 9 : 1)};
   clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+
+  ${TabText} {
+    transition: 0.075s all ease-in;
+    color: ${({ selected }) => (selected ? "white" : "#1e1e1e")};
+  }
+
   &:before {
-    ${({ selected }) =>
-      selected
-        ? `
-    background: #DEBCFA;
-    z-index: 9;
-  `
-        : `
-    background: #FFB8DD;
-    z-index: 1;
-  `}
-    position: absolute;
     content: "";
-    left: 1px;
     width: calc(100% - 3px);
     height: calc(100% - 2px);
+    position: absolute;
+    left: 1px;
+    transition: 0.075s background-color ease-in;
+    background: ${({ selected }) => (selected ? "#DEBCFA" : "#FFB8DD")};
+    z-index: ${({ selected }) => (selected ? 9 : 1)};
     clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
-  }
-`;
-
-export const TabText = styled.span`
-  display: flex;
-  text-align: center;
-  width: 100%;
-  z-index: 10;
-  align-items: center;
-  color: #1e1e1e;
-  svg {
-    margin-right: 8px;
-    stroke: #1e1e1e;
   }
 `;
 
