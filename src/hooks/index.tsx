@@ -49,6 +49,9 @@ const defaultShortcut = {
   metaKey: false,
 };
 
+// array of key values where we don't want to prevent the default
+const EVENTS_NOT_PREVENTED = ["Backspace"];
+
 export const useKeyboardShortcut: UseKeyboardShortcutSignature = (
   shortcut,
   callback
@@ -83,7 +86,9 @@ export const useKeyboardShortcut: UseKeyboardShortcutSignature = (
         ev.altKey === shortcut.altKey &&
         ev.metaKey === shortcut.metaKey
       ) {
-        ev.preventDefault();
+        if (!EVENTS_NOT_PREVENTED.includes(ev.key)) {
+          ev.preventDefault();
+        }
         callback();
       }
     };
