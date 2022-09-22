@@ -38,7 +38,8 @@ type Shortcut = {
 
 type UseKeyboardShortcutSignature = (
   shortcut: Shortcut,
-  callback: () => void
+  callback: () => void,
+  preventDefault?: boolean
 ) => void;
 
 const defaultShortcut = {
@@ -49,12 +50,10 @@ const defaultShortcut = {
   metaKey: false,
 };
 
-// array of key values where we don't want to prevent the default
-const EVENTS_NOT_PREVENTED = ["Backspace"];
-
 export const useKeyboardShortcut: UseKeyboardShortcutSignature = (
   shortcut,
-  callback
+  callback,
+  preventDefault = true
 ) => {
   const os = useMemo(() => getOS(), []);
 
@@ -86,7 +85,7 @@ export const useKeyboardShortcut: UseKeyboardShortcutSignature = (
         ev.altKey === shortcut.altKey &&
         ev.metaKey === shortcut.metaKey
       ) {
-        if (!EVENTS_NOT_PREVENTED.includes(ev.key)) {
+        if (preventDefault) {
           ev.preventDefault();
         }
         callback();
@@ -97,7 +96,7 @@ export const useKeyboardShortcut: UseKeyboardShortcutSignature = (
     return () => {
       window.removeEventListener("keydown", handleEvent);
     };
-  }, [callback, shortcut]);
+  }, [callback, shortcut, preventDefault]);
 };
 
 const getOS = () => {
