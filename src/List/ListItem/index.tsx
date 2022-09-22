@@ -71,6 +71,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
         <ListItemContent>
           {isEditable ? (
             <StyledTextInput
+              id={`task-item-${id}`}
               type="text"
               defaultValue={value}
               onChange={(e) => handleUpdateItem(id, "value", e.target.value)}

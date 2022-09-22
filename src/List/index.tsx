@@ -106,9 +106,16 @@ const List: React.FC<ListProps> = () => {
       }
     }
   };
-  const handleTabKey = () => {
+  // applies to tab and spacebar
+  const handleLineChange = () => {
     // do nothing if not editing
     if (!editable) return;
+
+    // check browser focus. If user is editing the textarea,
+    const focusedElement = document.activeElement;
+    console.log(focusedElement?.id);
+    if (focusedElement && !focusedElement.id.includes("task-item")) return;
+
     const editingIndex = sort.indexOf(editable);
 
     if (editingIndex === sort.length - 1) {
@@ -119,11 +126,13 @@ const List: React.FC<ListProps> = () => {
       handleSelectItem(nextItemId);
     }
   };
+
   // register shortcuts
-  useKeyboardShortcut({ key: "Enter", ctrlKey: false }, handleAddNewItem);
+  useKeyboardShortcut({ key: "Enter" }, handleLineChange, false);
   useKeyboardShortcut({ key: "Escape" }, handleDeselectItem);
-  useKeyboardShortcut({ key: "Backspace" }, handleDeleteItemBackspace);
-  useKeyboardShortcut({ key: "Tab" }, handleTabKey);
+  useKeyboardShortcut({ key: "Backspace" }, handleDeleteItemBackspace, false);
+  useKeyboardShortcut({ key: "Tab" }, handleLineChange);
+
   return (
     <Container>
       <Reorder.Group
