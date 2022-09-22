@@ -5,6 +5,7 @@ import { useListData } from "../Context/ListDataContext";
 import { TabProps, TabWindow } from "../Components";
 import Summary from "./Summary";
 import { BookOpen, Edit3 } from "react-feather";
+import Notes from "./Notes";
 
 export enum TabType {
   "Summary" = "Summary",
@@ -46,6 +47,7 @@ const Details: React.FC = () => {
           <Summary listItem={listItem} handleSaveTitle={handleSaveTitle} />
         );
       case TabType.Notes:
+        return <Notes listItem={listItem} />;
       default:
         return null;
     }
