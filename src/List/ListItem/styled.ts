@@ -76,12 +76,10 @@ export const IconButton = styled.button`
   border: none;
   background: transparent;
   cursor: pointer;
+
   &:hover {
     svg {
       stroke: purple;
     }
-  }
-  &:focus {
-    outline: 1px;
   }
 `;

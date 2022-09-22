@@ -28,7 +28,7 @@ const List: React.FC<ListProps> = () => {
       value: "",
       isDone: false,
       categories: [],
-      created: new Date(),
+      created: new Date().toDateString(),
     };
 
     listDispatch({ type: "ADD", payload });
@@ -82,7 +82,7 @@ const List: React.FC<ListProps> = () => {
     // reassign the id, set to 'not done', set created to current Date obj
     payload.id = v4();
     payload.isDone = false;
-    payload.created = new Date();
+    payload.created = new Date().toDateString();
 
     listDispatch({ type: "ADD", payload });
   };
