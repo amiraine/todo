@@ -7,7 +7,7 @@ export const Container = styled.div<{ gridArea: string }>`
   display: grid;
   grid-template-rows: 32px 1fr;
   border: 2px solid white;
-  color: #debcfa;
+  color: white;
   grid-area: ${({ gridArea }) => gridArea};
 `;
 
