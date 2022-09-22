@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "./styled";
 
-const Stats: React.FC = () => {
+const Info: React.FC = () => {
   return <Container />;
 };
 
-export default Stats;
+export default Info;
