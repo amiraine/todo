@@ -65,6 +65,5 @@ export const ContentWrapper = styled.section`
   background: #ebfaff;
   max-height: 100%;
   max-width: 100%;
-  padding: 24px;
   box-shadow: 1px 1px 4px #00000050;
 `;

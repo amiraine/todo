@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Globe, Star } from "react-feather";
 import { TabProps, TabWindow } from "../Components";
-import { Account, AccountName, Container, Header, InfoGroup } from "./styled";
+import Credits from "./Credits";
 
 enum TabType {
   "Credits" = "Credits",
-  "GlobalStats" = "GlobalStats",
+  "GlobalStats" = "Global stats",
+  "Settings" = "Settings",
 }
 
 const Info: React.FC = () => {
@@ -21,29 +22,14 @@ const Info: React.FC = () => {
   const RenderedContent = () => {
     switch (tab) {
       case TabType.Credits:
-        return null;
+        return <Credits />;
       default:
         return null;
     }
   };
   return (
     <TabWindow tabList={tabs} selectedTab={tab} setTab={setTab}>
-      <Container>
-        <InfoGroup>
-          <Header>☆</Header>
-          <Header>
-            Created by
-            <br />
-            Ami Cooper
-          </Header>
-          <Header>☆</Header>
-        </InfoGroup>
-        <InfoGroup>
-          <Account>
-            <AccountName>/amiraine</AccountName>
-          </Account>
-        </InfoGroup>
-      </Container>
+      <RenderedContent />
     </TabWindow>
   );
 };
