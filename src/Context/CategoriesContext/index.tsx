@@ -3,27 +3,27 @@ import React, { createContext, useContext } from "react";
 
 type ActionType = "ADD" | "REMOVE";
 
-export const ListActions: { [key in string]: ActionType } = {
+export const CategoryActions: { [key in string]: ActionType } = {
   ADD: "ADD",
   REMOVE: "REMOVE",
 };
 
-type ListAction = {
+type CategoryAction = {
   type: ActionType;
   payload?: any;
 };
 
-type UseCategoriesSignature = () => [string[], React.Dispatch<ListAction>];
+type UseCategoriesSignature = () => [string[], React.Dispatch<CategoryAction>];
 
 export const categoryContext = createContext<
   | {
       categories: string[];
-      updateCategories: React.Dispatch<ListAction>;
+      updateCategories: React.Dispatch<CategoryAction>;
     }
   | undefined
 >(undefined);
 
-export const listReducer = (state: string[], action: ListAction) => {
+export const listReducer = (state: string[], action: CategoryAction) => {
   switch (action.type) {
     case "ADD":
       return [...state, action.payload];
