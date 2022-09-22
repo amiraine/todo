@@ -14,12 +14,14 @@ export const initialData: ListData = {
       value: "Water plants",
       isDone: true,
       categories: [initialCategories[0]],
+      created: new Date("September 20, 2022 12:00:00"),
     },
     "648ff21c-16c3-4e9d-b67a-97a78f8acaca": {
       id: "648ff21c-16c3-4e9d-b67a-97a78f8acaca",
       value: "Feed cats",
       isDone: false,
       categories: [initialCategories[0], initialCategories[4]],
+      created: new Date("September 20, 2022 12:00:00"),
     },
   },
   sort: [

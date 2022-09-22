@@ -4,8 +4,9 @@ export interface ListItem {
   id: string;
   value: string;
   isDone: boolean;
+  created: Date;
   // marker?: Marker;
-  dueDate?: string;
+  due?: string;
   categories: string[];
 }
 
