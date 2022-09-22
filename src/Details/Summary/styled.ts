@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  padding: 24px;
+`;
 export const InfoLine = styled.div`
   width: 100%;
   padding: 4px 8px;
