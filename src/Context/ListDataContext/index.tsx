@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { ListData } from "../types";
+import { ListData } from "../../types";
 // types
 
 type ActionType = "ADD" | "REMOVE" | "UPDATE" | "SETACTIVE" | "REORDER";
