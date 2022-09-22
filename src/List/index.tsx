@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { v4 } from "uuid";
-import { Reorder } from "framer-motion";
+import { Reorder, AnimatePresence } from "framer-motion";
 // local
 import { useListData } from "../Context";
 import { ListItem as ListItemType } from "../types";
 import { useKeyboardShortcut } from "../hooks";
 // components and styles
 import ListItem from "./ListItem";
-import SubMenu from "./SubMenu";
 import { Container } from "./styled";
 
 interface ListProps {}
@@ -16,7 +15,6 @@ export type UpdateKey = keyof ListItemType;
 const List: React.FC<ListProps> = () => {
   // local state
   const [editable, setEditable] = useState<string>("");
-  const [openSubMenu, setOpenSubMenu] = useState<string>("");
   // hooks
 
   // get context and destructure
@@ -55,7 +53,6 @@ const List: React.FC<ListProps> = () => {
   // Other basic helpers
   const resetLocalState = () => {
     setEditable("");
-    setOpenSubMenu("");
   };
 
   const handleSelectItem = (id: string) => {
@@ -107,37 +104,39 @@ const List: React.FC<ListProps> = () => {
 
   return (
     <Container>
-      <Reorder.Group axis="y" values={sort} onReorder={handleReorder}>
-        {sort.map((itemId) => {
-          const { value, isDone } = items[itemId];
-          const isSelected = itemId === selected;
-          const isEditable = itemId === editable;
-          const hasSubMenu = itemId === openSubMenu;
-          return (
-            <Reorder.Item key={itemId} value={itemId}>
-              <ListItem
-                value={value}
-                isDone={isDone}
-                isSelected={isSelected}
-                isEditable={isEditable}
-                id={itemId}
-                handleSelectItem={handleSelectItem}
-                handleUpdateItem={handleUpdateItem}
-                setEditable={setEditable}
-                handleDeleteItem={handleDeleteItem}
-                handleCopyItem={handleCopyItem}
-                setOpenSubMenu={setOpenSubMenu}
-              />
-              {hasSubMenu && (
-                <SubMenu
-                  listItem={items[itemId]}
-                  isOpen={hasSubMenu}
+      <Reorder.Group
+        axis="y"
+        values={sort}
+        onReorder={handleReorder}
+        layoutScroll
+      >
+        <AnimatePresence>
+          {sort.map((itemId) => {
+            const listItem = items[itemId];
+            const isSelected = itemId === selected;
+            const isEditable = itemId === editable;
+            return (
+              <Reorder.Item
+                key={itemId}
+                value={itemId}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <ListItem
+                  isSelected={isSelected}
+                  isEditable={isEditable}
+                  handleSelectItem={handleSelectItem}
                   handleUpdateItem={handleUpdateItem}
+                  setEditable={setEditable}
+                  handleDeleteItem={handleDeleteItem}
+                  handleCopyItem={handleCopyItem}
+                  listItem={listItem}
                 />
-              )}
-            </Reorder.Item>
-          );
-        })}
+              </Reorder.Item>
+            );
+          })}
+        </AnimatePresence>
       </Reorder.Group>
     </Container>
   );

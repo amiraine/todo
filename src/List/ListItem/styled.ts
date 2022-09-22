@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+export const Container = styled.div<{ isExpanded?: boolean }>`
+  position: relative;
+  display: grid;
+  grid-template-rows: 50px ${({ isExpanded }) => (isExpanded ? "220px" : "0")};
+`;
 export const IconContainer = styled.div<{ isEditable: boolean }>`
   display: flex;
   align-items: center;
@@ -13,7 +18,8 @@ export const StyledListItem = styled.div<{ selected: boolean }>`
   padding: 5px 10px;
   background: ${({ selected }) =>
     selected ? "rgba(161, 148, 255, .5)" : "transparent"};
-
+  height: 39px;
+  max-height: 39px;
   &:hover {
     ${IconContainer} {
       opacity: 1;

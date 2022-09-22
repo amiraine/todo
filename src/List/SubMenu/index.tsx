@@ -1,9 +1,10 @@
 import React from "react";
+import { Heart, Moon, Star, Zap } from "react-feather";
+
 import { UpdateKey } from "..";
 import RadioButton from "../../Components/Radio";
 import { ListItem, Marker } from "../../types";
 import { Container, MarkerContainer } from "./styled";
-import { Heart, Moon, Star, Zap } from "react-feather";
 
 // array of options
 type MarkerOption = {
