@@ -82,6 +82,8 @@ const List: React.FC<ListProps> = () => {
   };
 
   const handleDeleteItemBackspace = () => {
+    const input = document.getElementById(editable) as HTMLInputElement;
+
     if (editable !== "") {
       const item = items[editable];
       const itemIndex = sort.indexOf(editable);
@@ -89,7 +91,9 @@ const List: React.FC<ListProps> = () => {
         // if this item is at the top of the list, do nothing
         return;
       }
-
+      if (input.selectionStart === 0) {
+        // todo: fix backspace bug
+      }
       if (item.value === "") {
         handleDeleteItem(editable);
         const prevItemId = sort[itemIndex - 1];
