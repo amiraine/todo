@@ -4,8 +4,9 @@ export interface ListItem {
   id: string;
   value: string;
   isDone: boolean;
-  marker?: Marker;
+  // marker?: Marker;
   dueDate?: string;
+  categories: string[];
 }
 
 export enum Marker {
