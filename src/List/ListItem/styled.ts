@@ -20,6 +20,7 @@ export const StyledListItem = styled.div<{ selected: boolean }>`
     selected ? "rgba(161, 148, 255, .5)" : "transparent"};
   height: 39px;
   max-height: 39px;
+  z-index: 2;
   &:hover {
     ${IconContainer} {
       opacity: 1;
