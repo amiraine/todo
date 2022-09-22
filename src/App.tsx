@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { Info, CheckSquare, BookOpen } from "react-feather";
+import { Info as InfoIcon, CheckSquare, BookOpen } from "react-feather";
 import {
   listReducer,
   listContext,
@@ -11,7 +11,7 @@ import { initialCategories, initialData } from "./initialdata";
 import { Window } from "./Components";
 import Details from "./Details";
 import List from "./List";
-import Stats from "./Stats";
+import Info from "./Info";
 // styles
 import { Container } from "./styled";
 
@@ -37,8 +37,8 @@ const App = () => {
           <Window title="Details" gridArea="b" icon={<BookOpen size={20} />}>
             <Details />
           </Window>
-          <Window title="Info" icon={<Info size={20} />}>
-            <Stats />
+          <Window title="Info" icon={<InfoIcon size={20} />}>
+            <Info />
           </Window>
         </Container>
       </categoriesContext.Provider>
