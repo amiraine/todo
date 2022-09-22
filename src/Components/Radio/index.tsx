@@ -9,7 +9,7 @@ interface RadioButtonProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const RadioButton: React.FC<RadioButtonProps> = (props) => {
+export const RadioButton: React.FC<RadioButtonProps> = (props) => {
   const { name, children, isChecked, onChange, value } = props;
 
   return (
@@ -19,5 +19,3 @@ const RadioButton: React.FC<RadioButtonProps> = (props) => {
     </Container>
   );
 };
-
-export default RadioButton;
