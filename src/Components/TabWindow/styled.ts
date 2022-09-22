@@ -31,7 +31,7 @@ export const Tab = styled.button<{ selected: boolean; index: number }>`
   height: 100%;
   font-family: inherit;
   left: ${({ index }) => {
-    return `${index * -40}px`;
+    return `${index * -45}px`;
   }};
   display: flex;
   align-items: center;
