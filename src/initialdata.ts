@@ -19,3 +19,11 @@ export const initialData: ListData = {
   ],
   selected: "",
 };
+
+export const categories: string[] = [
+  "Home",
+  "Work",
+  "Hobby",
+  "Urgent",
+  "Cleaning",
+];
