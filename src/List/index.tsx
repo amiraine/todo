@@ -27,6 +27,8 @@ const List: React.FC<ListProps> = () => {
       id: v4(),
       value: "",
       isDone: false,
+      categories: [],
+      created: new Date(),
     };
 
     listDispatch({ type: "ADD", payload });
@@ -75,9 +77,11 @@ const List: React.FC<ListProps> = () => {
 
   const handleCopyItem = (id: string) => {
     const payload = { ...items[id] };
-    // reassign the id and set it to "not done"
+    // reassign the id, set to 'not done', set created to current Date obj
     payload.id = v4();
     payload.isDone = false;
+    payload.created = new Date();
+
     listDispatch({ type: "ADD", payload });
   };
 
@@ -102,11 +106,24 @@ const List: React.FC<ListProps> = () => {
       }
     }
   };
+  const handleTabKey = () => {
+    // do nothing if not editing
+    if (!editable) return;
+    const editingIndex = sort.indexOf(editable);
+
+    if (editingIndex === sort.length - 1) {
+      handleAddNewItem();
+    } else {
+      const nextItemId = sort[editingIndex + 1];
+      setEditable(nextItemId);
+      handleSelectItem(nextItemId);
+    }
+  };
   // register shortcuts
   useKeyboardShortcut({ key: "Enter", ctrlKey: false }, handleAddNewItem);
   useKeyboardShortcut({ key: "Escape" }, handleDeselectItem);
   useKeyboardShortcut({ key: "Backspace" }, handleDeleteItemBackspace);
-
+  useKeyboardShortcut({ key: "Tab" }, handleTabKey);
   return (
     <Container>
       <Reorder.Group
