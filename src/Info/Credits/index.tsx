@@ -1,10 +1,19 @@
 import React from "react";
-import { Account, AccountName, Container, Header, InfoGroup } from "./styled";
+import { GitHub } from "../../assets/GitHub";
+import { LinkedIn } from "../../assets/LinkedIn";
+import {
+  Account,
+  AccountName,
+  Container,
+  Header,
+  HeaderGroup,
+  InfoGroup,
+} from "./styled";
 
 const Credits: React.FC = () => {
   return (
     <Container>
-      <InfoGroup>
+      <HeaderGroup>
         <Header>☆</Header>
         <Header>
           Created by
@@ -12,10 +21,15 @@ const Credits: React.FC = () => {
           Ami Cooper
         </Header>
         <Header>☆</Header>
-      </InfoGroup>
+      </HeaderGroup>
       <InfoGroup>
-        <Account>
+        <Account href="https://github.com/amiraine">
+          <GitHub color="#1e1e1e" />
           <AccountName>/amiraine</AccountName>
+        </Account>
+        <Account href="https://linkedin.com/ameliah-rc">
+          <LinkedIn color="#1e1e1e" />
+          <AccountName>/ameliah-rc</AccountName>
         </Account>
       </InfoGroup>
     </Container>

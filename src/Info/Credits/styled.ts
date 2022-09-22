@@ -1,14 +1,15 @@
 import styled from "styled-components";
 
 export const Header = styled.h1`
-  font-size: 28px;
+  font-size: 1rem;
   text-align: center;
   line-height: 103%;
 `;
 
 export const AccountName = styled.h2`
-  font-size: 18px;
+  font-size: 0.9rem;
   margin-left: 12px;
+  margin: 0;
 `;
 
 export const Container = styled.div`
@@ -17,6 +18,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  color: #1e1e1e;
 
   ${Header} {
     &:first-of-type {
@@ -28,19 +30,40 @@ export const Container = styled.div`
   }
 `;
 
-export const InfoGroup = styled.div`
-  display: flex;
-`;
-
-export const Account = styled.div`
+export const Account = styled.a`
   display: flex;
   flex-direction: row;
   align-items: center;
-
+  text-decoration: none;
+  color: #1e1e1e;
   > svg {
-    border: 2px solid white;
-    padding: 8px;
-    border-radius: 50%;
-    stroke-width: 3px;
+    height: 32px;
+    width: 32px;
   }
+  &:hover {
+    color: #debcfa;
+    cursor: pointer;
+    svg {
+      color: inherit;
+      fill: #debcfa;
+      stroke: #debcfa;
+      *:first-child {
+        color: inherit;
+        fill: inherit;
+        stroke: inherit;
+      }
+    }
+  }
+`;
+export const InfoGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-top: 12px;
+  ${AccountName} {
+    margin-left: 10px;
+  }
+`;
+export const HeaderGroup = styled.div`
+  display: flex;
 `;
