@@ -1,23 +1,24 @@
 import React, { useState } from "react";
 import { useListData } from "../Context/ListDataContext";
-import { Container, ContentWrapper, Tab, TabText, TabWrapper } from "./styled";
-import { BarChart2, Edit3, HelpCircle } from "react-feather";
+import { TabProps, TabWindow } from "../Components";
+import { BookOpen, Edit3 } from "react-feather";
 import Summary from "./Summary";
-import Stats from "./Stats";
 
 export enum TabType {
   "Summary" = "Summary",
   "Stats" = "Stats",
   "Notes" = "Notes",
 }
-const ICON_MAP = {
-  [TabType.Summary]: <HelpCircle size={18} />,
-  [TabType.Stats]: <BarChart2 size={18} />,
-  [TabType.Notes]: <Edit3 size={18} />,
-};
+
 const Details: React.FC = () => {
-  const tabs = Object.keys(TabType);
-  const [tab, setTab] = useState<TabType>(TabType.Summary);
+  const tabs: TabProps[] = [
+    {
+      name: TabType.Summary,
+      icon: <BookOpen />,
+    },
+    { name: TabType.Notes, icon: <Edit3 /> },
+  ];
+  const [tab, setTab] = useState<string>(TabType.Summary);
   const [listData, listDispatch] = useListData();
   const { items, selected } = listData;
   const listItem = items[selected];
@@ -42,8 +43,6 @@ const Details: React.FC = () => {
         return (
           <Summary listItem={listItem} handleSaveTitle={handleSaveTitle} />
         );
-      case TabType.Stats:
-        return <Stats />;
       case TabType.Notes:
       default:
         return null;
@@ -51,28 +50,9 @@ const Details: React.FC = () => {
   };
 
   return (
-    <Container tabCount={tabs.length}>
-      <TabWrapper>
-        {tabs.map((t, i) => {
-          return (
-            <Tab
-              key={t}
-              index={i}
-              selected={t === tab}
-              onClick={() => setTab(TabType[t])}
-            >
-              <TabText>
-                {ICON_MAP[t]}
-                {t}
-              </TabText>
-            </Tab>
-          );
-        })}
-      </TabWrapper>
-      <ContentWrapper>
-        <RenderedContent />
-      </ContentWrapper>
-    </Container>
+    <TabWindow tabList={tabs} setTab={setTab} selectedTab={tab}>
+      <RenderedContent />
+    </TabWindow>
   );
 };
 

@@ -17,6 +17,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
   ${Header} {
     &:first-of-type {
       margin-right: 10px;
@@ -27,7 +28,9 @@ export const Container = styled.div`
   }
 `;
 
-export const InfoGroup = styled.div``;
+export const InfoGroup = styled.div`
+  display: flex;
+`;
 
 export const Account = styled.div`
   display: flex;
