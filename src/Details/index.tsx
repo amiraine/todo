@@ -6,6 +6,7 @@ import { TabProps, TabWindow } from "../Components";
 import Summary from "./Summary";
 import { BookOpen, Edit3 } from "react-feather";
 import Notes from "./Notes";
+import { UpdateKey } from "../List";
 
 export enum TabType {
   "Summary" = "Summary",
@@ -36,6 +37,15 @@ const Details: React.FC = () => {
     listDispatch({ type: "UPDATE", payload });
   };
 
+  // todo fix
+  const handleUpdateNote = (note: string) => {
+    const payload = {
+      ...items[selected],
+      note,
+    };
+
+    listDispatch({ type: "UPDATE", payload });
+  };
   // conditional render
   const RenderedContent = () => {
     if (!listItem) {
@@ -47,7 +57,9 @@ const Details: React.FC = () => {
           <Summary listItem={listItem} handleSaveTitle={handleSaveTitle} />
         );
       case TabType.Notes:
-        return <Notes listItem={listItem} />;
+        return (
+          <Notes listItem={listItem} handleUpdateNote={handleUpdateNote} />
+        );
       default:
         return null;
     }
