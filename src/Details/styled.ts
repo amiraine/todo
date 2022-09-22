@@ -68,6 +68,7 @@ export const ContentWrapper = styled.section`
   height: 100%;
   width: 100%;
   padding: 12px;
+  box-shadow: 1px 1px 4px #00000050;
 `;
 
 export const InfoLine = styled.div`
