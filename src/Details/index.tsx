@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useListData } from "../Context";
 import { Container, ContentWrapper, Tab, TabText, TabWrapper } from "./styled";
 import { Clock, Edit3, HelpCircle } from "react-feather";
+import Summary from "./Summary";
 
 export enum TabType {
   "Summary" = "Summary",
@@ -17,6 +18,35 @@ const Details: React.FC = () => {
   const tabs = Object.keys(TabType);
   const [tab, setTab] = useState<TabType>(TabType.Summary);
   const [listData, listDispatch] = useListData();
+  const { items, selected } = listData;
+  const listItem = items[selected];
+
+  // helpers
+  const handleSaveTitle = (value: string) => {
+    const payload = {
+      ...items[selected],
+      value,
+    };
+
+    listDispatch({ type: "UPDATE", payload });
+  };
+
+  // conditional render
+  const RenderedContent = () => {
+    if (!listItem) {
+      return null;
+    }
+    switch (tab) {
+      case TabType.Summary:
+        return (
+          <Summary listItem={listItem} handleSaveTitle={handleSaveTitle} />
+        );
+      case TabType.History:
+      case TabType.Notes:
+      default:
+        return null;
+    }
+  };
 
   return (
     <Container tabCount={tabs.length}>
@@ -37,7 +67,9 @@ const Details: React.FC = () => {
           );
         })}
       </TabWrapper>
-      <ContentWrapper></ContentWrapper>
+      <ContentWrapper>
+        <RenderedContent />
+      </ContentWrapper>
     </Container>
   );
 };
