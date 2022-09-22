@@ -1,0 +1,49 @@
+import styled from "styled-components";
+
+export const Container = styled.div`
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 32px 1fr;
+  border: 2px solid white;
+  color: #debcfa;
+`;
+
+export const TitleBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid white;
+  background: linear-gradient(90deg, #93f1fd, #ffb8dd);
+  padding: 0 0 0 8px;
+`;
+
+export const ButtonGroup = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  svg {
+    background-color: white;
+    stroke: #debcfa;
+    &:first-of-type {
+      margin-right: 8px;
+    }
+  }
+`;
+
+export const Content = styled.div`
+  padding: 32px;
+`;
+
+export const Text = styled.span`
+  font-family: "Press Start 2P", sans-serif;
+`;
