@@ -8,6 +8,7 @@ export interface ListItem {
   // marker?: Marker;
   due?: Date;
   categories: string[];
+  note?: string;
 }
 
 export enum Marker {
