@@ -51,6 +51,11 @@ const ListItem: React.FC<ListItemProps> = (props) => {
   //     });
   //   };
   // }, []);
+  const handleToggleDone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.target;
+    handleUpdateItem(id, "isDone", checked);
+  };
+
   return (
     <>
       <StyledListItem
@@ -84,7 +89,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
             </IconButton> */}
           </IconContainer>
         </ListItemContent>
-        <Checkbox name={id} value={isDone} />
+        <Checkbox name={id} value={isDone} onChange={handleToggleDone} />
       </StyledListItem>
       <SubMenu
         listItem={listItem}
