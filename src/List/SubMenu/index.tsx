@@ -2,7 +2,7 @@ import React from "react";
 import { Heart, Moon, Star, Zap } from "react-feather";
 
 import { UpdateKey } from "..";
-import RadioButton from "../../Components/Radio";
+import { RadioButton } from "../../Components";
 import { ListItem, Marker } from "../../types";
 import { Container, MarkerContainer } from "./styled";
 
