@@ -20,7 +20,7 @@ export const initialData: ListData = {
   selected: "",
 };
 
-export const categories: string[] = [
+export const initialCategories: string[] = [
   "Home",
   "Work",
   "Hobby",
