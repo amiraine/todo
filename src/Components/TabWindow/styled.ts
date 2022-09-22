@@ -10,23 +10,33 @@ export const Container = styled.div`
 export const TabWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  max-width: 100%;
   width: 100%;
+  position: relative;
+  overflow-x: auto;
 `;
 
 export const TabText = styled.span`
   display: flex;
+  justify-content: center;
   text-align: center;
   width: 100%;
   z-index: 10;
   align-items: center;
   user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
 
   svg {
     margin-right: 8px;
   }
 `;
 
-export const Tab = styled.button<{ selected: boolean; index: number }>`
+export const Tab = styled.button<{
+  selected: boolean;
+  index: number;
+  tabCount: number;
+}>`
   position: relative;
   height: 100%;
   font-family: inherit;
@@ -34,11 +44,14 @@ export const Tab = styled.button<{ selected: boolean; index: number }>`
     return `${index * -45}px`;
   }};
   display: flex;
+  justify-content: center;
   align-items: center;
   min-width: 150px;
+  /* width: calc() */
+  width: max-content;
   height: 32px;
   border: 0;
-  padding: 0 32px;
+  padding: 0 30px;
   background: #70dbff;
   z-index: ${({ selected }) => (selected ? 9 : 1)};
   clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);

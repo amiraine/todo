@@ -24,7 +24,8 @@ export const TabWindow: React.FC<TabWindowProps> = (props) => {
               key={name}
               index={i}
               selected={name === selectedTab}
-              onClick={() => (setTab ? setTab(name) : console.log(name))}
+              onClick={() => setTab(name)}
+              tabCount={tabList.length}
             >
               <TabText>
                 {icon}

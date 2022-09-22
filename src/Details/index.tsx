@@ -18,9 +18,9 @@ const Details: React.FC = () => {
   const tabs: TabProps[] = [
     {
       name: TabType.Summary,
-      icon: <BookOpen />,
+      icon: <BookOpen size={18} />,
     },
-    { name: TabType.Notes, icon: <Edit3 /> },
+    { name: TabType.Notes, icon: <Edit3 size={18} /> },
   ];
   const [tab, setTab] = useState<string>(TabType.Summary);
   const [listData, listDispatch] = useListData();
