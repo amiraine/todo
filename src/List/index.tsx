@@ -62,6 +62,8 @@ const List: React.FC<ListProps> = () => {
   };
 
   const handleDeleteItem = (id: string) => {
+    // don't delete if there's only one item in the list
+    if (sort.length === 1) return;
     // clear editable
     if (editable === id) {
       resetLocalState();

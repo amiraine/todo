@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   // Container,
   DragHandleContainer,
@@ -14,7 +14,6 @@ import { UpdateKey } from "..";
 import { Drag } from "../../assets/Drag";
 import { Trash, Copy, Flag } from "react-feather";
 import { ListItem as ListItemType } from "../../types";
-import SubMenu from "../SubMenu";
 
 interface ListItemProps {
   isEditable: boolean;
@@ -39,18 +38,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     setEditable,
   } = props;
   const { id, value, isDone, due } = listItem;
-  const [submenuIsOpen, setSubmenuIsOpen] = useState<boolean>(false);
-  // deselect todo item on outside click
-  // useEffect(() => {
-  //   window.addEventListener("click", () => {
-  //     handleSelectItem("");
-  //   });
-  //   return () => {
-  //     window.removeEventListener("click", () => {
-  //       handleSelectItem("");
-  //     });
-  //   };
-  // }, []);
+
   const handleToggleDone = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     handleUpdateItem(id, "isDone", checked);
@@ -96,11 +84,6 @@ const ListItem: React.FC<ListItemProps> = (props) => {
         </ListItemContent>
         <Checkbox name={id} value={isDone} onChange={handleToggleDone} />
       </StyledListItem>
-      <SubMenu
-        listItem={listItem}
-        isOpen={submenuIsOpen}
-        handleUpdateItem={handleUpdateItem}
-      />
     </>
   );
 };
