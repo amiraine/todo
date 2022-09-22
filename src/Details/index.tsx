@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+// Context
 import { useListData } from "../Context/ListDataContext";
+// Components
 import { TabProps, TabWindow } from "../Components";
-import { BookOpen, Edit3 } from "react-feather";
 import Summary from "./Summary";
+import { BookOpen, Edit3 } from "react-feather";
 
 export enum TabType {
   "Summary" = "Summary",
