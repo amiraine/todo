@@ -4,7 +4,8 @@ export const Container = styled.div`
   width: 100%;
   height: 100vh;
   background-color: #ccfdff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "a b" "a c";
 `;
