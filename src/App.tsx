@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import { Window } from "./Components";
-import { listReducer, listContext } from "./Context";
+import { listReducer, listContext } from "./Context/ListDataContext";
 import { initialData } from "./initialdata";
 import Details from "./Details";
 import List from "./List";
