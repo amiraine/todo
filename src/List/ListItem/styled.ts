@@ -16,8 +16,7 @@ export const StyledListItem = styled.div<{ selected: boolean }>`
   display: flex;
   align-items: center;
   padding: 5px 10px;
-  background: ${({ selected }) =>
-    selected ? "rgba(161, 148, 255, .5)" : "transparent"};
+  background: ${({ selected }) => (selected ? "#debcfa50" : "#ccfdff50")};
   height: 39px;
   max-height: 39px;
   z-index: 2;
