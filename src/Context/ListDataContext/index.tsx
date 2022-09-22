@@ -30,12 +30,14 @@ export const listContext = createContext<
 export const listReducer = (state: ListData, action: ListAction) => {
   switch (action.type) {
     case "REORDER": {
+      // payload is string[]
       return {
         ...state,
         sort: [...action.payload],
       };
     }
     case "ADD":
+      // payload is ListItem
       return {
         ...state,
         selected: action.payload.id,
@@ -48,6 +50,7 @@ export const listReducer = (state: ListData, action: ListAction) => {
         sort: [...state.sort, action.payload.id],
       };
     case "UPDATE": {
+      // payload is ListItem
       const copy = { ...state.items };
       copy[action.payload.id] = action.payload;
       return {
@@ -56,6 +59,7 @@ export const listReducer = (state: ListData, action: ListAction) => {
       };
     }
     case "REMOVE":
+      // payload is listItem id
       const copy = { ...state.items };
       delete copy[action.payload];
       const activeId = Object.keys(copy)[Object.keys(copy).length - 1];
@@ -69,6 +73,7 @@ export const listReducer = (state: ListData, action: ListAction) => {
         sort: sortCopy,
       };
     case "SETACTIVE":
+      // payload is listItem id
       return { ...state, selected: action.payload };
     default:
       return { ...state };
