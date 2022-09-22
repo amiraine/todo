@@ -62,6 +62,11 @@ export const DragHandleContainer = styled.div`
   display: flex;
   align-items: center;
   margin-right: 12px;
+  svg,
+  svg * {
+    fill: #afafaf;
+    stroke: #afafaf;
+  }
   &:hover {
     cursor: grab;
   }
