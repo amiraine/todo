@@ -20,24 +20,25 @@ export const TitleBar = styled.div`
   padding: 0 0 0 8px;
 `;
 
-export const ButtonGroup = styled.div`
+export const TitleGroup = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
   align-content: center;
   button {
     border: none;
-    background: transparent;
     padding: 0;
     display: flex;
     align-items: center;
-  }
-  svg {
     background-color: white;
-    stroke: #debcfa;
-    &:first-of-type {
-      margin-right: 8px;
+    margin-right: 8px;
+    > svg {
+      stroke: #debcfa;
+      margin: 0;
     }
+  }
+  > svg {
+    margin-right: 8px;
   }
 `;
 
