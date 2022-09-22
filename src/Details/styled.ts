@@ -47,7 +47,6 @@ export const Tab = styled.button<{ selected: boolean; index: number }>`
     width: calc(100% - 3px);
     height: calc(100% - 2px);
     clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
-    /* border: 1px solid limegreen; */
   }
 `;
 
@@ -68,4 +67,12 @@ export const ContentWrapper = styled.section`
   background: #ebfaff;
   height: 100%;
   width: 100%;
+  padding: 12px;
+`;
+
+export const InfoLine = styled.div`
+  width: 100%;
+  padding: 4px 8px;
+  border-bottom: 2px solid #e1e1e1;
+  color: #e1e1e150;
 `;
