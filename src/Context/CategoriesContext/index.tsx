@@ -23,7 +23,7 @@ export const categoryContext = createContext<
   | undefined
 >(undefined);
 
-export const listReducer = (state: string[], action: CategoryAction) => {
+export const categoriesReducer = (state: string[], action: CategoryAction) => {
   switch (action.type) {
     case "ADD":
       return [...state, action.payload];
