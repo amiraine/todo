@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div<{ gridArea: string }>`
   box-sizing: border-box;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   display: grid;
   grid-template-rows: 32px 1fr;
   border: 2px solid white;
   color: #debcfa;
+  grid-area: ${({ gridArea }) => gridArea};
 `;
 
 export const TitleBar = styled.div`

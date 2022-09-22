@@ -3,14 +3,19 @@ import { Minus, X } from "react-feather";
 import { Container, Content, TitleBar, ButtonGroup, Text } from "./styled";
 
 interface WindowProps {
+  title: string;
   gridArea?: string;
 }
 
-export const Window: React.FC<WindowProps> = ({ children }) => (
-  <Container>
+export const Window: React.FC<WindowProps> = ({
+  title,
+  children,
+  gridArea,
+}) => (
+  <Container gridArea={gridArea}>
     <TitleBar>
       <ButtonGroup>
-        <Text>Task List</Text>
+        <Text>{title}</Text>
       </ButtonGroup>
       <ButtonGroup>
         <button>
