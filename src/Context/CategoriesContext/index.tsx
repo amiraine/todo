@@ -15,7 +15,7 @@ type CategoryAction = {
 
 type UseCategoriesSignature = () => [string[], React.Dispatch<CategoryAction>];
 
-export const categoryContext = createContext<
+export const categoriesContext = createContext<
   | {
       categories: string[];
       updateCategories: React.Dispatch<CategoryAction>;
@@ -36,7 +36,7 @@ export const categoriesReducer = (state: string[], action: CategoryAction) => {
 };
 
 export const useCategoriesContext: UseCategoriesSignature = () => {
-  const context = useContext(categoryContext);
+  const context = useContext(categoriesContext);
 
   if (context) {
     const { categories = [], updateCategories } = context;
