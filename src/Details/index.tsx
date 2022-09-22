@@ -6,7 +6,6 @@ import { TabProps, TabWindow } from "../Components";
 import Summary from "./Summary";
 import { BookOpen, Edit3 } from "react-feather";
 import Notes from "./Notes";
-import { UpdateKey } from "../List";
 
 export enum TabType {
   "Summary" = "Summary",
