@@ -2,13 +2,11 @@ import React, { createContext, useContext } from "react";
 import { FilterSortData, SortKey } from "../../types";
 // types
 
-type ActionType = "UPDATE_CATEGORIES" | "UPDATE_SORT" | "UPDATE_DONE";
-
-export const FilterSortActions: { [key in string]: ActionType } = {
-  UPDATE_CATEGORIES: "UPDATE_CATEGORIES",
-  UPDATE_SORT: "UPDATE_SORT",
-  UPDATE_DONE: "UPDATE_DONE",
-};
+type ActionType =
+  | "UPDATE_CATEGORIES"
+  | "UPDATE_SORT"
+  | "UPDATE_DONE"
+  | "UPDATE_CATEGORIZE";
 
 type FilterSortAction = {
   type: ActionType;
@@ -34,22 +32,28 @@ export const filterSortReducer = (
 ) => {
   switch (action.type) {
     case "UPDATE_CATEGORIES":
-      // takes array of categories as payload
+      // takes c
       return {
         ...state,
         filterCategories: action.payload,
       };
     case "UPDATE_SORT":
+      // takes SortKey
       return {
         ...state,
         sortKey: action.payload,
       };
     case "UPDATE_DONE":
+      // takes boolean
       return {
         ...state,
         filterCompleteItems: action.payload,
       };
-
+    case "UPDATE_CATEGORIZE":
+      return {
+        ...state,
+        categorize: action.payload,
+      };
     default:
       return { ...state };
   }
@@ -64,6 +68,7 @@ export const useFilterSortContext: UseFilterSortSignature = () => {
         sortKey: SortKey.creationAsc,
         filterCategories: [],
         filterCompleteItems: false,
+        categorize: false,
       },
       updateFilterSort,
     } = context;
@@ -75,6 +80,7 @@ export const useFilterSortContext: UseFilterSortSignature = () => {
       sortKey: SortKey.creationAsc,
       filterCategories: [],
       filterCompleteItems: false,
+      categorize: false,
     },
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     () => {},

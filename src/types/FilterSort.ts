@@ -2,6 +2,7 @@ export interface FilterSortData {
   sortKey: SortKey;
   filterCategories: string[];
   filterCompleteItems: boolean;
+  categorize: boolean;
 }
 
 export enum SortKey {
