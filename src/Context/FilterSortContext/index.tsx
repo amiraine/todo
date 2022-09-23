@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { FilterSortData } from "../../types";
+import { FilterSortData, SortKey } from "../../types";
 // types
 
 type ActionType = "UPDATE_CATEGORIES" | "UPDATE_SORT" | "UPDATE_DONE";
@@ -29,7 +29,7 @@ export const filterSortContext = createContext<
 >(undefined);
 
 export const filterSortReducer = (
-  state: string[],
+  state: FilterSortData,
   action: FilterSortAction
 ) => {
   switch (action.type) {
@@ -49,11 +49,7 @@ export const filterSortReducer = (
         ...state,
         filterCompleteItems: action.payload,
       };
-    // case "ADD":
-    //   return [...state, action.payload];
-    // case "REMOVE":
-    //   const copy = [...state].filter((x) => x !== action.payload);
-    //   return [...copy];
+
     default:
       return { ...state };
   }
@@ -65,8 +61,8 @@ export const useFilterSortContext: UseFilterSortSignature = () => {
   if (context) {
     const {
       filterSort = {
-        sortKey: "creationAsc",
-        filterCategories: [""],
+        sortKey: SortKey.creationAsc,
+        filterCategories: [],
         filterCompleteItems: false,
       },
       updateFilterSort,
@@ -76,8 +72,8 @@ export const useFilterSortContext: UseFilterSortSignature = () => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   return [
     {
-      sortKey: "creationAsc",
-      filterCategories: [""],
+      sortKey: SortKey.creationAsc,
+      filterCategories: [],
       filterCompleteItems: false,
     },
     // eslint-disable-next-line @typescript-eslint/no-empty-function
