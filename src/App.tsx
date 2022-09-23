@@ -5,8 +5,11 @@ import {
   listContext,
   categoriesReducer,
   categoriesContext,
+  filterSortReducer,
+  filterSortContext,
 } from "./Context";
-import { initialCategories, initialData } from "./initialdata";
+
+import { initialCategories, initialData, initialFilters } from "./initialdata";
 // local components
 import { Window } from "./Components";
 import Details from "./Details";
@@ -22,25 +25,30 @@ const App = () => {
   const [categories, updateCategories] = useReducer(categoriesReducer, [
     ...initialCategories,
   ]);
+  const [filterSort, updateFilterSort] = useReducer(filterSortReducer, {
+    ...initialFilters,
+  });
 
   return (
     <listContext.Provider value={{ todoList, updateTodoList }}>
       <categoriesContext.Provider value={{ categories, updateCategories }}>
-        <Container>
-          <Window
-            title="Task List"
-            gridArea="a"
-            icon={<CheckSquare size={20} />}
-          >
-            <List />
-          </Window>
-          <Window title="Details" gridArea="b" icon={<BookOpen size={20} />}>
-            <Details />
-          </Window>
-          <Window title="Info" icon={<InfoIcon size={20} />}>
-            <Info />
-          </Window>
-        </Container>
+        <filterSortContext.Provider value={{ filterSort, updateFilterSort }}>
+          <Container>
+            <Window
+              title="Task List"
+              gridArea="a"
+              icon={<CheckSquare size={20} />}
+            >
+              <List />
+            </Window>
+            <Window title="Details" gridArea="b" icon={<BookOpen size={20} />}>
+              <Details />
+            </Window>
+            <Window title="Info" icon={<InfoIcon size={20} />}>
+              <Info />
+            </Window>
+          </Container>
+        </filterSortContext.Provider>
       </categoriesContext.Provider>
     </listContext.Provider>
   );
