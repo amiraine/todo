@@ -8,18 +8,19 @@ export const IconContainer = styled.div<{ isEditable: boolean }>`
 `;
 
 export const StyledListItem = styled.div<{ selected: boolean }>`
+  height: 60px;
+  margin: 5px 0;
   display: flex;
   align-items: center;
   padding: 5px 10px;
   background: ${({ selected }) => (selected ? "#debcfa50" : "#ffffff50")};
   border-top: 2px solid
     ${({ selected }) => (selected ? "#debcfa75" : "#ffffff75")};
-  border-bottom: 2px dashed
+  border-bottom: 3px dashed
     ${({ selected }) => (selected ? "#debcfa75" : "#ffffff75")};
   color: ${({ selected }) => (selected ? "white" : "#1e1e1e")};
-  height: 55px;
   z-index: 2;
-  margin: 2px 0;
+  border-radius: 5px;
   &:hover {
     ${IconContainer} {
       opacity: 1;
@@ -57,17 +58,46 @@ export const DueDateWarning = styled.span<{
   distance: string;
 }>`
   position: absolute;
-  top: 28px;
+  top: 24px;
+  left: 8px;
+  font-size: 11px;
+  background: #ffffff80;
+  padding: 2px 0 4px;
+  border-top: 1px solid #ffd00080;
+  border-bottom: 1px solid #ffd00080;
   color: ${({ distance }) =>
     distance === "NEAR_FUTURE"
       ? "#ffe46f"
       : distance === "PAST"
       ? "#FF707A"
       : "inherit"};
-  content: "${({ dueDate }) => dueDate}";
-  font-size: 11px;
+  text-shadow: 1px 1px 1px #c7a20050;
   svg {
     margin-right: 5px;
+  }
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    top: 0;
+    bottom: 0;
+    border-top: 1px solid #ffd00080;
+    border-bottom: 1px solid #ffd00080;
+
+    background: #ffffff80;
+  }
+  &:before {
+    left: -8px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-left: 1px solid #ffd00080;
+  }
+  &:after {
+    right: -8px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-right: 1px solid #ffd00080;
   }
 `;
 

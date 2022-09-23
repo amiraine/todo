@@ -81,4 +81,7 @@ export const ContentWrapper = styled.section`
   max-height: 100%;
   max-width: 100%;
   box-shadow: 1px 1px 4px #00000050;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 `;
