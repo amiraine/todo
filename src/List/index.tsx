@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 import { Reorder, AnimatePresence } from "framer-motion";
 // local
 import { useListData } from "../Context/ListDataContext";
-import { ListItem as ListItemType } from "../types";
+import { ListItem as ListItemType, TaskState } from "../types";
 import { useKeyboardShortcut } from "../hooks";
 // components and styles
 import ListItem from "./ListItem";
@@ -27,7 +27,7 @@ const List: React.FC<ListProps> = () => {
     const payload: ListItemType = {
       id: v4(),
       value: "",
-      isDone: false,
+      status: TaskState["Not Started"],
       categories: [],
       created: new Date().toDateString(),
     };
@@ -79,7 +79,7 @@ const List: React.FC<ListProps> = () => {
     const payload = { ...items[id] };
     // reassign the id, set to 'not done', set created to current Date obj
     payload.id = v4();
-    payload.isDone = false;
+    payload.status = TaskState["Not Started"];
     payload.created = new Date().toDateString();
 
     listDispatch({ type: "ADD", payload });

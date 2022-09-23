@@ -13,7 +13,7 @@ import { Checkbox } from "../../Components";
 import { UpdateKey } from "..";
 import { Drag } from "../../assets/Drag";
 import { Trash, Copy, CornerDownRight } from "react-feather";
-import { ListItem as ListItemType } from "../../types";
+import { ListItem as ListItemType, TaskState } from "../../types";
 import moment from "moment";
 import { evaluateTime } from "../../utils";
 import { Reorder, useMotionValue } from "framer-motion";
@@ -41,12 +41,12 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     handleUpdateItem,
     setEditable,
   } = props;
-  const { id, value, isDone, due } = listItem;
+  const { id, value, status, due } = listItem;
   const y = useMotionValue(0);
   const boxShadow = useBoxShadow(y);
   const handleToggleDone = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
-    handleUpdateItem(id, "isDone", checked);
+    handleUpdateItem(id, "status", TaskState.Complete);
   };
 
   const fromNow = moment(due).fromNow();
@@ -80,7 +80,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
               autoFocus={isEditable}
             />
           ) : (
-            <Text isDone={isDone}>{value}</Text>
+            <Text isDone={status === TaskState.Complete}>{value}</Text>
           )}
           {!!due && (
             <DueDateWarning fromNow={fromNow} distance={distance}>
@@ -97,7 +97,11 @@ const ListItem: React.FC<ListItemProps> = (props) => {
             </IconButton>
           </IconContainer>
         </ListItemContent>
-        <Checkbox name={id} value={isDone} onChange={handleToggleDone} />
+        <Checkbox
+          name={id}
+          value={status === TaskState.Complete}
+          onChange={handleToggleDone}
+        />
       </StyledListItem>
     </Reorder.Item>
   );

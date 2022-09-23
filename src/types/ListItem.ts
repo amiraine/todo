@@ -1,9 +1,14 @@
 import { BaseMap } from "./BaseMap";
 
+export enum TaskState {
+  "Complete" = "Complete",
+  "In Progress" = "In Progress",
+  "Not Started" = "Not Started",
+}
 export interface ListItem {
   id: string;
   value: string;
-  isDone: boolean;
+  status: TaskState;
   created: string;
   due?: string;
   categories: string[];
