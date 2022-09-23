@@ -44,10 +44,7 @@ const List: React.FC<ListProps> = () => {
 
   const handleDeselectItem = () => {
     if (selected && selected !== "") {
-      // if the selected item is also editable, deselect there as well
-      if (selected === editable) {
-        setEditable("");
-      }
+      setEditable("");
       handleSelectItem("");
     }
   };
@@ -115,7 +112,6 @@ const List: React.FC<ListProps> = () => {
 
     // check browser focus. If user is editing the textarea,
     const focusedElement = document.activeElement;
-    console.log(focusedElement?.id);
     if (focusedElement && !focusedElement.id.includes("task-item")) return;
 
     const editingIndex = sort.indexOf(editable);
