@@ -88,13 +88,13 @@ export const DueDateWarning = styled.span<{
     background: #ffffff80;
   }
   &:before {
-    left: -8px;
+    left: -9px;
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
     border-left: 1px solid #ffd00080;
   }
   &:after {
-    right: -8px;
+    right: -9px;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
     border-right: 1px solid #ffd00080;
