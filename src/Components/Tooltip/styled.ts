@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 export const TooltipBox = styled(motion.div)`
-  background-color: #000;
-  border: 1px solid #000;
+  background-color: #fff;
+  border: 1px solid #fff;
   color: #fff;
   font-size: 12px;
   padding: 4px 8px;
@@ -14,3 +14,5 @@ export const TooltipBox = styled(motion.div)`
   max-width: 250px;
   position: relative;
 `;
+
+export const Container = styled.div``;
