@@ -4,4 +4,9 @@ export interface FilterSortData {
   filterCompleteItems: boolean;
 }
 
-export type SortKey = "creationAsc" | "creationDesc" | "dueAsc" | "dueDesc";
+export enum SortKey {
+  "creationAsc" = "creationAsc",
+  "creationDesc" = "creationDesc",
+  "dueAsc" = "dueAsc",
+  "dueDesc" = "dueDesc",
+}
