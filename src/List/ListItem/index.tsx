@@ -85,6 +85,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
           {!!due && (
             <DueDateWarning fromNow={fromNow} distance={distance}>
               <CornerDownRight size={14} />
+              {displayedDueDate}
             </DueDateWarning>
           )}
           <IconContainer isEditable={isEditable}>
