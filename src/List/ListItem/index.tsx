@@ -9,7 +9,7 @@ import {
   StyledTextInput,
   Text,
 } from "./styled";
-import { Checkbox, IndeterminateCheckbox } from "../../Components";
+import { IndeterminateCheckbox } from "../../Components";
 import { UpdateKey } from "..";
 import { Drag } from "../../assets/Drag";
 import { Trash, Copy, CornerDownRight } from "react-feather";
