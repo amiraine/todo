@@ -27,7 +27,7 @@ const Credits: React.FC = () => {
           <GitHub color="#1e1e1e" />
           <AccountName>/amiraine</AccountName>
         </Account>
-        <Account href="https://linkedin.com/ameliah-rc">
+        <Account href="https://linkedin.com/in/ameliah-rc">
           <LinkedIn color="#1e1e1e" />
           <AccountName>/ameliah-rc</AccountName>
         </Account>
