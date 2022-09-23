@@ -8,6 +8,7 @@ import { useKeyboardShortcut } from "../hooks";
 // components and styles
 import ListItem from "./ListItem";
 import { Container, SortAndFilterSettings } from "./styled";
+import { Select } from "../Components";
 
 interface ListProps {}
 export type UpdateKey = keyof ListItemType;
@@ -133,7 +134,9 @@ const List: React.FC<ListProps> = () => {
 
   return (
     <Container>
-      <SortAndFilterSettings></SortAndFilterSettings>
+      <SortAndFilterSettings>
+        <Select name="sort" options={[]} onChange={() => {}} />
+      </SortAndFilterSettings>
       <Reorder.Group
         axis="y"
         values={sort}

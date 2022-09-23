@@ -2,8 +2,6 @@ import styled, { css } from "styled-components";
 import { components } from "react-select";
 
 export const Control = styled(components.Control)`
-  background-color: ${(props) => props.theme.colors.background[0]} !important;
-  border: 1px solid ${(props) => props.theme.layout.border.primary} !important;
   border-radius: 5px !important;
   min-height: 40px !important;
 `;
@@ -35,7 +33,6 @@ export const Container = styled.div<ContainerProps>`
 `;
 
 export const Menu = styled(components.Menu)`
-  background-color: ${(props) => props.theme.colors.background[0]} !important;
   opacity: 1;
   position: relative;
   z-index: 99999999 !important;
@@ -44,13 +41,9 @@ export const Menu = styled(components.Menu)`
   margin-top: 0 !important;
 `;
 
-export const SingleValue = styled(components.SingleValue)`
-  /* color: ${(props) => props.theme.colors.text} !important; */
-`;
+export const SingleValue = styled(components.SingleValue)``;
 
-export const Placeholder = styled(components.Placeholder)`
-  color: ${(props) => props.theme.colors.text} !important;
-`;
+export const Placeholder = styled(components.Placeholder)``;
 
 export const IndicatorSeparator = styled(components.IndicatorSeparator)`
   display: none !important;
