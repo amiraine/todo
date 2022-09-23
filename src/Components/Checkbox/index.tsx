@@ -7,7 +7,7 @@ interface CheckboxProps {
   label?: string;
   name: string;
   value?: boolean;
-  onChange: (event: any) => void;
+  onChange: (value: boolean) => void;
   disabled?: boolean;
 }
 export const Checkbox: React.FC<CheckboxProps> = (props) => {
@@ -28,7 +28,7 @@ export const Checkbox: React.FC<CheckboxProps> = (props) => {
 
     setChecked(newValue);
     if (onChange) {
-      onChange(event);
+      onChange(newValue);
     }
   };
 
