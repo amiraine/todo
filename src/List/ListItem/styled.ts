@@ -59,7 +59,7 @@ export const DueDateWarning = styled.span<{
   top: 28px;
   color: ${({ distance }) =>
     distance === "NEAR_FUTURE"
-      ? "#FFD596"
+      ? "#e3b570"
       : distance === "PAST"
       ? "#FF707A"
       : "inherit"};
