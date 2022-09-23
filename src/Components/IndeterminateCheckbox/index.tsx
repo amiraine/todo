@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Check, Minus } from "react-feather";
 import { TaskState } from "../../types";
+import { Item, Menu } from "../Menu";
 
-import { Container, PseudoCheckbox } from "./styled";
+import { Container, IconWrapper, PseudoCheckbox } from "./styled";
 
 interface IndeterminateCheckboxProps {
   value: TaskState;
@@ -24,25 +25,40 @@ export const IndeterminateCheckbox: React.FC<IndeterminateCheckboxProps> = (
     }
   }, [value]);
 
-  const onClick = () => {
-    const idx = checkboxState ? STATES.indexOf(checkboxState) : 0;
-    const nextValue = STATES[idx + 1];
-    if (!nextValue) {
-      setCheckboxState(STATES[0]);
-    } else {
-      setCheckboxState(nextValue);
-    }
-    if (onChange) {
-      onChange(nextValue);
-    }
-  };
+  const items: Item[] = STATES.map((state) => {
+    const icon = (
+      <IconWrapper>
+        {state === TaskState.Complete && <Check />}
+        {state === TaskState["In Progress"] && <Minus />}
+      </IconWrapper>
+    );
+    return {
+      label: state,
+      value: state,
+      action: () => {
+        setCheckboxState(state);
+        if (onChange) {
+          onChange(state);
+        }
+      },
+      icon,
+    };
+  });
 
   return (
     <Container>
-      <PseudoCheckbox onClick={onClick} disabled={disabled}>
-        {checkboxState === TaskState.Complete && <Check size={32} />}
-        {checkboxState === TaskState["In Progress"] && <Minus />}
-      </PseudoCheckbox>
+      <Menu
+        backgroundColor="#fff"
+        items={items}
+        color="#1e1e1e"
+        placement="TOP_CENTER"
+        arrow
+      >
+        <PseudoCheckbox disabled={disabled}>
+          {checkboxState === TaskState.Complete && <Check />}
+          {checkboxState === TaskState["In Progress"] && <Minus />}
+        </PseudoCheckbox>
+      </Menu>
     </Container>
   );
 };

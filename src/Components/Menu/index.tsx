@@ -1,15 +1,15 @@
 // React
 import React, { ReactElement } from "react";
 // Styles
-import styled from "styled-components";
+import { Container, MenuContainer, MenuItemContainer } from "./styled";
 // Animations
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { AnimatePresence, Variants } from "framer-motion";
 // Laag
-import { useToggleLayer, LayerSide } from "react-laag";
+import { useToggleLayer, LayerSide, AnchorEnum, Arrow } from "react-laag";
 // Polyfill
 import ResizeObserver from "resize-observer-polyfill";
 
-type Item = {
+export type Item = {
   label: string;
   value: string | number;
   action?: (value?: string | number) => void;
@@ -21,25 +21,9 @@ type MenuProps = {
   items?: Array<Item>;
   backgroundColor?: string;
   color?: string;
+  placement?: AnchorEnum;
+  arrow?: boolean;
 };
-
-const Container = styled.span`
-  user-select: none;
-`;
-
-type MenuContainerProps = {
-  backgroundColor: string;
-  color: string;
-};
-
-const MenuContainer = styled(motion.div)<MenuContainerProps>`
-  z-index: 9999;
-  background-color: ${(props) => props.backgroundColor};
-  color: ${(props) => props.color};
-  border-radius: 5px;
-  min-width: 115px;
-  user-select: none;
-`;
 
 const ContextVariants: Variants = {
   initial: (layerSide: LayerSide) => ({
@@ -74,10 +58,12 @@ export const Menu: React.FC<MenuProps> = (props) => {
     children,
     content,
     items,
+    placement = "RIGHT_BOTTOM",
+    arrow,
   } = props;
   const [element, toggleLayerProps] = useToggleLayer(
     // determine how to render the layer
-    ({ isOpen, close, layerProps }) => (
+    ({ isOpen, close, layerProps, arrowStyle, layerSide }) => (
       <AnimatePresence>
         {isOpen && (
           <MenuContainer
@@ -100,13 +86,23 @@ export const Menu: React.FC<MenuProps> = (props) => {
               : React.cloneElement(content as React.ReactElement<any>, {
                   close,
                 })}
+            {arrow && (
+              <Arrow
+                style={arrowStyle}
+                layerSide={layerSide}
+                size={8}
+                angle={45}
+                roundness={1}
+                backgroundColor={backgroundColor}
+              />
+            )}
           </MenuContainer>
         )}
       </AnimatePresence>
     ),
     {
       placement: {
-        anchor: "RIGHT_BOTTOM",
+        anchor: placement,
         autoAdjust: true,
         triggerOffset: 8,
         scrollOffset: 16,
@@ -131,16 +127,6 @@ export const Menu: React.FC<MenuProps> = (props) => {
 interface MenuItemProps extends Item {
   close: () => void;
 }
-
-const MenuItemContainer = styled.div`
-  padding: 10px;
-  cursor: pointer;
-  display: grid;
-  gap: 8px;
-  grid-template-areas: "a a";
-  grid-auto-columns: min-content;
-  align-items: center;
-`;
 
 const MenuItem: React.FC<MenuItemProps> = (props) => {
   const { label, value, action, icon, close } = props;

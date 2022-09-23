@@ -42,3 +42,12 @@ export const PseudoCheckbox = styled.button`
     stroke-width: 3;
   }
 `;
+
+export const IconWrapper = styled.div`
+  border: 2px solid #1e1e1e;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  height: 16px;
+  width: 16px;
+`;
