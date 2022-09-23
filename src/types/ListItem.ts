@@ -11,7 +11,7 @@ export interface ListItem {
   status: TaskState;
   created: string;
   due?: string;
-  categories: string[];
+  category: string | null;
   note?: string;
 }
 export interface ListData extends BaseMap<ListItem> {}
