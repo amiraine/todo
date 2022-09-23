@@ -14,11 +14,12 @@ export const StyledListItem = styled.div<{ selected: boolean }>`
   background: ${({ selected }) => (selected ? "#debcfa50" : "#ffffff50")};
   border-top: 2px solid
     ${({ selected }) => (selected ? "#debcfa75" : "#ffffff75")};
-  border-bottom: 4px dashed
+  border-bottom: 2px dashed
     ${({ selected }) => (selected ? "#debcfa75" : "#ffffff75")};
   color: ${({ selected }) => (selected ? "white" : "#1e1e1e")};
   height: 55px;
   z-index: 2;
+  margin: 2px 0;
   &:hover {
     ${IconContainer} {
       opacity: 1;
@@ -59,7 +60,7 @@ export const DueDateWarning = styled.span<{
   top: 28px;
   color: ${({ distance }) =>
     distance === "NEAR_FUTURE"
-      ? "#e3b570"
+      ? "#ffe46f"
       : distance === "PAST"
       ? "#FF707A"
       : "inherit"};

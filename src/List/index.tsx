@@ -7,7 +7,7 @@ import { ListItem as ListItemType } from "../types";
 import { useKeyboardShortcut } from "../hooks";
 // components and styles
 import ListItem from "./ListItem";
-import { Container } from "./styled";
+import { Container, SortAndFilterSettings } from "./styled";
 
 interface ListProps {}
 export type UpdateKey = keyof ListItemType;
@@ -133,6 +133,7 @@ const List: React.FC<ListProps> = () => {
 
   return (
     <Container>
+      <SortAndFilterSettings></SortAndFilterSettings>
       <Reorder.Group
         axis="y"
         values={sort}
@@ -144,25 +145,19 @@ const List: React.FC<ListProps> = () => {
             const listItem = items[itemId];
             const isSelected = itemId === selected;
             const isEditable = itemId === editable;
+
             return (
-              <Reorder.Item
+              <ListItem
                 key={itemId}
-                value={itemId}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <ListItem
-                  isSelected={isSelected}
-                  isEditable={isEditable}
-                  handleSelectItem={handleSelectItem}
-                  handleUpdateItem={handleUpdateItem}
-                  setEditable={setEditable}
-                  handleDeleteItem={handleDeleteItem}
-                  handleCopyItem={handleCopyItem}
-                  listItem={listItem}
-                />
-              </Reorder.Item>
+                isSelected={isSelected}
+                isEditable={isEditable}
+                handleSelectItem={handleSelectItem}
+                handleUpdateItem={handleUpdateItem}
+                setEditable={setEditable}
+                handleDeleteItem={handleDeleteItem}
+                handleCopyItem={handleCopyItem}
+                listItem={listItem}
+              />
             );
           })}
         </AnimatePresence>

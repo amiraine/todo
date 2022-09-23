@@ -16,6 +16,8 @@ import { Trash, Copy, CornerDownRight } from "react-feather";
 import { ListItem as ListItemType } from "../../types";
 import moment from "moment";
 import { evaluateTime } from "../../utils";
+import { Reorder, useMotionValue } from "framer-motion";
+import { useBoxShadow } from "./util";
 
 interface ListItemProps {
   isEditable: boolean;
@@ -40,7 +42,8 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     setEditable,
   } = props;
   const { id, value, isDone, due } = listItem;
-
+  const y = useMotionValue(0);
+  const boxShadow = useBoxShadow(y);
   const handleToggleDone = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     handleUpdateItem(id, "isDone", checked);
@@ -50,7 +53,13 @@ const ListItem: React.FC<ListItemProps> = (props) => {
   const distance = evaluateTime(fromNow);
 
   return (
-    <>
+    <Reorder.Item
+      value={id}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      style={{ boxShadow, y }}
+    >
       <StyledListItem
         selected={isSelected}
         onClick={() => handleSelectItem(id)}
@@ -88,7 +97,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
         </ListItemContent>
         <Checkbox name={id} value={isDone} onChange={handleToggleDone} />
       </StyledListItem>
-    </>
+    </Reorder.Item>
   );
 };
 

@@ -9,3 +9,10 @@ export const Container = styled.div`
     list-style: none;
   }
 `;
+
+export const SortAndFilterSettings = styled.div`
+  border: 2px solid white;
+  background-color: #ffffff80;
+  padding: 16px;
+  border-radius: 2px;
+`;
