@@ -15,7 +15,7 @@ import { Drag } from "../../assets/Drag";
 import { Trash, Copy } from "react-feather";
 import { ListItem as ListItemType } from "../../types";
 import moment from "moment";
-import { evaluateTime, momentFormat } from "../../utils";
+import { evaluateTime } from "../../utils";
 
 interface ListItemProps {
   isEditable: boolean;

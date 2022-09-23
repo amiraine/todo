@@ -45,6 +45,7 @@ export const Text = styled.span<{ isDone: boolean }>`
   max-width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
+  overflow: hidden;
   height: 100%;
 `;
 
@@ -56,6 +57,7 @@ export const ListItemContent = styled.div<{
   display: flex;
   align-items: center;
   position: relative;
+  max-width: calc(100% - 70px);
 
   &:after {
     font-family: sans-serif;

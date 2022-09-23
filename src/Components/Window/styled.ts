@@ -9,6 +9,7 @@ export const Container = styled.div<{ gridArea: string }>`
   border: 2px solid white;
   color: white;
   grid-area: ${({ gridArea }) => gridArea};
+  max-width: inherit;
 `;
 
 export const TitleBar = styled.div`
@@ -44,6 +45,8 @@ export const TitleGroup = styled.div`
 
 export const Content = styled.div`
   padding: 32px;
+  max-width: 50vw;
+  box-sizing: border-box;
 `;
 
 export const Text = styled.span`

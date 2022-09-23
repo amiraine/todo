@@ -8,4 +8,8 @@ export const Container = styled.div`
   grid-template-rows: 60% 40%;
   grid-template-columns: 50vw 50vw;
   grid-template-areas: "a b" "a c";
+
+  > * {
+    max-width: 50vw;
+  }
 `;
