@@ -12,10 +12,12 @@ export const StyledListItem = styled.div<{ selected: boolean }>`
   align-items: center;
   padding: 5px 10px;
   background: ${({ selected }) => (selected ? "#debcfa50" : "#ffffff50")};
-  border-bottom: 2px dashed
+  border-top: 2px solid
+    ${({ selected }) => (selected ? "#debcfa75" : "#ffffff75")};
+  border-bottom: 4px dashed
     ${({ selected }) => (selected ? "#debcfa75" : "#ffffff75")};
   color: ${({ selected }) => (selected ? "white" : "#1e1e1e")};
-  height: 45px;
+  height: 55px;
   z-index: 2;
   &:hover {
     ${IconContainer} {
@@ -49,30 +51,33 @@ export const Text = styled.span<{ isDone: boolean }>`
   height: 100%;
 `;
 
-export const ListItemContent = styled.div<{
+export const DueDateWarning = styled.span<{
   dueDate: string;
   distance: string;
 }>`
+  position: absolute;
+  top: 28px;
+  color: ${({ distance }) =>
+    distance === "NEAR_FUTURE"
+      ? "#FFD596"
+      : distance === "PAST"
+      ? "#FF707A"
+      : "inherit"};
+  content: "${({ dueDate }) => dueDate}";
+  font-size: 11px;
+  svg {
+    margin-right: 5px;
+  }
+`;
+
+export const ListItemContent = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   position: relative;
   max-width: calc(100% - 70px);
 
-  &:after {
-    font-family: sans-serif;
-    position: absolute;
-    top: 28px;
-    color: ${({ distance }) =>
-      distance === "NEAR_FUTURE"
-        ? "#FFD596"
-        : distance === "PAST"
-        ? "#FF707A"
-        : "inherit"};
-    content: "${({ dueDate }) => dueDate}";
-    font-size: 10px;
-  }
-  span {
+  ${Text} {
     margin-bottom: 2px;
   }
 `;
