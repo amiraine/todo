@@ -51,6 +51,8 @@ const ListItem: React.FC<ListItemProps> = (props) => {
 
   const fromNow = moment(due).fromNow();
   const distance = evaluateTime(fromNow);
+  const displayedDueDate =
+    distance === "FUTURE" ? moment(due).format("dddd Do MMMM YY") : fromNow;
 
   return (
     <Reorder.Item
@@ -83,7 +85,6 @@ const ListItem: React.FC<ListItemProps> = (props) => {
           {!!due && (
             <DueDateWarning fromNow={fromNow} distance={distance}>
               <CornerDownRight size={14} />
-              {fromNow}
             </DueDateWarning>
           )}
           <IconContainer isEditable={isEditable}>
