@@ -11,6 +11,7 @@ export const InfoLine = styled.div<{ label: string }>`
   height: 34px;
   margin: 28px 0 0 0;
   position: relative;
+  font-size: 12px;
 
   &:before {
     position: absolute;
