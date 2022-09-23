@@ -1,10 +1,5 @@
 import styled from "styled-components";
 
-export const Container = styled.div<{ isExpanded?: boolean }>`
-  position: relative;
-  display: grid;
-  grid-template-rows: 50px ${({ isExpanded }) => (isExpanded ? "220px" : "0")};
-`;
 export const IconContainer = styled.div<{ isEditable: boolean }>`
   display: flex;
   align-items: center;
@@ -16,9 +11,11 @@ export const StyledListItem = styled.div<{ selected: boolean }>`
   display: flex;
   align-items: center;
   padding: 5px 10px;
-  background: ${({ selected }) => (selected ? "#debcfa50" : "#ccfdff50")};
-  height: 39px;
-  max-height: 39px;
+  background: ${({ selected }) => (selected ? "#debcfa50" : "#ffffff50")};
+  border-bottom: 2px dashed
+    ${({ selected }) => (selected ? "#debcfa75" : "#ffffff75")};
+  color: ${({ selected }) => (selected ? "white" : "#1e1e1e")};
+  height: 45px;
   z-index: 2;
   &:hover {
     ${IconContainer} {
@@ -49,10 +46,28 @@ export const Text = styled.span<{ isDone: boolean }>`
   text-decoration: ${({ isDone }) => (isDone ? "line-through" : "none")};
 `;
 
-export const ListItemContent = styled.div`
+export const ListItemContent = styled.div<{
+  dueDate: string;
+  distance: string;
+}>`
   width: 100%;
   display: flex;
   align-items: center;
+  position: relative;
+
+  &:after {
+    font-family: sans-serif;
+    position: absolute;
+    top: 28px;
+    color: ${({ distance }) =>
+      distance === "NEAR_FUTURE"
+        ? "#FFD596"
+        : distance === "PAST"
+        ? "#FF707A"
+        : "inherit"};
+    content: "${({ dueDate }) => dueDate}";
+    font-size: 10px;
+  }
   span {
     margin-bottom: 2px;
   }

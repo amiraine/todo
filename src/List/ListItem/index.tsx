@@ -12,10 +12,10 @@ import {
 import { Checkbox } from "../../Components";
 import { UpdateKey } from "..";
 import { Drag } from "../../assets/Drag";
-import { Trash, Copy, Flag } from "react-feather";
+import { Trash, Copy } from "react-feather";
 import { ListItem as ListItemType } from "../../types";
 import moment from "moment";
-import { momentFormat } from "../../utils";
+import { evaluateTime, momentFormat } from "../../utils";
 
 interface ListItemProps {
   isEditable: boolean;
@@ -45,9 +45,10 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     const { checked } = e.target;
     handleUpdateItem(id, "isDone", checked);
   };
-  const dueDate = moment(due).format(momentFormat);
-  const now = moment(new Date().toString()).format(momentFormat);
-  console.log(dueDate === now);
+
+  const fromNow = moment(due).fromNow();
+  const distance = evaluateTime(fromNow);
+
   return (
     <>
       <StyledListItem
@@ -58,7 +59,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
         <DragHandleContainer>
           <Drag />
         </DragHandleContainer>
-        <ListItemContent>
+        <ListItemContent dueDate={due ? fromNow : ""} distance={distance}>
           {isEditable ? (
             <StyledTextInput
               id={`task-item-${id}`}
@@ -69,11 +70,6 @@ const ListItem: React.FC<ListItemProps> = (props) => {
             />
           ) : (
             <Text isDone={isDone}>{value}</Text>
-          )}
-          {dueDate === now && (
-            <IconButton>
-              <Flag color="#E7749A" />
-            </IconButton>
           )}
           <IconContainer isEditable={isEditable}>
             <IconButton onClick={() => handleCopyItem(id)}>
