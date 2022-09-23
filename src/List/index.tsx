@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { Reorder, AnimatePresence } from "framer-motion";
 // local
@@ -7,8 +7,15 @@ import { ListItem as ListItemType, TaskState } from "../types";
 import { useKeyboardShortcut } from "../hooks";
 // components and styles
 import ListItem from "./ListItem";
-import { Container, SortAndFilterSettings } from "./styled";
-import { Select } from "../Components";
+import {
+  Container,
+  FilterWrapper,
+  GroupWrapper,
+  SortAndFilterSettings,
+} from "./styled";
+import { Checkbox, Select } from "../Components";
+import { useFilterSortContext } from "../Context";
+import { categorizeListItems } from "./utils";
 
 interface ListProps {}
 export type UpdateKey = keyof ListItemType;
@@ -16,19 +23,30 @@ export type UpdateKey = keyof ListItemType;
 const List: React.FC<ListProps> = () => {
   // local state
   const [editable, setEditable] = useState<string>("");
-  // hooks
+  const [localListData, setLocalListData] = useState<{
+    [category: string]: ListItemType[];
+  }>({});
 
   // get context and destructure
   const [listData, listDispatch] = useListData();
   const { items, sort, selected } = listData;
-
+  const [filterSort, filterSortDispatch] = useFilterSortContext();
+  const { categorize } = filterSort;
+  // Hooks
+  useEffect(() => {
+    const listItems: ListItemType[] = sort.map((id) => items[id]);
+    const sortedListData: { [category: string]: ListItemType[] } = categorize
+      ? categorizeListItems(listItems)
+      : { None: [...listItems] };
+    setLocalListData(sortedListData);
+  }, [categorize, sort, items]);
   // Basic CRUD helpers
   const handleAddNewItem = () => {
     const payload: ListItemType = {
       id: v4(),
       value: "",
       status: TaskState["Not Started"],
-      categories: [],
+      category: null,
       created: new Date().toDateString(),
     };
 
@@ -48,6 +66,13 @@ const List: React.FC<ListProps> = () => {
       setEditable("");
       handleSelectItem("");
     }
+  };
+
+  const handleToggleCategorize = (payload: boolean) => {
+    filterSortDispatch({
+      type: "UPDATE_CATEGORIZE",
+      payload,
+    });
   };
 
   // Other basic helpers
@@ -74,7 +99,6 @@ const List: React.FC<ListProps> = () => {
   };
 
   // additional helpers
-
   const handleCopyItem = (id: string) => {
     const payload = { ...items[id] };
     // reassign the id, set to 'not done', set created to current Date obj
@@ -132,39 +156,57 @@ const List: React.FC<ListProps> = () => {
   useKeyboardShortcut({ key: "Backspace" }, handleDeleteItemBackspace, false);
   useKeyboardShortcut({ key: "Tab" }, handleLineChange);
 
+  console.log(localListData);
+  const localKeys = Object.keys(localListData);
   return (
     <Container>
       <SortAndFilterSettings>
-        <Select name="sort" options={[]} onChange={() => {}} />
+        <FilterWrapper>
+          <Checkbox
+            name="sortByCategory"
+            onChange={handleToggleCategorize}
+            label="Group by category"
+          />
+        </FilterWrapper>
+        <FilterWrapper>
+          <Select name="sort" options={[]} onChange={() => {}} />
+        </FilterWrapper>
       </SortAndFilterSettings>
-      <Reorder.Group
-        axis="y"
-        values={sort}
-        onReorder={handleReorder}
-        layoutScroll
-      >
-        <AnimatePresence>
-          {sort.map((itemId) => {
-            const listItem = items[itemId];
-            const isSelected = itemId === selected;
-            const isEditable = itemId === editable;
-
-            return (
-              <ListItem
-                key={itemId}
-                isSelected={isSelected}
-                isEditable={isEditable}
-                handleSelectItem={handleSelectItem}
-                handleUpdateItem={handleUpdateItem}
-                setEditable={setEditable}
-                handleDeleteItem={handleDeleteItem}
-                handleCopyItem={handleCopyItem}
-                listItem={listItem}
-              />
-            );
-          })}
-        </AnimatePresence>
-      </Reorder.Group>
+      <GroupWrapper>
+        {localKeys.map((key) => {
+          const showTitle = localKeys.length > 1;
+          return (
+            <>
+              {showTitle && <span>{key}</span>}
+              <Reorder.Group
+                axis="y"
+                values={sort}
+                onReorder={handleReorder}
+                layoutScroll
+              >
+                {localListData[key].map((listItem) => {
+                  const { id } = listItem;
+                  const isSelected = id === selected;
+                  const isEditable = id === editable;
+                  return (
+                    <ListItem
+                      key={id}
+                      isSelected={isSelected}
+                      isEditable={isEditable}
+                      handleSelectItem={handleSelectItem}
+                      handleUpdateItem={handleUpdateItem}
+                      setEditable={setEditable}
+                      handleDeleteItem={handleDeleteItem}
+                      handleCopyItem={handleCopyItem}
+                      listItem={listItem}
+                    />
+                  );
+                })}
+              </Reorder.Group>
+            </>
+          );
+        })}
+      </GroupWrapper>
     </Container>
   );
 };
