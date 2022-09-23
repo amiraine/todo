@@ -21,6 +21,7 @@ export const StyledListItem = styled.div<{ selected: boolean }>`
   color: ${({ selected }) => (selected ? "white" : "#1e1e1e")};
   z-index: 2;
   border-radius: 5px;
+  font-size: 14px;
   &:hover {
     ${IconContainer} {
       opacity: 1;
@@ -34,7 +35,7 @@ export const StyledTextInput = styled.input`
   border: 0;
   background: transparent;
   font-family: inherit;
-  font-size: 16px;
+  font-size: 14px;
   padding: 0;
   border-bottom: 2px solid black;
   height: 100%;
