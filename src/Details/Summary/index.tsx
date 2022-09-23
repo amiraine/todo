@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Save, Slash } from "react-feather";
 import { ListItem } from "../../types";
@@ -16,13 +17,13 @@ interface SummaryProps {
 }
 const Summary: React.FC<SummaryProps> = (props) => {
   const {
-    listItem: { value: title, id },
+    listItem: { value: title, id, created, due },
     handleSaveTitle,
   } = props;
 
   const [localTitle, setLocalTitle] = useState<string>("");
   const [editingTitle, setEditingTitle] = useState<boolean>(false);
-
+  const [editingDate, setEditingDate] = useState<boolean>(false);
   // helpers
 
   const updateLocalTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +31,7 @@ const Summary: React.FC<SummaryProps> = (props) => {
     setLocalTitle(value);
   };
 
-  const handleToggleTitleEdit = (event: React.MouseEvent) => {
+  const handleToggleTitleEdit = () => {
     if (!editingTitle) {
       const input = document.getElementById(id);
       if (!input) return;
@@ -38,7 +39,12 @@ const Summary: React.FC<SummaryProps> = (props) => {
       input.focus();
     } else {
       setEditingTitle(false);
+      setLocalTitle(title);
     }
+  };
+
+  const handleToggleDateEdit = () => {
+    setEditingDate(!editingDate);
   };
 
   const handleCancelEdit = () => {
@@ -50,10 +56,17 @@ const Summary: React.FC<SummaryProps> = (props) => {
     setLocalTitle(title);
   }, [title]);
 
+  const creationDate = `${moment(created).format("LL")} - ${moment(
+    created
+  ).fromNow()}`;
+  const dueDate = due
+    ? `${moment(created).format("LL")} - ${moment(due).fromNow()}`
+    : "No due date set. Double-click to add one.";
   // todo add tooltip component
+
   return (
     <Container>
-      <InfoLine onDoubleClick={handleToggleTitleEdit}>
+      <InfoLine onDoubleClick={handleToggleTitleEdit} label="Task">
         {editingTitle ? (
           <>
             <Input id={id} value={localTitle} onChange={updateLocalTitle} />
@@ -69,6 +82,10 @@ const Summary: React.FC<SummaryProps> = (props) => {
         ) : (
           <Title>{title}</Title>
         )}
+      </InfoLine>
+      <InfoLine label="Created on">{creationDate}</InfoLine>
+      <InfoLine onDoubleClick={handleToggleDateEdit} label="Due on">
+        {dueDate}
       </InfoLine>
     </Container>
   );

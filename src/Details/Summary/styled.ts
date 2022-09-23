@@ -1,9 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  padding: 24px;
-`;
-export const InfoLine = styled.div`
+export const InfoLine = styled.div<{ label: string }>`
   width: 100%;
   box-sizing: border-box;
   border-bottom: 2px solid #1e1e1e;
@@ -12,6 +9,26 @@ export const InfoLine = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 34px;
+  margin: 28px 0 0 0;
+  position: relative;
+
+  &:before {
+    position: absolute;
+    content: "${({ label }) => label}";
+    top: -10px;
+    font-size: 10px;
+    left: 5px;
+  }
+`;
+
+export const Container = styled.div`
+  padding: 24px;
+
+  ${InfoLine} {
+    &:first-of-type {
+      margin-top: 10px;
+    }
+  }
 `;
 
 export const Input = styled.input`
