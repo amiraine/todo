@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // Context
 import { useListData } from "../Context/ListDataContext";
 // Components
@@ -45,6 +45,12 @@ const Details: React.FC = () => {
 
     listDispatch({ type: "UPDATE", payload });
   };
+
+  useEffect(() => {
+    if (selected === "") {
+      setTab(TabType.Summary);
+    }
+  }, [selected]);
   // conditional render
   const RenderedContent = () => {
     if (!listItem) {
@@ -65,7 +71,12 @@ const Details: React.FC = () => {
   };
 
   return (
-    <TabWindow tabList={tabs} setTab={setTab} selectedTab={tab}>
+    <TabWindow
+      tabList={tabs}
+      setTab={setTab}
+      selectedTab={tab}
+      isDisabled={listItem === undefined}
+    >
       <RenderedContent />
     </TabWindow>
   );

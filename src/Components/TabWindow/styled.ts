@@ -36,6 +36,7 @@ export const Tab = styled.button<{
   selected: boolean;
   index: number;
   tabCount: number;
+  isDisabled?: boolean;
 }>`
   position: relative;
   height: 100%;
@@ -47,7 +48,6 @@ export const Tab = styled.button<{
   justify-content: center;
   align-items: center;
   min-width: 150px;
-  /* width: calc() */
   width: max-content;
   height: 32px;
   border: 0;
@@ -60,6 +60,7 @@ export const Tab = styled.button<{
     transition: 0.075s all ease-in;
     color: ${({ selected }) => (selected ? "white" : "#1e1e1e")};
   }
+  cursor: ${({ isDisabled }) => (isDisabled ? "not-allowed" : "pointer")};
 
   &:before {
     content: "";
@@ -68,7 +69,8 @@ export const Tab = styled.button<{
     position: absolute;
     left: 1px;
     transition: 0.075s background-color ease-in;
-    background: ${({ selected }) => (selected ? "#DEBCFA" : "#FFB8DD")};
+    background: ${({ selected, isDisabled }) =>
+      selected ? "#DEBCFA" : isDisabled ? "#afafaf" : "#FFB8DD"};
     z-index: ${({ selected }) => (selected ? 9 : 1)};
     clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
   }

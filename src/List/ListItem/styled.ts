@@ -42,8 +42,10 @@ export const StyledTextInput = styled.input`
 
 export const Text = styled.span<{ isDone: boolean }>`
   width: 100%;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   height: 100%;
-  text-decoration: ${({ isDone }) => (isDone ? "line-through" : "none")};
 `;
 
 export const ListItemContent = styled.div<{

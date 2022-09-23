@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  padding: 0 24px 0 0;
+  max-width: 50vw;
   ul,
   li {
     list-style: none;

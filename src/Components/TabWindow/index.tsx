@@ -10,10 +10,17 @@ interface TabWindowProps {
   tabList: TabProps[];
   selectedTab: string;
   setTab: (tab: string) => void;
+  isDisabled?: boolean;
 }
 
 export const TabWindow: React.FC<TabWindowProps> = (props) => {
-  const { children, tabList = [], selectedTab, setTab } = props;
+  const {
+    children,
+    tabList = [],
+    selectedTab,
+    setTab,
+    isDisabled = false,
+  } = props;
   return (
     <Container>
       <TabWrapper>
@@ -24,8 +31,12 @@ export const TabWindow: React.FC<TabWindowProps> = (props) => {
               key={name}
               index={i}
               selected={name === selectedTab}
-              onClick={() => setTab(name)}
+              onClick={() => {
+                if (isDisabled) return;
+                setTab(name);
+              }}
               tabCount={tabList.length}
+              isDisabled={isDisabled}
             >
               <TabText>
                 {icon}
