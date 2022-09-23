@@ -5,10 +5,9 @@ export const Container = styled.div`
 `;
 export const InfoLine = styled.div`
   width: 100%;
-  padding: 4px 8px;
   box-sizing: border-box;
-  border-bottom: 2px solid #1e1e1e75;
-  color: #1e1e1e75;
+  border-bottom: 2px solid #1e1e1e;
+  color: #1e1e1e;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,6 +23,14 @@ export const Input = styled.input`
   height: 100%;
   width: 100%;
   background: transparent;
+  padding: 4px 8px 0;
+  margin: 0 8px 4px 0;
+
+  background: #debcfa50;
+`;
+
+export const Title = styled.span`
+  padding: 4px 8px;
 `;
 
 export const ButtonContainer = styled.div`

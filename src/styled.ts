@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: #ccfdff;
+  background: linear-gradient(0deg, #ccfdff, #b1eaff);
   display: grid;
   grid-template-rows: 60% 40%;
   grid-template-columns: 50vw 50vw;

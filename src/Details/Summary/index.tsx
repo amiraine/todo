@@ -7,6 +7,7 @@ import {
   IconButton,
   InfoLine,
   Input,
+  Title,
 } from "./styled";
 
 interface SummaryProps {
@@ -66,7 +67,7 @@ const Summary: React.FC<SummaryProps> = (props) => {
             </ButtonContainer>
           </>
         ) : (
-          title
+          <Title>{title}</Title>
         )}
       </InfoLine>
     </Container>

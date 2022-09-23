@@ -77,7 +77,7 @@ export const Tab = styled.button<{
 `;
 
 export const ContentWrapper = styled.section`
-  background: #ebfaff;
+  background: linear-gradient(0deg, #c9e9ff50, #ffffff50);
   max-height: 100%;
   max-width: 100%;
   box-shadow: 1px 1px 4px #00000050;
