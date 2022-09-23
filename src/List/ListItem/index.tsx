@@ -9,7 +9,7 @@ import {
   StyledTextInput,
   Text,
 } from "./styled";
-import { Checkbox } from "../../Components";
+import { Checkbox, IndeterminateCheckbox } from "../../Components";
 import { UpdateKey } from "..";
 import { Drag } from "../../assets/Drag";
 import { Trash, Copy, CornerDownRight } from "react-feather";
@@ -44,9 +44,9 @@ const ListItem: React.FC<ListItemProps> = (props) => {
   const { id, value, status, due } = listItem;
   const y = useMotionValue(0);
   const boxShadow = useBoxShadow(y);
-  const handleToggleDone = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = e.target;
-    handleUpdateItem(id, "status", TaskState.Complete);
+
+  const handleUpdateTaskState = (state: TaskState) => {
+    handleUpdateItem(id, "status", TaskState);
   };
 
   const fromNow = moment(due).fromNow();
@@ -97,10 +97,14 @@ const ListItem: React.FC<ListItemProps> = (props) => {
             </IconButton>
           </IconContainer>
         </ListItemContent>
-        <Checkbox
+        {/* <Checkbox
           name={id}
           value={status === TaskState.Complete}
           onChange={handleToggleDone}
+        /> */}
+        <IndeterminateCheckbox
+          value={status}
+          onChange={handleUpdateTaskState}
         />
       </StyledListItem>
     </Reorder.Item>

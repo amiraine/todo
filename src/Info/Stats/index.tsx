@@ -10,7 +10,7 @@ const Stats: React.FC = () => {
   const { items, sort } = listData;
   const listDataArray = sort.map((id) => items[id]);
   const graphData = calculateDoneData(listDataArray);
-  console.log(graphData);
+
   return (
     <Container>
       <ResponsiveContainer height={100} width={100}>
