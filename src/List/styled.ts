@@ -15,4 +15,12 @@ export const SortAndFilterSettings = styled.div`
   background-color: #ffffff80;
   padding: 16px;
   border-radius: 2px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`;
+
+export const FilterWrapper = styled.div<{ gridArea?: string }>``;
+
+export const GroupWrapper = styled.div`
+  padding: 32px 0;
 `;
