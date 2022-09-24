@@ -16,9 +16,10 @@ import {
 import { Checkbox, Select } from "../Components";
 import { useFilterSortContext } from "../Context";
 import { categorizeListItems } from "./utils";
-import { ConditionalReorderGroup } from "./ConditionalReorderWrappers";
+import { Reorder } from "framer-motion";
 
 interface ListProps {}
+
 export type UpdateKey = keyof ListItemType;
 
 const List: React.FC<ListProps> = () => {
@@ -33,6 +34,7 @@ const List: React.FC<ListProps> = () => {
   const { items, sort, selected } = listData;
   const [filterSort, filterSortDispatch] = useFilterSortContext();
   const { categorize } = filterSort;
+
   // Hooks
   useEffect(() => {
     const listItems: ListItemType[] = sort.map((id) => items[id]);
@@ -41,6 +43,7 @@ const List: React.FC<ListProps> = () => {
       : { None: [...listItems] };
     setLocalListData(sortedListData);
   }, [categorize, sort, items]);
+
   // Basic CRUD helpers
   const handleAddNewItem = () => {
     const payload: ListItemType = {
@@ -174,28 +177,23 @@ const List: React.FC<ListProps> = () => {
         </FilterWrapper>
       </SortAndFilterSettings>
       <ListWrapper>
-        {localKeys.map((key) => {
-          const showTitle = localKeys.length > 1;
+        {categorize ? (
+          localKeys.map((key) => {
+            const showTitle = localKeys.length > 1;
 
-          return (
-            <GroupWrapper key={key}>
-              {showTitle && <span>{key}</span>}
-              <ConditionalReorderGroup
-                useReorder={!categorize}
-                values={sort}
-                onReorder={handleReorder}
-                layoutScroll
-              >
+            return (
+              <GroupWrapper key={key}>
+                {showTitle && <span>{key}</span>}
+
                 {localListData[key].map((listItem) => {
                   const { id } = listItem;
                   const isSelected = id === selected;
                   const isEditable = id === editable;
-                  const isDraggable = !categorize;
 
                   return (
                     <ListItem
                       key={id}
-                      isDraggable={isDraggable}
+                      isDraggable={false}
                       isSelected={isSelected}
                       isEditable={isEditable}
                       handleSelectItem={handleSelectItem}
@@ -207,10 +205,108 @@ const List: React.FC<ListProps> = () => {
                     />
                   );
                 })}
-              </ConditionalReorderGroup>
-            </GroupWrapper>
-          );
-        })}
+              </GroupWrapper>
+            );
+          })
+        ) : (
+          <Reorder.Group
+            axis="y"
+            values={sort}
+            onReorder={handleReorder}
+            layoutScroll
+          >
+            {sort.map((id) => {
+              const listItem = items[id];
+              const isSelected = id === selected;
+              const isEditable = id === editable;
+
+              return (
+                <Reorder.Item value={id} key={id}>
+                  <ListItem
+                    key={id}
+                    isSelected={isSelected}
+                    isEditable={isEditable}
+                    handleSelectItem={handleSelectItem}
+                    handleUpdateItem={handleUpdateItem}
+                    setEditable={setEditable}
+                    handleDeleteItem={handleDeleteItem}
+                    handleCopyItem={handleCopyItem}
+                    listItem={listItem}
+                    isDraggable
+                  />
+                </Reorder.Item>
+              );
+            })}
+          </Reorder.Group>
+        )}
+        {/* {categorize ? (
+          localKeys.map((key) => {
+            const showTitle = localKeys.length > 1;
+
+            return (
+              <GroupWrapper key={key}>
+                {showTitle && <span>{key}</span>}
+                <ConditionalReorderGroup
+                  useReorder={!categorize}
+                  values={sort}
+                  onReorder={handleReorder}
+                  layoutScroll
+                >
+                  {localListData[key].map((listItem) => {
+                    const { id } = listItem;
+                    const isSelected = id === selected;
+                    const isEditable = id === editable;
+                    const isDraggable = !categorize;
+
+                    return (
+                      <ListItem
+                        key={id}
+                        isDraggable={isDraggable}
+                        isSelected={isSelected}
+                        isEditable={isEditable}
+                        handleSelectItem={handleSelectItem}
+                        handleUpdateItem={handleUpdateItem}
+                        setEditable={setEditable}
+                        handleDeleteItem={handleDeleteItem}
+                        handleCopyItem={handleCopyItem}
+                        listItem={listItem}
+                      />
+                    );
+                  })}
+                </ConditionalReorderGroup>
+              </GroupWrapper>
+            );
+          })
+        ) : (
+          <ConditionalReorderGroup
+            useReorder={!categorize}
+            values={sort}
+            onReorder={handleReorder}
+            layoutScroll
+          >
+            {sort.map((id) => {
+              const listItem = items[id];
+              const isSelected = id === selected;
+              const isEditable = id === editable;
+              const isDraggable = !categorize;
+              console.log("rendering the right thing");
+              return (
+                <ListItem
+                  key={id}
+                  isDraggable={isDraggable}
+                  isSelected={isSelected}
+                  isEditable={isEditable}
+                  handleSelectItem={handleSelectItem}
+                  handleUpdateItem={handleUpdateItem}
+                  setEditable={setEditable}
+                  handleDeleteItem={handleDeleteItem}
+                  handleCopyItem={handleCopyItem}
+                  listItem={listItem}
+                />
+              );
+            })}
+          </ConditionalReorderGroup>
+        )} */}
       </ListWrapper>
     </Container>
   );
