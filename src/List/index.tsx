@@ -178,7 +178,7 @@ const List: React.FC<ListProps> = () => {
           const showTitle = localKeys.length > 1;
 
           return (
-            <GroupWrapper>
+            <GroupWrapper key={key}>
               {showTitle && <span>{key}</span>}
               <ConditionalReorderGroup
                 useReorder={!categorize}
