@@ -28,3 +28,7 @@ export const ListWrapper = styled.div`
 export const GroupWrapper = styled.div`
   margin-bottom: 16px;
 `;
+
+export const CategoryTitle = styled.span`
+  user-select: none;
+`;

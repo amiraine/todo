@@ -7,6 +7,7 @@ import { useKeyboardShortcut } from "../hooks";
 // components and styles
 import ListItem from "./ListItem";
 import {
+  CategoryTitle,
   Container,
   FilterWrapper,
   GroupWrapper,
@@ -183,7 +184,7 @@ const List: React.FC<ListProps> = () => {
 
             return (
               <GroupWrapper key={key}>
-                {showTitle && <span>{key}</span>}
+                {showTitle && <CategoryTitle>{key}</CategoryTitle>}
 
                 {localListData[key].map((listItem) => {
                   const { id } = listItem;
