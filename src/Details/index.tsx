@@ -9,7 +9,6 @@ import Notes from "./Notes";
 
 export enum TabType {
   "Summary" = "Summary",
-  "Stats" = "Stats",
   "Notes" = "Notes",
 }
 

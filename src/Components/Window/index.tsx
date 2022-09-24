@@ -1,6 +1,13 @@
 import React from "react";
 import { Minus, X } from "react-feather";
-import { Container, Content, TitleBar, TitleGroup, Text } from "./styled";
+import {
+  Container,
+  Content,
+  TitleBar,
+  TitleGroup,
+  Text,
+  StyledButton,
+} from "./styled";
 
 interface WindowProps {
   title: string;
@@ -21,12 +28,12 @@ export const Window: React.FC<WindowProps> = ({
         <Text>{title}</Text>
       </TitleGroup>
       <TitleGroup>
-        <button>
+        <StyledButton>
           <Minus />
-        </button>
-        <button>
+        </StyledButton>
+        <StyledButton>
           <X />
-        </button>
+        </StyledButton>
       </TitleGroup>
     </TitleBar>
     <Content>{children}</Content>

@@ -13,7 +13,6 @@ export const TabWrapper = styled.div`
   max-width: 100%;
   width: 100%;
   position: relative;
-  overflow-x: auto;
 `;
 
 export const TabText = styled.span`
@@ -21,11 +20,12 @@ export const TabText = styled.span`
   justify-content: center;
   text-align: center;
   width: 100%;
-  z-index: 10;
+  z-index: inherit;
   align-items: center;
   user-select: none;
   white-space: nowrap;
   overflow: hidden;
+  margin: 0 8px;
 
   svg {
     margin-right: 8px;
@@ -39,7 +39,6 @@ export const Tab = styled.button<{
   isDisabled?: boolean;
 }>`
   position: relative;
-  height: 100%;
   font-family: inherit;
   left: ${({ index }) => {
     return `${index * -45}px`;
@@ -47,14 +46,14 @@ export const Tab = styled.button<{
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 150px;
-  width: max-content;
   height: 32px;
   border: 0;
-  padding: 0 30px;
+  padding: 0 16px;
   background: #70dbff;
-  z-index: ${({ selected, index, tabCount }) =>
-    selected ? 10 : index * -3 + tabCount * 3};
+  z-index: ${({ selected, index, tabCount }) => {
+    const number = index + 1;
+    return selected ? tabCount * 3 : number * -3 + tabCount * 3;
+  }};
   clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
 
   ${TabText} {
@@ -72,8 +71,10 @@ export const Tab = styled.button<{
     transition: 0.075s background-color ease-in;
     background: ${({ selected, isDisabled }) =>
       selected ? "#DEBCFA" : isDisabled ? "#afafaf" : "#FFB8DD"};
-    z-index: ${({ selected, index, tabCount }) =>
-      selected ? 10 : index * -3 + tabCount * 3};
+    z-index: ${({ selected, index, tabCount }) => {
+      const number = index + 1;
+      return selected ? tabCount * 3 : number * -3 + tabCount * 3;
+    }};
     clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
   }
 `;

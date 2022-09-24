@@ -28,23 +28,27 @@ export const TitleGroup = styled.div`
   display: flex;
   align-items: center;
   align-content: center;
-  button {
-    border: none;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    background-color: white;
-    margin-right: 8px;
-    > svg {
-      stroke: #debcfa;
-      margin: 0;
-    }
-  }
+
   > svg {
     margin-right: 8px;
   }
 `;
 
+export const StyledButton = styled.button`
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  margin-right: 8px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 2px 0 rgba(255, 255, 255, 0.4),
+    inset 0 0 2px 2px rgba(0, 0, 0, 0.05), 1px 1px 3px 0 rgba(0, 0, 0, 0.25);
+  > svg {
+    stroke: #debcfa;
+    margin: 0;
+  }
+`;
 export const Content = styled.div`
   padding: 32px;
   max-width: 50vw;

@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { Globe, Settings, Star } from "react-feather";
+import { Globe, Settings, Star, Zap } from "react-feather";
 import { TabProps, TabWindow } from "../Components";
 import Credits from "./Credits";
 
 enum TabType {
+  "Quickstart" = "Quickstart",
   "Credits" = "Credits",
   "Stats" = "Stats",
   "Settings" = "Settings",
 }
 
 const Info: React.FC = () => {
-  const [tab, setTab] = useState<string>(TabType.Stats);
+  const [tab, setTab] = useState<string>(TabType.Quickstart);
   const tabs: TabProps[] = [
+    { name: TabType.Quickstart, icon: <Zap size={18} /> },
     { name: TabType.Stats, icon: <Globe size={18} /> },
     {
       name: TabType.Credits,
