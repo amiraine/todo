@@ -21,6 +21,10 @@ export const SortAndFilterSettings = styled.div`
 
 export const FilterWrapper = styled.div<{ gridArea?: string }>``;
 
-export const GroupWrapper = styled.div`
+export const ListWrapper = styled.div`
   padding: 32px 0;
+`;
+
+export const GroupWrapper = styled.div`
+  margin-bottom: 16px;
 `;

@@ -16,11 +16,13 @@ import { Trash, Copy, CornerDownRight } from "react-feather";
 import { ListItem as ListItemType, TaskState } from "../../types";
 import moment from "moment";
 import { evaluateTime } from "../../utils";
-import { Reorder, useMotionValue } from "framer-motion";
+import { useMotionValue } from "framer-motion";
 import { useBoxShadow } from "./util";
+import { ConditionalReorderItem } from "../ConditionalReorderWrappers";
 
 interface ListItemProps {
   isEditable: boolean;
+  isDraggable: boolean;
   isSelected: boolean;
   listItem: ListItemType;
   handleSelectItem: (id: string) => void;
@@ -40,6 +42,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     handleSelectItem,
     handleUpdateItem,
     setEditable,
+    isDraggable,
   } = props;
   const { id, value, status, due } = listItem;
   const y = useMotionValue(0);
@@ -55,11 +58,9 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     distance === "FUTURE" ? moment(due).format("dddd Do MMMM YY") : fromNow;
 
   return (
-    <Reorder.Item
-      value={id}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+    <ConditionalReorderItem
+      useReorder={isDraggable}
+      value={value}
       style={{ boxShadow, y }}
     >
       <StyledListItem
@@ -67,9 +68,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
         onClick={() => handleSelectItem(id)}
         onDoubleClick={() => setEditable(id)}
       >
-        <DragHandleContainer>
-          <Drag />
-        </DragHandleContainer>
+        <DragHandleContainer>{isDraggable && <Drag />}</DragHandleContainer>
         <ListItemContent dueDate={due ? fromNow : ""} distance={distance}>
           {isEditable ? (
             <StyledTextInput
@@ -97,17 +96,12 @@ const ListItem: React.FC<ListItemProps> = (props) => {
             </IconButton>
           </IconContainer>
         </ListItemContent>
-        {/* <Checkbox
-          name={id}
-          value={status === TaskState.Complete}
-          onChange={handleToggleDone}
-        /> */}
         <IndeterminateCheckbox
           value={status}
           onChange={handleUpdateTaskState}
         />
       </StyledListItem>
-    </Reorder.Item>
+    </ConditionalReorderItem>
   );
 };
 

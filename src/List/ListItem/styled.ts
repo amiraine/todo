@@ -52,6 +52,7 @@ export const Text = styled.span<{ isDone: boolean }>`
   white-space: nowrap;
   overflow: hidden;
   height: 100%;
+  user-select: none;
 `;
 
 export const DueDateWarning = styled.span<{

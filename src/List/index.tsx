@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
-import { Reorder, AnimatePresence } from "framer-motion";
 // local
 import { useListData } from "../Context/ListDataContext";
 import { ListItem as ListItemType, TaskState } from "../types";
@@ -11,11 +10,13 @@ import {
   Container,
   FilterWrapper,
   GroupWrapper,
+  ListWrapper,
   SortAndFilterSettings,
 } from "./styled";
 import { Checkbox, Select } from "../Components";
 import { useFilterSortContext } from "../Context";
 import { categorizeListItems } from "./utils";
+import { ConditionalReorderGroup } from "./ConditionalReorderWrappers";
 
 interface ListProps {}
 export type UpdateKey = keyof ListItemType;
@@ -156,8 +157,8 @@ const List: React.FC<ListProps> = () => {
   useKeyboardShortcut({ key: "Backspace" }, handleDeleteItemBackspace, false);
   useKeyboardShortcut({ key: "Tab" }, handleLineChange);
 
-  console.log(localListData);
   const localKeys = Object.keys(localListData);
+
   return (
     <Container>
       <SortAndFilterSettings>
@@ -172,14 +173,15 @@ const List: React.FC<ListProps> = () => {
           <Select name="sort" options={[]} onChange={() => {}} />
         </FilterWrapper>
       </SortAndFilterSettings>
-      <GroupWrapper>
+      <ListWrapper>
         {localKeys.map((key) => {
           const showTitle = localKeys.length > 1;
+
           return (
-            <>
+            <GroupWrapper>
               {showTitle && <span>{key}</span>}
-              <Reorder.Group
-                axis="y"
+              <ConditionalReorderGroup
+                useReorder={!categorize}
                 values={sort}
                 onReorder={handleReorder}
                 layoutScroll
@@ -188,9 +190,12 @@ const List: React.FC<ListProps> = () => {
                   const { id } = listItem;
                   const isSelected = id === selected;
                   const isEditable = id === editable;
+                  const isDraggable = !categorize;
+
                   return (
                     <ListItem
                       key={id}
+                      isDraggable={isDraggable}
                       isSelected={isSelected}
                       isEditable={isEditable}
                       handleSelectItem={handleSelectItem}
@@ -202,11 +207,11 @@ const List: React.FC<ListProps> = () => {
                     />
                   );
                 })}
-              </Reorder.Group>
-            </>
+              </ConditionalReorderGroup>
+            </GroupWrapper>
           );
         })}
-      </GroupWrapper>
+      </ListWrapper>
     </Container>
   );
 };
