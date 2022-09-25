@@ -9,7 +9,7 @@ import {
   filterSortContext,
 } from "./Context";
 
-import { initialCategories, initialData, initialFilters } from "./initialdata";
+import { initialCategories, todayData, initialFilters } from "./initialdata";
 // local components
 import { Window } from "./Components";
 import Details from "./Details";
@@ -20,7 +20,7 @@ import { Container } from "./styled";
 
 const App = () => {
   const [todoList, updateTodoList] = useReducer(listReducer, {
-    ...initialData,
+    ...todayData,
   });
   const [categories, updateCategories] = useReducer(categoriesReducer, [
     ...initialCategories,

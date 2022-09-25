@@ -14,4 +14,7 @@ export interface ListItem {
   category: string | null;
   note?: string;
 }
+
 export interface ListData extends BaseMap<ListItem> {}
+
+export interface DayData extends BaseMap<ListData> {}
