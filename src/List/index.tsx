@@ -6,18 +6,12 @@ import { ListItem as ListItemType, TaskState } from "../types";
 import { useKeyboardShortcut } from "../hooks";
 // components and styles
 import ListItem from "./ListItem";
-import {
-  CategoryTitle,
-  Container,
-  FilterWrapper,
-  GroupWrapper,
-  ListWrapper,
-  SortAndFilterSettings,
-} from "./styled";
-import { Checkbox, Select } from "../Components";
+import { Container, ListWrapper } from "./styled";
 import { useFilterSortContext } from "../Context";
 import { categorizeListItems } from "./utils";
-import { Reorder } from "framer-motion";
+import FilterSortSettings from "./FilterSortSettings";
+import DraggableList from "./DraggableList";
+import StaticList from "./StaticList";
 
 interface ListProps {}
 
@@ -26,7 +20,7 @@ export type UpdateKey = keyof ListItemType;
 const List: React.FC<ListProps> = () => {
   // local state
   const [editable, setEditable] = useState<string>("");
-  const [localListData, setLocalListData] = useState<{
+  const [categoryListMap, setCategoryListMap] = useState<{
     [category: string]: ListItemType[];
   }>({});
 
@@ -42,7 +36,7 @@ const List: React.FC<ListProps> = () => {
     const sortedListData: { [category: string]: ListItemType[] } = categorize
       ? categorizeListItems(listItems)
       : { None: [...listItems] };
-    setLocalListData(sortedListData);
+    setCategoryListMap(sortedListData);
   }, [categorize, sort, items]);
 
   // Basic CRUD helpers
@@ -161,84 +155,35 @@ const List: React.FC<ListProps> = () => {
   useKeyboardShortcut({ key: "Backspace" }, handleDeleteItemBackspace, false);
   useKeyboardShortcut({ key: "Tab" }, handleLineChange);
 
-  const localKeys = Object.keys(localListData);
+  const localKeys = Object.keys(categoryListMap);
 
   return (
     <Container>
-      <SortAndFilterSettings>
-        <FilterWrapper>
-          <Checkbox
-            name="sortByCategory"
-            onChange={handleToggleCategorize}
-            label="Group by category"
-          />
-        </FilterWrapper>
-        <FilterWrapper>
-          <Select name="sort" options={[]} onChange={() => {}} />
-        </FilterWrapper>
-      </SortAndFilterSettings>
+      <FilterSortSettings handleToggleCategorize={handleToggleCategorize} />
       <ListWrapper>
         {categorize ? (
-          localKeys.map((key) => {
-            const showTitle = localKeys.length > 1;
-
-            return (
-              <GroupWrapper key={key}>
-                {showTitle && <CategoryTitle>{key}</CategoryTitle>}
-
-                {localListData[key].map((listItem) => {
-                  const { id } = listItem;
-                  const isSelected = id === selected;
-                  const isEditable = id === editable;
-
-                  return (
-                    <ListItem
-                      key={id}
-                      isDraggable={false}
-                      isSelected={isSelected}
-                      isEditable={isEditable}
-                      handleSelectItem={handleSelectItem}
-                      handleUpdateItem={handleUpdateItem}
-                      setEditable={setEditable}
-                      handleDeleteItem={handleDeleteItem}
-                      handleCopyItem={handleCopyItem}
-                      listItem={listItem}
-                    />
-                  );
-                })}
-              </GroupWrapper>
-            );
-          })
+          <StaticList
+            localKeys={localKeys}
+            categoryListMap={categoryListMap}
+            editable={editable}
+            selected={selected}
+            handleCopyItem={handleCopyItem}
+            handleSelectItem={handleSelectItem}
+            handleDeleteItem={handleDeleteItem}
+            handleUpdateItem={handleUpdateItem}
+            setEditable={setEditable}
+          />
         ) : (
-          <Reorder.Group
-            axis="y"
-            values={sort}
-            onReorder={handleReorder}
-            layoutScroll
-          >
-            {sort.map((id) => {
-              const listItem = items[id];
-              const isSelected = id === selected;
-              const isEditable = id === editable;
-
-              return (
-                <Reorder.Item value={id} key={id}>
-                  <ListItem
-                    key={id}
-                    isSelected={isSelected}
-                    isEditable={isEditable}
-                    handleSelectItem={handleSelectItem}
-                    handleUpdateItem={handleUpdateItem}
-                    setEditable={setEditable}
-                    handleDeleteItem={handleDeleteItem}
-                    handleCopyItem={handleCopyItem}
-                    listItem={listItem}
-                    isDraggable
-                  />
-                </Reorder.Item>
-              );
-            })}
-          </Reorder.Group>
+          <DraggableList
+            listData={listData}
+            editable={editable}
+            handleCopyItem={handleCopyItem}
+            handleReorder={handleReorder}
+            handleSelectItem={handleSelectItem}
+            handleDeleteItem={handleDeleteItem}
+            handleUpdateItem={handleUpdateItem}
+            setEditable={setEditable}
+          />
         )}
       </ListWrapper>
     </Container>
