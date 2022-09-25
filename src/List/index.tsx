@@ -5,7 +5,6 @@ import { useListData } from "../Context/ListDataContext";
 import { ListItem as ListItemType, TaskState } from "../types";
 import { useKeyboardShortcut } from "../hooks";
 // components and styles
-import ListItem from "./ListItem";
 import { Container, ListWrapper } from "./styled";
 import { useFilterSortContext } from "../Context";
 import { categorizeListItems } from "./utils";
