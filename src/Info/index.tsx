@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Globe, Settings, Star, Zap } from "react-feather";
 import { TabProps, TabWindow } from "../Components";
 import Credits from "./Credits";
+import Quickstart from "./Quickstart";
 
 enum TabType {
   "Quickstart" = "Quickstart",
@@ -24,6 +25,8 @@ const Info: React.FC = () => {
 
   const RenderedContent = () => {
     switch (tab) {
+      case TabType.Quickstart:
+        return <Quickstart />;
       case TabType.Credits:
         return <Credits />;
       default:

@@ -13,6 +13,7 @@ interface WindowProps {
   title: string;
   gridArea?: string;
   icon?: React.ReactNode;
+  disableOverflow?: boolean;
 }
 
 export const Window: React.FC<WindowProps> = ({
@@ -20,8 +21,9 @@ export const Window: React.FC<WindowProps> = ({
   children,
   gridArea,
   icon,
+  disableOverflow = false,
 }) => (
-  <Container gridArea={gridArea}>
+  <Container gridArea={gridArea} disableOverflow={disableOverflow}>
     <TitleBar>
       <TitleGroup>
         {icon && icon}

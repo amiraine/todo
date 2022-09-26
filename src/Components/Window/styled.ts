@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const Container = styled.div<{ gridArea: string }>`
+export const Container = styled.div<{
+  gridArea: string;
+  disableOverflow: boolean;
+}>`
   box-sizing: border-box;
   height: 100%;
   width: 100%;
@@ -11,7 +14,7 @@ export const Container = styled.div<{ gridArea: string }>`
   grid-area: ${({ gridArea }) => gridArea};
   max-width: inherit;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: ${({ disableOverflow }) => (disableOverflow ? "hidden" : "auto")};
 `;
 
 export const TitleBar = styled.div`
