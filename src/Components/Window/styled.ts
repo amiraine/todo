@@ -13,6 +13,7 @@ export const Container = styled.div<{
   color: white;
   grid-area: ${({ gridArea }) => gridArea};
   max-width: inherit;
+  max-height: 100%;
   overflow-x: hidden;
   overflow-y: ${({ disableOverflow }) => (disableOverflow ? "hidden" : "auto")};
 `;
@@ -56,7 +57,8 @@ export const Content = styled.div`
   padding: 32px;
   max-width: 50vw;
   box-sizing: border-box;
-  max-height: inherit;
+  position: relative;
+  max-height: 100%;
 `;
 
 export const Text = styled.span`

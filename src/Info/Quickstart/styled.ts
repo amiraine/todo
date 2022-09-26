@@ -9,6 +9,7 @@ export const Container = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   padding: 0 16px;
+  max-height: 100%;
 `;
 
 export const Header = styled.h1`
