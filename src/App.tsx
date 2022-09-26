@@ -1,15 +1,15 @@
 import React, { useReducer } from "react";
 import { Info as InfoIcon, CheckSquare, BookOpen } from "react-feather";
 import {
-  listReducer,
-  listContext,
+  dayReducer,
+  DayContext,
   categoriesReducer,
   categoriesContext,
   filterSortReducer,
   filterSortContext,
 } from "./Context";
 
-import { initialCategories, todayData, initialFilters } from "./initialdata";
+import { initialCategories, initialFilters, initialData } from "./initialdata";
 // local components
 import { Window } from "./Components";
 import Details from "./Details";
@@ -19,8 +19,8 @@ import Info from "./Info";
 import { Container } from "./styled";
 
 const App = () => {
-  const [todoList, updateTodoList] = useReducer(listReducer, {
-    ...todayData,
+  const [data, updateData] = useReducer(dayReducer, {
+    ...initialData,
   });
   const [categories, updateCategories] = useReducer(categoriesReducer, [
     ...initialCategories,
@@ -28,9 +28,9 @@ const App = () => {
   const [filterSort, updateFilterSort] = useReducer(filterSortReducer, {
     ...initialFilters,
   });
-
+  console.log(data);
   return (
-    <listContext.Provider value={{ todoList, updateTodoList }}>
+    <DayContext.Provider value={{ data, updateData }}>
       <categoriesContext.Provider value={{ categories, updateCategories }}>
         <filterSortContext.Provider value={{ filterSort, updateFilterSort }}>
           <Container>
@@ -50,7 +50,7 @@ const App = () => {
           </Container>
         </filterSortContext.Provider>
       </categoriesContext.Provider>
-    </listContext.Provider>
+    </DayContext.Provider>
   );
 };
 

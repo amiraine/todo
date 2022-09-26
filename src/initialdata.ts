@@ -98,15 +98,15 @@ export const tomorrowData: ListData = {
     "b2e4fa15-81cf-4f67-b85d-86c90dcb9f54": {
       id: "b2e4fa15-81cf-4f67-b85d-86c90dcb9f54",
       value: "Meal prep",
-      created: moment().format(),
+      created: moment().format("L"),
       status: TaskState["In Progress"],
       category: initialCategories[0],
-      due: moment().add(1, "day").format(),
+      due: moment().add(1, "day").format("L"),
     },
     "17746fec-3a20-4395-a6f5-457569d17b2a": {
       id: "17746fec-3a20-4395-a6f5-457569d17b2a",
       value: "Take out trash",
-      created: moment().format(),
+      created: moment().format("L"),
       status: TaskState["Not Started"],
       category: initialCategories[0],
     },
@@ -116,7 +116,7 @@ export const tomorrowData: ListData = {
       created: moment().format(),
       status: TaskState["In Progress"],
       category: initialCategories[1],
-      due: moment().add(2, "day").format(),
+      due: moment().add(2, "day").format("L"),
     },
   },
   sort: [
@@ -127,11 +127,11 @@ export const tomorrowData: ListData = {
   selected: "b2e4fa15-81cf-4f67-b85d-86c90dcb9f54",
 };
 
-const yesterday = moment().subtract(1, "day").format();
-const today = moment().format();
-const tomorrow = moment().add(1, "day").format();
+const yesterday = moment().subtract(1, "day").format("L");
+const today = moment().format("L");
+const tomorrow = moment().add(1, "day").format("L");
 
-export const dayData: DayData = {
+export const initialData: DayData = {
   items: {
     [yesterday]: yesterdayData,
     [today]: todayData,

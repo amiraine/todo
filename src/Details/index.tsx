@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // Context
-import { useListData } from "../Context/ListDataContext";
+import { useDayData } from "../Context";
 // Components
 import { TabProps, TabWindow } from "../Components";
 import Summary from "./Summary";
@@ -21,29 +21,29 @@ const Details: React.FC = () => {
     { name: TabType.Notes, icon: <Edit3 size={18} /> },
   ];
   const [tab, setTab] = useState<string>(TabType.Summary);
-  const [listData, listDispatch] = useListData();
-  const { items, selected } = listData;
+  const [day, dayDispatch] = useDayData();
+  const { items, selected } = day;
   const listItem = items[selected];
 
-  // helpers
-  const handleSaveTitle = (value: string) => {
-    const payload = {
-      ...items[selected],
-      value,
-    };
+  // // helpers
+  // const handleSaveTitle = (value: string) => {
+  //   const payload = {
+  //     ...items[selected],
+  //     value,
+  //   };
 
-    listDispatch({ type: "UPDATE", payload });
-  };
+  //   listDispatch({ type: "UPDATE", payload });
+  // };
 
-  // todo fix
-  const handleUpdateNote = (note: string) => {
-    const payload = {
-      ...items[selected],
-      note,
-    };
+  // // todo fix
+  // const handleUpdateNote = (note: string) => {
+  //   const payload = {
+  //     ...items[selected],
+  //     note,
+  //   };
 
-    listDispatch({ type: "UPDATE", payload });
-  };
+  //   listDispatch({ type: "UPDATE", payload });
+  // };
 
   useEffect(() => {
     if (selected === "") {
@@ -57,13 +57,11 @@ const Details: React.FC = () => {
     }
     switch (tab) {
       case TabType.Summary:
-        return (
-          <Summary listItem={listItem} handleSaveTitle={handleSaveTitle} />
-        );
+        return null;
+        // <Summary listItem={listItem} handleSaveTitle={handleSaveTitle} />
       case TabType.Notes:
-        return (
-          <Notes listItem={listItem} handleUpdateNote={handleUpdateNote} />
-        );
+        return null;
+        // <Notes listItem={listItem} handleUpdateNote={handleUpdateNote} />
       default:
         return null;
     }

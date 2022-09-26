@@ -5,8 +5,6 @@ import ListItem from "../ListItem";
 import { GroupWrapper, CategoryTitle } from "./styled";
 
 interface StaticListProps {
-  localKeys: string[];
-  categoryListMap: { [category: string]: ListItemType[] };
   selected: string;
   editable: string;
   handleSelectItem: (id: string) => void;
@@ -18,8 +16,6 @@ interface StaticListProps {
 
 const StaticList: React.FC<StaticListProps> = (props) => {
   const {
-    localKeys,
-    categoryListMap,
     handleCopyItem,
     handleSelectItem,
     handleUpdateItem,
@@ -28,9 +24,12 @@ const StaticList: React.FC<StaticListProps> = (props) => {
     selected,
     editable,
   } = props;
-  return (
-    <>
-      {localKeys.map((key) => {
+  return <></>;
+};
+
+export default StaticList;
+// {
+/* {localKeys.map((key) => {
         const showTitle = localKeys.length > 1;
 
         return (
@@ -45,7 +44,7 @@ const StaticList: React.FC<StaticListProps> = (props) => {
               </CategoryTitle>
             )}
 
-            {categoryListMap[key].map((listItem) => {
+            {/* {categoryListMap[key].map((listItem) => {
               const { id } = listItem;
               const isSelected = id === selected;
               const isEditable = id === editable;
@@ -64,12 +63,13 @@ const StaticList: React.FC<StaticListProps> = (props) => {
                   listItem={listItem}
                 />
               );
-            })}
-          </GroupWrapper>
-        );
-      })}
-    </>
-  );
-};
-
-export default StaticList;
+            })} */
+// }
+// {
+/* </GroupWrapper> */
+// }
+// {
+/* ); */
+// }
+// })} */}
+//

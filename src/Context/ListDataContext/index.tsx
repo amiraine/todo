@@ -1,98 +1,70 @@
 import React, { createContext, useContext } from "react";
-import { ListData } from "../../types";
-// types
+import { DayData } from "../../types";
 
-type ActionType = "ADD" | "REMOVE" | "UPDATE" | "SETACTIVE" | "REORDER";
+type ActionType = "ADD_DAY" | "UPDATE_DAY" | "SET_ACTIVE" | "REORDER_TASKS";
 
-export const ListActions: { [key in string]: ActionType } = {
-  ADD: "ADD",
-  UPDATE: "UPDATE",
-  REMOVE: "REMOVE",
-  SETACTIVE: "SETACTIVE",
-  REORDER: "REORDER",
-};
-
-type ListAction = {
+type Action = {
   type: ActionType;
-  payload?: any;
+  payload: any;
 };
 
-type UseListSignature = () => [ListData, React.Dispatch<ListAction>];
+type UseDataSignature = () => [DayData, React.Dispatch<Action>];
 
-export const listContext = createContext<
+export const DayContext = createContext<
   | {
-      todoList: ListData;
-      updateTodoList: React.Dispatch<ListAction>;
+      data: DayData;
+      updateData: React.Dispatch<Action>;
     }
   | undefined
 >(undefined);
 
-export const listReducer = (state: ListData, action: ListAction) => {
+export const dayReducer = (state: DayData, action: Action): DayData => {
+  const { payload } = action;
+
   switch (action.type) {
-    case "REORDER": {
-      // payload is string[]
+    case "ADD_DAY":
       return {
         ...state,
-        sort: [...action.payload],
-      };
-    }
-    case "ADD":
-      // payload is ListItem
-      return {
-        ...state,
-        selected: action.payload.id,
+        selected: payload.id,
         items: {
           ...state.items,
-          [action.payload.id]: {
-            ...action.payload,
+          [payload.id]: {
+            ...payload,
           },
         },
-        sort: [...state.sort, action.payload.id],
+        sort: [...state.sort, payload.id],
       };
-    case "UPDATE": {
-      // payload is ListItem
+    case "UPDATE_DAY":
+      // payload isa ListData
       const copy = { ...state.items };
-      copy[action.payload.id] = action.payload;
+      copy[payload.id] = payload;
+      return { ...state, items: { ...copy } };
+    case "SET_ACTIVE":
+      // payload is id string
       return {
         ...state,
-        items: { ...copy },
+        selected: payload,
       };
-    }
-    case "REMOVE":
-      // payload is listItem id
-      const copy = { ...state.items };
-      delete copy[action.payload];
-      const activeId = Object.keys(copy)[Object.keys(copy).length - 1];
-      const sortCopy = [...state.sort];
-      const itemIndex = sortCopy.findIndex((id) => id === action.payload);
-      sortCopy.splice(itemIndex, 1);
-      return {
-        ...state,
-        items: { ...copy },
-        selected: activeId,
-        sort: sortCopy,
-      };
-    case "SETACTIVE":
-      // payload is listItem id
-      return { ...state, selected: action.payload };
+    case "REORDER_TASKS":
+    // payload is
     default:
       return { ...state };
   }
 };
 
-export const useListData: UseListSignature = () => {
-  const context = useContext(listContext);
+export const useDayData: UseDataSignature = () => {
+  const context = useContext(DayContext);
 
   if (context) {
     const {
-      todoList = {
+      data = {
         selected: "",
         items: {},
         sort: [],
       },
-      updateTodoList,
+      updateData,
     } = context;
-    return [todoList, updateTodoList];
+    return [data, updateData];
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   return [

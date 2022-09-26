@@ -1,11 +1,10 @@
 import { Reorder } from "framer-motion";
 import React from "react";
 import { UpdateKey } from "..";
-import { ListData } from "../../types";
+// import { ListData } from "../../types";
 import ListItem from "../ListItem";
 
 interface DraggableListProps {
-  listData: ListData;
   editable: string;
   handleReorder: (arr: string[]) => void;
   handleSelectItem: (id: string) => void;
@@ -17,7 +16,7 @@ interface DraggableListProps {
 
 const DraggableList: React.FC<DraggableListProps> = (props) => {
   const {
-    listData: { items, selected, sort },
+    // listData: { items, selected, sort },
     handleReorder,
     editable,
     handleSelectItem,
@@ -27,13 +26,8 @@ const DraggableList: React.FC<DraggableListProps> = (props) => {
     handleCopyItem,
   } = props;
   return (
-    <Reorder.Group
-      axis="y"
-      values={sort}
-      onReorder={handleReorder}
-      layoutScroll
-    >
-      {sort.map((id) => {
+    <Reorder.Group axis="y" values={[]} onReorder={handleReorder} layoutScroll>
+      {/* {sort.map((id) => {
         const listItem = items[id];
         const isSelected = id === selected;
         const isEditable = id === editable;
@@ -54,7 +48,7 @@ const DraggableList: React.FC<DraggableListProps> = (props) => {
             />
           </Reorder.Item>
         );
-      })}
+      })} */}
     </Reorder.Group>
   );
 };

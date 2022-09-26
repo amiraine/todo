@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 // local
-import { useListData } from "../Context/ListDataContext";
-import { ListItem as ListItemType, TaskState } from "../types";
+import { useDayData } from "../Context";
+import { ListData, ListItem as ListItemType, TaskState } from "../types";
 import { useKeyboardShortcut } from "../hooks";
 // components and styles
 import { Container, ListWrapper } from "./styled";
 import { useFilterSortContext } from "../Context";
-import { categorizeListItems } from "./utils";
+// import { categorizeListItems } from "./utils";
 import FilterSortSettings from "./FilterSortSettings";
 import DraggableList from "./DraggableList";
 import StaticList from "./StaticList";
+import DayNavigator from "./DayNavigator";
 
 interface ListProps {}
 
@@ -19,24 +20,12 @@ export type UpdateKey = keyof ListItemType;
 const List: React.FC<ListProps> = () => {
   // local state
   const [editable, setEditable] = useState<string>("");
-  const [categoryListMap, setCategoryListMap] = useState<{
-    [category: string]: ListItemType[];
-  }>({});
 
   // get context and destructure
-  const [listData, listDispatch] = useListData();
-  const { items, sort, selected } = listData;
+  const [day, dayDispatch] = useDayData();
+  const { items, sort, selected } = day;
   const [filterSort, filterSortDispatch] = useFilterSortContext();
   const { categorize } = filterSort;
-
-  // Hooks
-  useEffect(() => {
-    const listItems: ListItemType[] = sort.map((id) => items[id]);
-    const sortedListData: { [category: string]: ListItemType[] } = categorize
-      ? categorizeListItems(listItems)
-      : { None: [...listItems] };
-    setCategoryListMap(sortedListData);
-  }, [categorize, sort, items]);
 
   // Basic CRUD helpers
   const handleAddNewItem = () => {
@@ -48,15 +37,23 @@ const List: React.FC<ListProps> = () => {
       created: new Date().toDateString(),
     };
 
-    listDispatch({ type: "ADD", payload });
+    // listDispatch({ type: "ADD", payload });
     setEditable(payload.id);
     return;
   };
 
+  const handleAddNewDay = () => {
+    // create empty basemap
+    const payload: ListData = {
+      items: {},
+      sort: [],
+      selected: "",
+    };
+    // const unfinishedTasksFromToday =
+  };
   const handleUpdateItem = (id: string, key: UpdateKey, newValue: any) => {
-    const payload: ListItemType = { ...items[id], [key]: newValue };
-
-    listDispatch({ type: "UPDATE", payload });
+    // const payload: ListItemType = { ...items[id], [key]: newValue };
+    // listDispatch({ type: "UPDATE", payload });
   };
 
   const handleDeselectItem = () => {
@@ -79,7 +76,7 @@ const List: React.FC<ListProps> = () => {
   };
 
   const handleSelectItem = (id: string) => {
-    listDispatch({ type: "SETACTIVE", payload: id });
+    // listDispatch({ type: "SETACTIVE", payload: id });
   };
 
   const handleDeleteItem = (id: string) => {
@@ -89,22 +86,29 @@ const List: React.FC<ListProps> = () => {
     if (editable === id) {
       resetLocalState();
     }
-    listDispatch({ type: "REMOVE", payload: id });
+    // listDispatch({ type: "REMOVE", payload: id });
   };
 
   const handleReorder = (payload: string[]) => {
-    listDispatch({ type: "REORDER", payload });
+    // listDispatch({ type: "REORDER", payload });
+  };
+
+  const handleGoForward = () => {
+    const currentIdx = sort.indexOf(selected);
+    if (currentIdx + 1 === sort.length) {
+      handleAddNewItem();
+    }
   };
 
   // additional helpers
   const handleCopyItem = (id: string) => {
     const payload = { ...items[id] };
     // reassign the id, set to 'not done', set created to current Date obj
-    payload.id = v4();
-    payload.status = TaskState["Not Started"];
-    payload.created = new Date().toDateString();
+    // payload.id = v4();
+    // payload.status = TaskState["Not Started"];
+    // payload.created = new Date().toDateString();
 
-    listDispatch({ type: "ADD", payload });
+    // listDispatch({ type: "ADD", payload });
   };
 
   const handleDeleteItemBackspace = () => {
@@ -120,12 +124,12 @@ const List: React.FC<ListProps> = () => {
       if (input.selectionStart === 0) {
         // todo: fix backspace bug
       }
-      if (item.value === "") {
-        handleDeleteItem(editable);
-        const prevItemId = sort[itemIndex - 1];
-        handleSelectItem(prevItemId);
-        setEditable(prevItemId);
-      }
+      // if (item.value === "") {
+      //   handleDeleteItem(editable);
+      //   const prevItemId = sort[itemIndex - 1];
+      //   handleSelectItem(prevItemId);
+      //   setEditable(prevItemId);
+      // }
     }
   };
   // applies to tab and spacebar
@@ -154,16 +158,13 @@ const List: React.FC<ListProps> = () => {
   useKeyboardShortcut({ key: "Backspace" }, handleDeleteItemBackspace, false);
   useKeyboardShortcut({ key: "Tab" }, handleLineChange);
 
-  const localKeys = Object.keys(categoryListMap);
-
   return (
     <Container>
+      <DayNavigator selectedDay={selected} />
       <FilterSortSettings handleToggleCategorize={handleToggleCategorize} />
       <ListWrapper>
         {categorize ? (
           <StaticList
-            localKeys={localKeys}
-            categoryListMap={categoryListMap}
             editable={editable}
             selected={selected}
             handleCopyItem={handleCopyItem}
@@ -174,7 +175,6 @@ const List: React.FC<ListProps> = () => {
           />
         ) : (
           <DraggableList
-            listData={listData}
             editable={editable}
             handleCopyItem={handleCopyItem}
             handleReorder={handleReorder}
