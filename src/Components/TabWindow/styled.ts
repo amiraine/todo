@@ -13,6 +13,25 @@ export const TabWrapper = styled.div`
   max-width: 100%;
   width: 100%;
   position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  ::-webkit-scrollbar-track {
+    border: 0;
+    background-color: #e1e1e1;
+    overflow: -moz-scrollbars-vertical;
+    overflow-y: auto;
+  }
+
+  ::-webkit-scrollbar {
+    height: 4px;
+    background-color: #afafaf;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #afafaf;
+    border-radius: 40px;
+  }
 `;
 
 export const TabText = styled.span`
@@ -40,21 +59,22 @@ export const Tab = styled.button<{
 }>`
   position: relative;
   font-family: inherit;
-  left: ${({ index }) => {
-    return `${index * -45}px`;
-  }};
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 32px;
+  height: 35px;
   border: 0;
-  padding: 0 16px;
-  background: #70dbff;
+  padding: 0 0px;
+  background: ${({ selected, isDisabled }) =>
+    selected ? "#DEBCFA" : isDisabled ? "#AFAFAF" : "#FFB8DD"};
+
+  border-top: 3px solid
+    ${({ selected, disabled }) =>
+      selected ? "#c9aae4" : disabled ? "#3d3d3d" : "#eea8ca"};
   z-index: ${({ selected, index, tabCount }) => {
     const number = index + 1;
     return selected ? tabCount * 3 : number * -3 + tabCount * 3;
   }};
-  clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
 
   ${TabText} {
     transition: 0.075s all ease-in;
@@ -62,28 +82,54 @@ export const Tab = styled.button<{
   }
   cursor: ${({ isDisabled }) => (isDisabled ? "not-allowed" : "pointer")};
 
-  &:before {
+  > div {
     content: "";
-    width: calc(100% - 3px);
-    height: calc(100% - 2px);
+    height: calc(100% + 3px);
+    width: 30px;
     position: absolute;
-    left: 1px;
-    transition: 0.075s background-color ease-in;
-    background: ${({ selected, isDisabled }) =>
-      selected ? "#DEBCFA" : isDisabled ? "#afafaf" : "#FFB8DD"};
     z-index: ${({ selected, index, tabCount }) => {
       const number = index + 1;
       return selected ? tabCount * 3 : number * -3 + tabCount * 3;
     }};
-    clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+    background: inherit;
+    border-bottom: 3px solid;
+    border-color: inherit;
+
+    &:first-of-type {
+      clip-path: polygon(0% 0, 0% 100%, 100% 100%);
+      right: -29px;
+    }
+    &:last-of-type {
+      clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+      left: -29px;
+    }
   }
 `;
 
 export const ContentWrapper = styled.section`
   background: linear-gradient(0deg, #c9e9ff50, #ffffff50);
-  max-height: calc(100% - 32px);
   box-shadow: 1px 1px 4px #00000050;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  ::-webkit-scrollbar-track {
+    border: 0;
+    background-color: #e1e1e1;
+    overflow: -moz-scrollbars-vertical;
+    overflow-y: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    background-color: #afafaf;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #afafaf;
+    border-radius: 40px;
+  }
 `;

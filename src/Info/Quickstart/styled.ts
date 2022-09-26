@@ -6,9 +6,7 @@ export const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   color: #1e1e1e;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: 0 16px;
+  padding: 8px 16px 24px;
   max-height: 100%;
 `;
 

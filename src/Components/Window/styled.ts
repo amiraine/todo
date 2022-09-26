@@ -7,13 +7,11 @@ export const Container = styled.div<{
   box-sizing: border-box;
   height: 100%;
   width: 100%;
-  display: grid;
-  grid-template-rows: 32px 1fr;
+  display: flex;
+  flex-direction: column;
   border: 2px solid white;
   color: white;
   grid-area: ${({ gridArea }) => gridArea};
-  max-width: inherit;
-  max-height: 100%;
   overflow-x: hidden;
   overflow-y: ${({ disableOverflow }) => (disableOverflow ? "hidden" : "auto")};
 `;
@@ -25,6 +23,7 @@ export const TitleBar = styled.div`
   border-bottom: 2px solid white;
   background: linear-gradient(90deg, #93f1fd, #ffb8dd);
   padding: 0 0 0 8px;
+  height: 32px;
 `;
 
 export const TitleGroup = styled.div`
@@ -58,7 +57,8 @@ export const Content = styled.div`
   max-width: 50vw;
   box-sizing: border-box;
   position: relative;
-  max-height: 100%;
+  height: inherit;
+  grid-area: body;
 `;
 
 export const Text = styled.span`
