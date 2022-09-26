@@ -29,6 +29,7 @@ const List: React.FC<ListProps> = () => {
 
   // Basic CRUD helpers
   const handleAddNewItem = () => {
+    // make this worka t the list level, not the day level
     const payload: ListItemType = {
       id: v4(),
       value: "",
@@ -42,6 +43,7 @@ const List: React.FC<ListProps> = () => {
     return;
   };
 
+  // todo make all basic helpers for the day thing
   const handleAddNewDay = () => {
     // create empty basemap
     const payload: ListData = {
