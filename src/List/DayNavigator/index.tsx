@@ -5,12 +5,13 @@ import { Container, StyledButton, ButtonWrapper, Title } from "./styled";
 
 interface DayNavigatorProps {
   selectedDay: string;
+  disableNext: boolean;
   handleGoForward: () => void;
   handleGoBack: () => void;
 }
 
 const DayNavigator: React.FC<DayNavigatorProps> = (props) => {
-  const { selectedDay } = props;
+  const { selectedDay, handleGoForward, disableNext } = props;
   const displayDate = moment(selectedDay).format("LL");
   return (
     <Container>
@@ -21,7 +22,7 @@ const DayNavigator: React.FC<DayNavigatorProps> = (props) => {
       </ButtonWrapper>
       <Title>{displayDate}</Title>
       <ButtonWrapper>
-        <StyledButton>
+        <StyledButton onClick={handleGoForward} disabled={disableNext}>
           <ArrowRight />
         </StyledButton>
       </ButtonWrapper>

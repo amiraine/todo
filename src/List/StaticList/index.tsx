@@ -1,11 +1,12 @@
 import React from "react";
 import { UpdateKey } from "..";
-import { ListItem as ListItemType } from "../../types";
+import { ListData, ListItem as ListItemType } from "../../types";
 import ListItem from "../ListItem";
+import { categorizeListItems } from "../utils";
 import { GroupWrapper, CategoryTitle } from "./styled";
 
 interface StaticListProps {
-  selected: string;
+  listData: ListData;
   editable: string;
   handleSelectItem: (id: string) => void;
   handleUpdateItem: (id: string, key: UpdateKey, val: any) => void;
@@ -16,15 +17,77 @@ interface StaticListProps {
 
 const StaticList: React.FC<StaticListProps> = (props) => {
   const {
+    listData: { sort, items, selected: listSelected },
     handleCopyItem,
     handleSelectItem,
     handleUpdateItem,
     setEditable,
     handleDeleteItem,
-    selected,
     editable,
   } = props;
-  return <></>;
+  console.log(sort, items);
+  const listItems = sort.map((id) => items[id]);
+  const listItemsByCategory = categorizeListItems(listItems);
+
+  // todo make this a collapsible drawer
+  return (
+    <>
+      {Object.keys(listItemsByCategory).map((key, i) => {
+        return (
+          <GroupWrapper key={key}>
+            {Object.keys(listItemsByCategory).length > 1 && (
+              <CategoryTitle
+                initial={{ opacity: 0, height: "0px" }}
+                animate={{ opacity: 1, height: "12px" }}
+                exit={{ opacity: 0, height: "0px" }}
+              >
+                {key}
+              </CategoryTitle>
+            )}
+            {listItemsByCategory[key].map((task) => {
+              const { id } = task;
+              const isSelected = id === listSelected;
+              const isEditable = id === editable;
+              return (
+                <ListItem
+                  key={id}
+                  isDraggable={false}
+                  isSelected={isSelected}
+                  isEditable={isEditable}
+                  handleSelectItem={handleSelectItem}
+                  handleUpdateItem={handleUpdateItem}
+                  setEditable={setEditable}
+                  handleDeleteItem={handleDeleteItem}
+                  handleCopyItem={handleCopyItem}
+                  listItem={task}
+                />
+              );
+            })}
+            {/* {categoryListMap[key].map((listItem) => {
+              const { id } = listItem;
+              const isSelected = id === selected;
+              const isEditable = id === editable;
+
+              return (
+                <ListItem
+                  key={id}
+                  isDraggable={false}
+                  isSelected={isSelected}
+                  isEditable={isEditable}
+                  handleSelectItem={handleSelectItem}
+                  handleUpdateItem={handleUpdateItem}
+                  setEditable={setEditable}
+                  handleDeleteItem={handleDeleteItem}
+                  handleCopyItem={handleCopyItem}
+                  listItem={listItem}
+                />
+              );
+            })} */}
+          </GroupWrapper>
+        );
+      })}
+    </>
+  );
 };
 
 export default StaticList;
@@ -34,16 +97,6 @@ export default StaticList;
 
         return (
           <GroupWrapper key={key}>
-            {showTitle && (
-              <CategoryTitle
-                initial={{ opacity: 0, height: "0px" }}
-                animate={{ opacity: 1, height: "12px" }}
-                exit={{ opacity: 0, height: "0px" }}
-              >
-                {key}
-              </CategoryTitle>
-            )}
-
             {/* {categoryListMap[key].map((listItem) => {
               const { id } = listItem;
               const isSelected = id === selected;
