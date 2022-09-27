@@ -21,27 +21,36 @@ export const TabWindow: React.FC<TabWindowProps> = (props) => {
     setTab,
     isDisabled = false,
   } = props;
+
   return (
     <Container>
       <TabWrapper>
         {tabList.map((tab, i) => {
           const { icon, name } = tab;
+          const isSelected = name === selectedTab;
+
           return (
             <Tab
               key={name}
-              index={i}
-              selected={name === selectedTab}
+              selected={isSelected}
               onClick={() => {
                 if (isDisabled) return;
                 setTab(name);
               }}
-              tabCount={tabList.length}
               isDisabled={isDisabled}
+              id={tab.name}
             >
-              <TabText>
-                {icon}
-                {name}
-              </TabText>
+              {icon}
+              {isSelected && (
+                <TabText
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  exit={{ width: "100%" }}
+                  transition={{ type: "linear" }}
+                >
+                  {name}
+                </TabText>
+              )}
             </Tab>
           );
         })}

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -13,78 +14,104 @@ export const TabWrapper = styled.div`
   max-width: 100%;
   width: 100%;
   position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  ::-webkit-scrollbar-track {
+    border: 0;
+    background-color: #e1e1e1;
+    overflow: -moz-scrollbars-vertical;
+    overflow-y: auto;
+  }
+
+  ::-webkit-scrollbar {
+    height: 4px;
+    background-color: #afafaf;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #afafaf;
+    border-radius: 40px;
+  }
 `;
 
-export const TabText = styled.span`
+export const TabText = styled(motion.span)`
   display: flex;
-  justify-content: center;
-  text-align: center;
-  width: 100%;
-  z-index: inherit;
   align-items: center;
   user-select: none;
   white-space: nowrap;
   overflow: hidden;
-  margin: 0 8px;
-
-  svg {
-    margin-right: 8px;
-  }
+  position: relative;
 `;
 
 export const Tab = styled.button<{
   selected: boolean;
-  index: number;
-  tabCount: number;
   isDisabled?: boolean;
 }>`
   position: relative;
+  display: inline-block;
   font-family: inherit;
-  left: ${({ index }) => {
-    return `${index * -45}px`;
-  }};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 32px;
   border: 0;
-  padding: 0 16px;
-  background: #70dbff;
-  z-index: ${({ selected, index, tabCount }) => {
-    const number = index + 1;
-    return selected ? tabCount * 3 : number * -3 + tabCount * 3;
-  }};
-  clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+  background: transparent;
+  padding: 0.3em 1.5em 0;
+  display: flex;
+  align-items: center;
+  color: ${({ selected }) => (selected ? "#FFF" : "#1e1e1e")};
+  svg {
+    display: block;
+    max-width: 18px;
+    max-height: 18px;
+    margin-right: ${({ selected }) => (selected ? "8px" : 0)};
+    z-index: 1;
+  }
 
   ${TabText} {
-    transition: 0.075s all ease-in;
-    color: ${({ selected }) => (selected ? "white" : "#1e1e1e")};
+    z-index: 1;
+    overflow: hidden;
   }
-  cursor: ${({ isDisabled }) => (isDisabled ? "not-allowed" : "pointer")};
 
-  &:before {
+  &:after {
     content: "";
-    width: calc(100% - 3px);
-    height: calc(100% - 2px);
     position: absolute;
-    left: 1px;
-    transition: 0.075s background-color ease-in;
     background: ${({ selected, isDisabled }) =>
-      selected ? "#DEBCFA" : isDisabled ? "#afafaf" : "#FFB8DD"};
-    z-index: ${({ selected, index, tabCount }) => {
-      const number = index + 1;
-      return selected ? tabCount * 3 : number * -3 + tabCount * 3;
-    }};
-    clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+      selected ? "#DEBCFA" : isDisabled ? "#AFAFAF" : "#FFB8DD"};
+    top: 0;
+    right: 0;
+    left: 2px;
+    bottom: 0;
+    border-bottom: none;
+    border-radius: 0.5em 0.5em 0 0;
+    box-shadow: 0 2px 2px white inset;
+    transform: scale(1.1, 1.3) perspective(0.5em) rotateX(5deg);
+    transform-origin: bottom;
+    z-index: 0;
   }
 `;
 
 export const ContentWrapper = styled.section`
   background: linear-gradient(0deg, #c9e9ff50, #ffffff50);
-  max-height: 100%;
-  max-width: 100%;
   box-shadow: 1px 1px 4px #00000050;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  ::-webkit-scrollbar-track {
+    border: 0;
+    background-color: #e1e1e1;
+    overflow: -moz-scrollbars-vertical;
+    overflow-y: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    background-color: #afafaf;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #afafaf;
+    border-radius: 40px;
+  }
 `;

@@ -41,10 +41,15 @@ const App = () => {
             >
               <List />
             </Window>
-            <Window title="Details" gridArea="b" icon={<BookOpen size={20} />}>
+            <Window
+              title="Details"
+              gridArea="b"
+              icon={<BookOpen size={20} />}
+              disableOverflow
+            >
               <Details />
             </Window>
-            <Window title="Info" icon={<InfoIcon size={20} />}>
+            <Window title="Info" icon={<InfoIcon size={20} />} disableOverflow>
               <Info />
             </Window>
           </Container>
