@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const IconContainer = styled.div<{ isEditable: boolean }>`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
   opacity: ${({ isEditable }) => (isEditable ? 1 : 0)};
   transition: 0.25 all linear;

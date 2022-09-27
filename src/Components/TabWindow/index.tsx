@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container, Tab, TabWrapper, TabText, ContentWrapper } from "./styled";
 
 export type TabProps = {
@@ -13,32 +13,6 @@ interface TabWindowProps {
   isDisabled?: boolean;
 }
 
-const calculateTabLeft = (
-  tabs: { tab: string; width: number }[]
-): { name: string; left: number }[] => {
-  const additiveTabs = tabs.reduce(
-    (acc: { name: string; left: number }[], next, i) => {
-      if (i === 0) {
-        const tab = {
-          name: next.tab,
-          left: 0,
-        };
-        acc.push(tab);
-      } else {
-        const tab = {
-          name: next.tab,
-          left: tabs[i - 1].width + next.width - 25,
-        };
-        acc.push(tab);
-      }
-      return acc;
-    },
-    []
-  );
-
-  return additiveTabs;
-};
-
 export const TabWindow: React.FC<TabWindowProps> = (props) => {
   const {
     children,
@@ -47,50 +21,36 @@ export const TabWindow: React.FC<TabWindowProps> = (props) => {
     setTab,
     isDisabled = false,
   } = props;
-  const [idk, setidk] = useState<any[]>();
-
-  useEffect(() => {
-    let idkCopy: any[] = [];
-    tabList.forEach((tab) => {
-      const el = document.getElementById(tab.name);
-      if (el) {
-        const test = el.getBoundingClientRect();
-        const next = {
-          tab: tab.name,
-          width: test.width,
-        };
-        idkCopy.push(next);
-      }
-    });
-    setidk(calculateTabLeft(idkCopy));
-  }, [tabList]);
 
   return (
     <Container>
       <TabWrapper>
         {tabList.map((tab, i) => {
           const { icon, name } = tab;
-          const widthOfPrev = idk?.[i - 1]?.left || 0;
+          const isSelected = name === selectedTab;
+
           return (
             <Tab
               key={name}
-              index={i}
-              selected={name === selectedTab}
+              selected={isSelected}
               onClick={() => {
                 if (isDisabled) return;
                 setTab(name);
               }}
-              tabCount={tabList.length}
               isDisabled={isDisabled}
               id={tab.name}
-              widthOfPrev={widthOfPrev}
             >
-              <div />
-              <TabText>
-                {icon}
-                {name}
-              </TabText>
-              <div />
+              {icon}
+              {isSelected && (
+                <TabText
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  exit={{ width: "100%" }}
+                  transition={{ type: "linear" }}
+                >
+                  {name}
+                </TabText>
+              )}
             </Tab>
           );
         })}

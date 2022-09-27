@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -34,75 +35,56 @@ export const TabWrapper = styled.div`
   }
 `;
 
-export const TabText = styled.span`
+export const TabText = styled(motion.span)`
   display: flex;
-  justify-content: center;
-  text-align: center;
-  width: 100%;
-  z-index: inherit;
   align-items: center;
   user-select: none;
   white-space: nowrap;
   overflow: hidden;
-  margin: 0 8px;
-
-  svg {
-    margin-right: 8px;
-  }
+  position: relative;
 `;
 
 export const Tab = styled.button<{
   selected: boolean;
-  index: number;
-  tabCount: number;
   isDisabled?: boolean;
 }>`
   position: relative;
+  display: inline-block;
   font-family: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 35px;
   border: 0;
-  padding: 0 0px;
-  background: ${({ selected, isDisabled }) =>
-    selected ? "#DEBCFA" : isDisabled ? "#AFAFAF" : "#FFB8DD"};
-
-  border-top: 3px solid
-    ${({ selected, disabled }) =>
-      selected ? "#c9aae4" : disabled ? "#3d3d3d" : "#eea8ca"};
-  z-index: ${({ selected, index, tabCount }) => {
-    const number = index + 1;
-    return selected ? tabCount * 3 : number * -3 + tabCount * 3;
-  }};
+  background: transparent;
+  padding: 0.3em 1.5em 0;
+  display: flex;
+  align-items: center;
+  color: ${({ selected }) => (selected ? "#FFF" : "#1e1e1e")};
+  svg {
+    display: block;
+    max-width: 18px;
+    max-height: 18px;
+    margin-right: ${({ selected }) => (selected ? "8px" : 0)};
+    z-index: 1;
+  }
 
   ${TabText} {
-    transition: 0.075s all ease-in;
-    color: ${({ selected }) => (selected ? "white" : "#1e1e1e")};
+    z-index: 1;
+    overflow: hidden;
   }
-  cursor: ${({ isDisabled }) => (isDisabled ? "not-allowed" : "pointer")};
 
-  > div {
+  &:after {
     content: "";
-    height: calc(100% + 3px);
-    width: 30px;
     position: absolute;
-    z-index: ${({ selected, index, tabCount }) => {
-      const number = index + 1;
-      return selected ? tabCount * 3 : number * -3 + tabCount * 3;
-    }};
-    background: inherit;
-    border-bottom: 3px solid;
-    border-color: inherit;
-
-    &:first-of-type {
-      clip-path: polygon(0% 0, 0% 100%, 100% 100%);
-      right: -29px;
-    }
-    &:last-of-type {
-      clip-path: polygon(100% 0, 0% 100%, 100% 100%);
-      left: -29px;
-    }
+    background: ${({ selected, isDisabled }) =>
+      selected ? "#DEBCFA" : isDisabled ? "#AFAFAF" : "#FFB8DD"};
+    top: 0;
+    right: 0;
+    left: 2px;
+    bottom: 0;
+    border-bottom: none;
+    border-radius: 0.5em 0.5em 0 0;
+    box-shadow: 0 2px 2px white inset;
+    transform: scale(1.1, 1.3) perspective(0.5em) rotateX(5deg);
+    transform-origin: bottom;
+    z-index: 0;
   }
 `;
 

@@ -59,6 +59,7 @@ export const Content = styled.div`
   position: relative;
   height: inherit;
   grid-area: body;
+  max-height: calc(40vh - 38px);
 `;
 
 export const Text = styled.span`
