@@ -21,12 +21,23 @@ export type UpdateKey = keyof ListItemType;
 const List: React.FC<ListProps> = () => {
   // local state
   const [editable, setEditable] = useState<string>("");
-
+  const [selectedDayData, setSelectedDayData] = useState<ListData>({
+    items: {},
+    sort: [],
+    selected: "",
+  });
   // get context and destructure
   const [day, dayDispatch] = useDayData();
   const { items: dayItems, sort: daySort, selected: daySelected } = day;
   const [filterSort, filterSortDispatch] = useFilterSortContext();
-  const { categorize } = filterSort;
+  const { categorize, filterCompleteItems } = filterSort;
+
+  // other hooks
+  useEffect(() => {
+    const selectedDay = dayItems[daySelected];
+    setSelectedDayData(selectedDay);
+  }, [dayItems, daySelected]);
+  // vars
 
   // Basic CRUD helpers
   const handleAddNewItem = () => {
@@ -92,6 +103,13 @@ const List: React.FC<ListProps> = () => {
   const handleToggleCategorize = (payload: boolean) => {
     filterSortDispatch({
       type: "UPDATE_CATEGORIZE",
+      payload,
+    });
+  };
+
+  const handleToggleFilterComplete = (payload: boolean) => {
+    filterSortDispatch({
+      type: "UPDATE_DONE",
       payload,
     });
   };
@@ -190,7 +208,7 @@ const List: React.FC<ListProps> = () => {
     const latestDay = moment(daySort[daySort.length - 1]).format("L");
     return tomorrow === latestDay;
   }, [daySort]);
-  console.log(dayItems[daySelected]);
+
   return (
     <Container>
       <DayNavigator
@@ -199,20 +217,25 @@ const List: React.FC<ListProps> = () => {
         handleGoBack={() => {}}
         disableNext={disableNext}
       />
-      <FilterSortSettings handleToggleCategorize={handleToggleCategorize} />
+      <FilterSortSettings
+        handleToggleCategorize={handleToggleCategorize}
+        handleToggleFilterComplete={handleToggleFilterComplete}
+      />
       <ListWrapper>
         {categorize ? (
           <StaticList
-            listData={dayItems[daySelected]}
+            listData={selectedDayData}
             editable={editable}
             handleCopyItem={handleCopyItem}
             handleSelectItem={handleSelectItem}
             handleDeleteItem={handleDeleteItem}
             handleUpdateItem={handleUpdateItem}
             setEditable={setEditable}
+            filterCompleteItems={filterCompleteItems}
           />
         ) : (
           <DraggableList
+            listData={selectedDayData}
             editable={editable}
             handleCopyItem={handleCopyItem}
             handleReorder={handleReorder}
@@ -220,6 +243,7 @@ const List: React.FC<ListProps> = () => {
             handleDeleteItem={handleDeleteItem}
             handleUpdateItem={handleUpdateItem}
             setEditable={setEditable}
+            filterCompleteItems={filterCompleteItems}
           />
         )}
       </ListWrapper>

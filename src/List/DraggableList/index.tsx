@@ -1,11 +1,13 @@
 import { Reorder } from "framer-motion";
 import React from "react";
 import { UpdateKey } from "..";
-// import { ListData } from "../../types";
+import { ListData, TaskState } from "../../types";
 import ListItem from "../ListItem";
 
 interface DraggableListProps {
+  listData: ListData;
   editable: string;
+  filterCompleteItems: boolean;
   handleReorder: (arr: string[]) => void;
   handleSelectItem: (id: string) => void;
   handleUpdateItem: (id: string, key: UpdateKey, val: any) => void;
@@ -16,7 +18,7 @@ interface DraggableListProps {
 
 const DraggableList: React.FC<DraggableListProps> = (props) => {
   const {
-    // listData: { items, selected, sort },
+    listData: { items, selected, sort },
     handleReorder,
     editable,
     handleSelectItem,
@@ -24,14 +26,33 @@ const DraggableList: React.FC<DraggableListProps> = (props) => {
     setEditable,
     handleDeleteItem,
     handleCopyItem,
+    filterCompleteItems,
   } = props;
+
   return (
     <Reorder.Group axis="y" values={[]} onReorder={handleReorder} layoutScroll>
-      {/* {sort.map((id) => {
+      {sort.map((id) => {
         const listItem = items[id];
         const isSelected = id === selected;
         const isEditable = id === editable;
-
+        if (filterCompleteItems) {
+          return listItem.status === TaskState.Complete ? null : (
+            <Reorder.Item value={id} key={id}>
+              <ListItem
+                key={id}
+                isSelected={isSelected}
+                isEditable={isEditable}
+                handleSelectItem={handleSelectItem}
+                handleUpdateItem={handleUpdateItem}
+                setEditable={setEditable}
+                handleDeleteItem={handleDeleteItem}
+                handleCopyItem={handleCopyItem}
+                listItem={listItem}
+                isDraggable
+              />
+            </Reorder.Item>
+          );
+        }
         return (
           <Reorder.Item value={id} key={id}>
             <ListItem
@@ -48,7 +69,7 @@ const DraggableList: React.FC<DraggableListProps> = (props) => {
             />
           </Reorder.Item>
         );
-      })} */}
+      })}
     </Reorder.Group>
   );
 };

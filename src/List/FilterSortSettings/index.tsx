@@ -4,10 +4,11 @@ import { FilterWrapper, SortAndFilterSettings } from "./styled";
 
 interface FilterSortSettingsProps {
   handleToggleCategorize: (val: boolean) => void;
+  handleToggleFilterComplete: (val: boolean) => void;
 }
 
 const FilterSortSettings: React.FC<FilterSortSettingsProps> = (props) => {
-  const { handleToggleCategorize } = props;
+  const { handleToggleCategorize, handleToggleFilterComplete } = props;
   return (
     <SortAndFilterSettings>
       <FilterWrapper>
@@ -15,6 +16,11 @@ const FilterSortSettings: React.FC<FilterSortSettingsProps> = (props) => {
           name="sortByCategory"
           onChange={handleToggleCategorize}
           label="Group by category"
+        />
+        <Checkbox
+          name="hideComplete"
+          onChange={handleToggleFilterComplete}
+          label="Hide completed tasks"
         />
       </FilterWrapper>
       <FilterWrapper>

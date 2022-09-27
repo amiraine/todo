@@ -8,6 +8,7 @@ import { GroupWrapper, CategoryTitle } from "./styled";
 interface StaticListProps {
   listData: ListData;
   editable: string;
+  filterCompleteItems: boolean;
   handleSelectItem: (id: string) => void;
   handleUpdateItem: (id: string, key: UpdateKey, val: any) => void;
   setEditable: (id: string) => void;
