@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const InfoLine = styled.div<{ label: string }>`
+export const InfoLine = styled.div<{
+  label: string;
+  onClick?: any;
+  onDoubleClick?: any;
+}>`
   width: 100%;
   box-sizing: border-box;
   border-bottom: 2px solid #1e1e1e;
@@ -13,12 +17,27 @@ export const InfoLine = styled.div<{ label: string }>`
   position: relative;
   font-size: 12px;
   z-index: 50;
+
   &:before {
     position: absolute;
     content: "${({ label }) => label}";
     top: -10px;
     font-size: 10px;
     left: 5px;
+  }
+
+  cursor: ${({ onClick, onDoubleClick }) =>
+    onClick !== undefined || onDoubleClick !== undefined
+      ? "pointer"
+      : "default"};
+  input {
+    &:hover {
+      cursor: inherit;
+    }
+    &:active,
+    &:focus {
+      cursor: text;
+    }
   }
 `;
 
@@ -62,6 +81,9 @@ export const Title = styled.span`
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
+  button:first-of-type {
+    margin-right: 5px;
+  }
 `;
 
 export const IconButton = styled.button`
@@ -71,4 +93,7 @@ export const IconButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  &:hover {
+    color: pink;
+  }
 `;
