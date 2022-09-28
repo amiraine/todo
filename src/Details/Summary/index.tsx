@@ -24,8 +24,8 @@ const Summary: React.FC<SummaryProps> = (props) => {
   const [localTitle, setLocalTitle] = useState<string>("");
   const [editingTitle, setEditingTitle] = useState<boolean>(false);
   const [editingDate, setEditingDate] = useState<boolean>(false);
-  // helpers
 
+  // helpers
   const updateLocalTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setLocalTitle(value);
@@ -36,10 +36,8 @@ const Summary: React.FC<SummaryProps> = (props) => {
       const input = document.getElementById(id);
       if (!input) return;
       setEditingTitle(true);
-      console.log(editingTitle);
       input.focus();
     } else {
-      console.log("what");
       setEditingTitle(false);
       setLocalTitle(title);
     }
@@ -65,27 +63,30 @@ const Summary: React.FC<SummaryProps> = (props) => {
     ? `${moment(created).format("LL")} - ${moment(due).fromNow()}`
     : "No due date set. Double-click to add one.";
   // todo add tooltip component
-  console.log(editingTitle);
+
   return (
     <Container>
       <InfoLine onDoubleClick={handleToggleTitleEdit} label="Task">
-        {editingTitle ? (
-          <>
-            <Input id={id} value={localTitle} onChange={updateLocalTitle} />
-            <ButtonContainer>
-              <IconButton onClick={() => handleSaveTitle(localTitle)}>
-                <Save />
-              </IconButton>
-              <IconButton onClick={handleCancelEdit}>
-                <Slash />
-              </IconButton>
-            </ButtonContainer>
-          </>
-        ) : (
-          <Title>{title}</Title>
+        <Input
+          id={id}
+          value={localTitle}
+          onChange={updateLocalTitle}
+          disabled={!editingTitle}
+        />
+        {editingTitle && (
+          <ButtonContainer>
+            <IconButton onClick={() => handleSaveTitle(localTitle)}>
+              <Save />
+            </IconButton>
+            <IconButton onClick={handleCancelEdit}>
+              <Slash />
+            </IconButton>
+          </ButtonContainer>
         )}
       </InfoLine>
-      <InfoLine label="Created on">{creationDate}</InfoLine>
+      <InfoLine label="Created on">
+        <Title>{creationDate}</Title>
+      </InfoLine>
       <InfoLine onDoubleClick={handleToggleDateEdit} label="Due on">
         <Title>{dueDate}</Title>
       </InfoLine>

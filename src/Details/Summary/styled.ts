@@ -12,7 +12,7 @@ export const InfoLine = styled.div<{ label: string }>`
   margin: 28px 0 0 0;
   position: relative;
   font-size: 12px;
-  z-index: 10;
+  z-index: 50;
   &:before {
     position: absolute;
     content: "${({ label }) => label}";
@@ -20,13 +20,12 @@ export const InfoLine = styled.div<{ label: string }>`
     font-size: 10px;
     left: 5px;
   }
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 export const Container = styled.div`
   padding: 24px;
+  position: relative;
+  z-index: 20;
 
   ${InfoLine} {
     &:first-of-type {
@@ -47,7 +46,12 @@ export const Input = styled.input`
   padding: 4px 8px 0;
   margin: 0 8px 4px 0;
 
-  background: #debcfa50;
+  &:active {
+    background: #debcfa50;
+  }
+  &:disabled {
+    user-select: none;
+  }
 `;
 
 export const Title = styled.span`
