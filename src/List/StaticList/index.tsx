@@ -26,7 +26,7 @@ const StaticList: React.FC<StaticListProps> = (props) => {
     handleDeleteItem,
     editable,
   } = props;
-  console.log(sort, items);
+
   const listItems = sort.map((id) => items[id]);
   const listItemsByCategory = categorizeListItems(listItems);
 

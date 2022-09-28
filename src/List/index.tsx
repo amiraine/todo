@@ -29,6 +29,9 @@ const List: React.FC<ListProps> = () => {
   // get context and destructure
   const [day, dayDispatch] = useDayData();
   const { items: dayItems, sort: daySort, selected: daySelected } = day;
+  const { items: taskItems, sort: taskSort, selected: taskSelected } = dayItems[
+    daySelected
+  ];
   const [filterSort, filterSortDispatch] = useFilterSortContext();
   const { categorize, filterCompleteItems } = filterSort;
 
@@ -37,36 +40,23 @@ const List: React.FC<ListProps> = () => {
     const selectedDay = dayItems[daySelected];
     setSelectedDayData(selectedDay);
   }, [dayItems, daySelected]);
-  // vars
 
-  // Basic CRUD helpers
-  const handleAddNewItem = () => {
-    // make this worka t the list level, not the day level
-    const payload: ListItemType = {
-      id: v4(),
-      value: "",
-      status: TaskState["Not Started"],
-      category: null,
-      created: moment().format("L"),
-    };
-
-    // listDispatch({ type: "ADD", payload });
-    setEditable(payload.id);
-    return;
-  };
-
-  // todo make all basic helpers for the day thing
+  // Day CRUD functions
   const handleAddNewDay = () => {
-    const todayData = dayItems[moment().format("L")];
+    const {
+      sort: todaySort,
+      items: todayItems,
+      // selected: todaySelected,
+    } = dayItems[moment().format("L")];
     // create empty basemap
     const payload: ListData = {
       items: {},
       sort: [],
       selected: "",
     };
-    const unfinishedTasksFromToday = todayData.sort
+    const unfinishedTasksFromToday = todaySort
       .map((taskId) => {
-        return todayData.items[taskId];
+        return todayItems[taskId];
       })
       .filter((x) => x.status !== TaskState.Complete);
     const newItems = unfinishedTasksFromToday.reduce(
@@ -75,8 +65,9 @@ const List: React.FC<ListProps> = () => {
       },
       {}
     );
+
     payload.items = { ...newItems };
-    payload.sort = [...daySort].filter((id) =>
+    payload.sort = [...todaySort].filter((id) =>
       Object.keys(newItems).includes(id)
     );
     payload.selected = daySelected;
@@ -87,9 +78,26 @@ const List: React.FC<ListProps> = () => {
     });
   };
 
+  // task CRUDS
+  const handleAddNewTask = () => {
+    // make this work at the list level, not the day level
+    const payload: ListItemType = {
+      id: v4(),
+      value: "",
+      status: TaskState["Not Started"],
+      category: null,
+      created: moment().format("L"),
+    };
+
+    dayDispatch({ type: "ADD_TASK", payload });
+    setEditable(payload.id);
+    return;
+  };
+
   const handleUpdateItem = (id: string, key: UpdateKey, newValue: any) => {
-    // const payload: ListItemType = { ...items[id], [key]: newValue };
-    // listDispatch({ type: "UPDATE", payload });
+    const payload: ListItemType = { ...taskItems[id], [key]: newValue };
+
+    dayDispatch({ type: "UPDATE_TASK", payload });
   };
 
   const handleDeselectItem = () => {
@@ -125,16 +133,17 @@ const List: React.FC<ListProps> = () => {
 
   const handleDeleteItem = (id: string) => {
     // don't delete if there's only one item in the list
-    // if (sort.length === 1) return;
+    if (taskSort.length === 1) return;
     // clear editable
     if (editable === id) {
       resetLocalState();
     }
-    // listDispatch({ type: "REMOVE", payload: id });
+    dayDispatch({ type: "DELETE_TASK", payload: id });
   };
 
   const handleReorder = (payload: string[]) => {
-    // listDispatch({ type: "REORDER", payload });
+    console.log(payload);
+    dayDispatch({ type: "REORDER_TASKS", payload });
   };
 
   const handleGoForward = () => {
@@ -144,6 +153,12 @@ const List: React.FC<ListProps> = () => {
     } else {
       dayDispatch({ type: "SET_ACTIVE", payload: daySort[currentIdx + 1] });
     }
+  };
+
+  const handleGoBack = () => {
+    const currentIdx = daySort.indexOf(daySelected);
+    if (currentIdx === 0) return;
+    dayDispatch({ type: "SET_ACTIVE", payload: daySort[currentIdx - 1] });
   };
 
   // additional helpers
@@ -183,18 +198,18 @@ const List: React.FC<ListProps> = () => {
     if (!editable) return;
     //todo refactor for day mode
     // // check browser focus. If user is editing the textarea,
-    // const focusedElement = document.activeElement;
-    // if (focusedElement && !focusedElement.id.includes("task-item")) return;
+    const focusedElement = document.activeElement;
+    if (focusedElement && !focusedElement.id.includes("task-item")) return;
 
-    // const editingIndex = sort.indexOf(editable);
+    const editingIndex = taskSort.indexOf(editable);
 
-    // if (editingIndex === sort.length - 1) {
-    //   handleAddNewItem();
-    // } else {
-    //   const nextItemId = sort[editingIndex + 1];
-    //   setEditable(nextItemId);
-    //   handleSelectItem(nextItemId);
-    // }
+    if (editingIndex === taskSort.length - 1) {
+      handleAddNewTask();
+    } else {
+      const nextItemId = taskSort[editingIndex + 1];
+      setEditable(nextItemId);
+      handleSelectItem(nextItemId);
+    }
   };
 
   // register shortcuts
@@ -205,17 +220,21 @@ const List: React.FC<ListProps> = () => {
 
   const disableNext = useMemo(() => {
     const tomorrow = moment().add(1, "day").format("L");
-    const latestDay = moment(daySort[daySort.length - 1]).format("L");
-    return tomorrow === latestDay;
-  }, [daySort]);
+    return daySelected === tomorrow;
+  }, [daySelected]);
+  const disablePrev = useMemo(() => {
+    const currentIdx = daySort.indexOf(daySelected);
+    return currentIdx === 0;
+  }, [daySort, daySelected]);
 
   return (
     <Container>
       <DayNavigator
         selectedDay={daySelected}
         handleGoForward={handleGoForward}
-        handleGoBack={() => {}}
+        handleGoBack={handleGoBack}
         disableNext={disableNext}
+        disablePrev={disablePrev}
       />
       <FilterSortSettings
         handleToggleCategorize={handleToggleCategorize}

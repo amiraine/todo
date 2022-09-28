@@ -28,7 +28,7 @@ const App = () => {
   const [filterSort, updateFilterSort] = useReducer(filterSortReducer, {
     ...initialFilters,
   });
-  console.log(data);
+
   return (
     <DayContext.Provider value={{ data, updateData }}>
       <categoriesContext.Provider value={{ categories, updateCategories }}>

@@ -1,7 +1,13 @@
 import React, { createContext, useContext } from "react";
-import { DayData } from "../../types";
+import { DayData, ListData } from "../../types";
 
-type ActionType = "ADD_DAY" | "UPDATE_DAY" | "SET_ACTIVE" | "REORDER_TASKS";
+type ActionType =
+  | "ADD_DAY"
+  | "ADD_TASK"
+  | "UPDATE_TASK"
+  | "SET_ACTIVE"
+  | "DELETE_TASK"
+  | "REORDER_TASKS";
 
 type Action = {
   type: ActionType;
@@ -20,9 +26,12 @@ export const DayContext = createContext<
 
 export const dayReducer = (state: DayData, action: Action): DayData => {
   const { payload } = action;
+  const selectedDay = { ...state.items[state.selected] };
 
   switch (action.type) {
+    // Day Level
     case "ADD_DAY":
+      // takes a ListData obk
       return {
         ...state,
         selected: payload.id,
@@ -34,20 +43,65 @@ export const dayReducer = (state: DayData, action: Action): DayData => {
         },
         sort: [...state.sort, payload.id],
       };
-    case "UPDATE_DAY":
-      // payload isa ListData
-      const copy = { ...state.items };
-      copy[payload.id] = payload;
-      return { ...state, items: { ...copy } };
     case "SET_ACTIVE":
       // payload is id string
       return {
         ...state,
         selected: payload,
       };
+    // Task Level
+    case "ADD_TASK":
+      // payload ListItem
+      selectedDay.items = { ...selectedDay.items, [payload.id]: payload };
+      selectedDay.sort = [...selectedDay.sort, payload.id];
+      selectedDay.selected = payload.id;
+
+      return {
+        ...state,
+        items: { ...state.items, [state.selected]: selectedDay },
+      };
     case "REORDER_TASKS":
-    // payload is
+      // payload is new sort
+      console.log(payload);
+      selectedDay.sort = payload;
+      return {
+        ...state,
+        items: { ...state.items, [state.selected]: selectedDay },
+      };
+    case "UPDATE_TASK":
+      //  task item
+      const todayItems = { ...state.items[state.selected].items };
+      todayItems[payload.id] = payload;
+      const updatedList: ListData = {
+        items: todayItems,
+        sort: selectedDay.sort,
+        selected: selectedDay.selected,
+      };
+
+      return {
+        ...state,
+        items: { ...state.items, [state.selected]: updatedList },
+      };
+    case "DELETE_TASK":
+      // takes id
+      const newSort = selectedDay.sort.filter((id) => {
+        return id !== payload;
+      });
+      selectedDay.sort = newSort;
+      const newItems = newSort.reduce((acc, next) => {
+        const task = selectedDay.items[next];
+        return {
+          ...acc,
+          [task.id]: task,
+        };
+      }, {});
+      selectedDay.items = newItems;
+      return {
+        ...state,
+        items: { ...state.items, [state.selected]: selectedDay },
+      };
     default:
+      console.error("Unexpected action type: ", action.type);
       return { ...state };
   }
 };

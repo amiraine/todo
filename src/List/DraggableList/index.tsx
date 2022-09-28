@@ -30,7 +30,12 @@ const DraggableList: React.FC<DraggableListProps> = (props) => {
   } = props;
 
   return (
-    <Reorder.Group axis="y" values={[]} onReorder={handleReorder} layoutScroll>
+    <Reorder.Group
+      axis="y"
+      values={sort}
+      onReorder={handleReorder}
+      layoutScroll
+    >
       {sort.map((id) => {
         const listItem = items[id];
         const isSelected = id === selected;
