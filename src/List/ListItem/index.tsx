@@ -44,7 +44,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
   const { id, value, status, due } = listItem;
 
   const handleUpdateTaskState = (state: TaskState) => {
-    handleUpdateItem(id, "status", TaskState);
+    handleUpdateItem(id, "status", state);
   };
 
   const fromNow = moment(due).fromNow();
