@@ -8,7 +8,6 @@ import {
   filterSortReducer,
   filterSortContext,
 } from "./Context";
-
 import { initialCategories, initialFilters, initialData } from "./initialdata";
 // local components
 import { Window } from "./Components";
