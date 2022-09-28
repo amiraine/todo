@@ -9,7 +9,7 @@ interface StaticListProps {
   listData: ListData;
   editable: string;
   filterCompleteItems: boolean;
-  handleSelectItem: (id: string) => void;
+  handleSelectTask: (id: string) => void;
   handleUpdateItem: (id: string, key: UpdateKey, val: any) => void;
   setEditable: (id: string) => void;
   handleDeleteItem: (id: string) => void;
@@ -20,7 +20,7 @@ const StaticList: React.FC<StaticListProps> = (props) => {
   const {
     listData: { sort, items, selected: listSelected },
     handleCopyItem,
-    handleSelectItem,
+    handleSelectTask,
     handleUpdateItem,
     setEditable,
     handleDeleteItem,
@@ -55,7 +55,7 @@ const StaticList: React.FC<StaticListProps> = (props) => {
                   isDraggable={false}
                   isSelected={isSelected}
                   isEditable={isEditable}
-                  handleSelectItem={handleSelectItem}
+                  handleSelectTask={handleSelectTask}
                   handleUpdateItem={handleUpdateItem}
                   setEditable={setEditable}
                   handleDeleteItem={handleDeleteItem}
@@ -75,7 +75,7 @@ const StaticList: React.FC<StaticListProps> = (props) => {
                   isDraggable={false}
                   isSelected={isSelected}
                   isEditable={isEditable}
-                  handleSelectItem={handleSelectItem}
+                  handleSelectTask={handleSelectTask}
                   handleUpdateItem={handleUpdateItem}
                   setEditable={setEditable}
                   handleDeleteItem={handleDeleteItem}
@@ -109,7 +109,7 @@ export default StaticList;
                   isDraggable={false}
                   isSelected={isSelected}
                   isEditable={isEditable}
-                  handleSelectItem={handleSelectItem}
+                  handleSelectTask={handleSelectTask}
                   handleUpdateItem={handleUpdateItem}
                   setEditable={setEditable}
                   handleDeleteItem={handleDeleteItem}

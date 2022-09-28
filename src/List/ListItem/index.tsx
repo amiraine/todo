@@ -22,7 +22,7 @@ interface ListItemProps {
   isDraggable: boolean;
   isSelected: boolean;
   listItem: ListItemType;
-  handleSelectItem: (id: string) => void;
+  handleSelectTask: (id: string) => void;
   setEditable: (id: string) => void;
   handleDeleteItem: (id: string) => void;
   handleCopyItem: (id: string) => void;
@@ -36,7 +36,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     isSelected,
     handleCopyItem,
     handleDeleteItem,
-    handleSelectItem,
+    handleSelectTask,
     handleUpdateItem,
     setEditable,
     isDraggable,
@@ -55,7 +55,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
   return (
     <StyledListItem
       selected={isSelected}
-      onClick={() => handleSelectItem(id)}
+      onClick={() => handleSelectTask(id)}
       onDoubleClick={() => setEditable(id)}
     >
       <DragHandleContainer>{isDraggable && <Drag />}</DragHandleContainer>

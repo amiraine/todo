@@ -104,7 +104,7 @@ const List: React.FC<ListProps> = () => {
     // todo fix for nested data
     // if (daySelected && daySelected !== "") {
     setEditable("");
-    handleSelectItem("");
+    handleSelectTask("");
     // }
   };
 
@@ -127,8 +127,8 @@ const List: React.FC<ListProps> = () => {
     setEditable("");
   };
 
-  const handleSelectItem = (id: string) => {
-    // listDispatch({ type: "SETACTIVE", payload: id });
+  const handleSelectTask = (id: string) => {
+    dayDispatch({ type: "SET_SELECTED_TASK", payload: id });
   };
 
   const handleDeleteItem = (id: string) => {
@@ -151,53 +151,55 @@ const List: React.FC<ListProps> = () => {
     if (currentIdx + 1 === daySort.length) {
       handleAddNewDay();
     } else {
-      dayDispatch({ type: "SET_ACTIVE", payload: daySort[currentIdx + 1] });
+      dayDispatch({
+        type: "SET_SELECTED_DAY",
+        payload: daySort[currentIdx + 1],
+      });
     }
   };
 
   const handleGoBack = () => {
     const currentIdx = daySort.indexOf(daySelected);
     if (currentIdx === 0) return;
-    dayDispatch({ type: "SET_ACTIVE", payload: daySort[currentIdx - 1] });
+    dayDispatch({ type: "SET_SELECTED_DAY", payload: daySort[currentIdx - 1] });
   };
 
   // additional helpers
   const handleCopyItem = (id: string) => {
-    // const payload = { ...items[id] };
+    const payload = { ...taskItems[id] };
     // reassign the id, set to 'not done', set created to current Date obj
-    // payload.id = v4();
-    // payload.status = TaskState["Not Started"];
-    // payload.created = new Date().toDateString();
-    // listDispatch({ type: "ADD", payload });
+    payload.id = v4();
+    payload.status = TaskState["Not Started"];
+    payload.created = moment().format("L");
+    dayDispatch({ type: "ADD_TASK", payload });
   };
 
   const handleDeleteItemBackspace = () => {
     const input = document.getElementById(editable) as HTMLInputElement;
 
     if (editable !== "") {
-      // const item = items[editable];
-      // const itemIndex = sort.indexOf(editable);
-      // if (itemIndex === 0) {
-      //   // if this item is at the top of the list, do nothing
-      //   return;
-      // }
+      const item = taskItems[editable];
+      const itemIndex = taskSort.indexOf(editable);
+      if (itemIndex === 0) {
+        // if this item is at the top of the list, do nothing
+        return;
+      }
       if (input.selectionStart === 0) {
         // todo: fix backspace bug
       }
-      // if (item.value === "") {
-      //   handleDeleteItem(editable);
-      //   const prevItemId = sort[itemIndex - 1];
-      //   handleSelectItem(prevItemId);
-      //   setEditable(prevItemId);
-      // }
+      if (item.value === "") {
+        handleDeleteItem(editable);
+        const prevItemId = taskSort[itemIndex - 1];
+        handleSelectTask(prevItemId);
+        setEditable(prevItemId);
+      }
     }
   };
   // applies to tab and spacebar
   const handleLineChange = () => {
     // do nothing if not editing
     if (!editable) return;
-    //todo refactor for day mode
-    // // check browser focus. If user is editing the textarea,
+    // check browser focus. If user is editing the textarea,
     const focusedElement = document.activeElement;
     if (focusedElement && !focusedElement.id.includes("task-item")) return;
 
@@ -208,7 +210,34 @@ const List: React.FC<ListProps> = () => {
     } else {
       const nextItemId = taskSort[editingIndex + 1];
       setEditable(nextItemId);
-      handleSelectItem(nextItemId);
+      handleSelectTask(nextItemId);
+    }
+  };
+
+  const handleDownArrow = () => {
+    const selectedIndex = taskSort.indexOf(taskSelected);
+    if (selectedIndex === -1 || selectedIndex === taskSort.length - 1) {
+      handleSelectTask(taskSort[0]);
+    } else {
+      handleSelectTask(taskSort[selectedIndex + 1]);
+    }
+    if (editable.length > 0) {
+      setEditable(taskSort[selectedIndex + 1]);
+    }
+  };
+
+  const handleUpArrow = () => {
+    const selectedIndex = taskSort.indexOf(taskSelected);
+    if (selectedIndex === -1 || selectedIndex === 0) {
+      handleSelectTask(taskSort[taskSort.length - 1]);
+      if (editable.length > 0) {
+        setEditable(taskSort[taskSort[taskSort.length - 1]]);
+      }
+    } else {
+      handleSelectTask(taskSort[selectedIndex - 1]);
+      if (editable.length > 0) {
+        setEditable(taskSort[selectedIndex - 1]);
+      }
     }
   };
 
@@ -217,6 +246,8 @@ const List: React.FC<ListProps> = () => {
   useKeyboardShortcut({ key: "Escape" }, handleDeselectItem);
   useKeyboardShortcut({ key: "Backspace" }, handleDeleteItemBackspace, false);
   useKeyboardShortcut({ key: "Tab" }, handleLineChange);
+  useKeyboardShortcut({ key: "ArrowDown" }, handleDownArrow);
+  useKeyboardShortcut({ key: "ArrowUp" }, handleUpArrow);
 
   const disableNext = useMemo(() => {
     const tomorrow = moment().add(1, "day").format("L");
@@ -246,7 +277,7 @@ const List: React.FC<ListProps> = () => {
             listData={selectedDayData}
             editable={editable}
             handleCopyItem={handleCopyItem}
-            handleSelectItem={handleSelectItem}
+            handleSelectTask={handleSelectTask}
             handleDeleteItem={handleDeleteItem}
             handleUpdateItem={handleUpdateItem}
             setEditable={setEditable}
@@ -258,7 +289,7 @@ const List: React.FC<ListProps> = () => {
             editable={editable}
             handleCopyItem={handleCopyItem}
             handleReorder={handleReorder}
-            handleSelectItem={handleSelectItem}
+            handleSelectTask={handleSelectTask}
             handleDeleteItem={handleDeleteItem}
             handleUpdateItem={handleUpdateItem}
             setEditable={setEditable}

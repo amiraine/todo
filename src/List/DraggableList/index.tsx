@@ -9,7 +9,7 @@ interface DraggableListProps {
   editable: string;
   filterCompleteItems: boolean;
   handleReorder: (arr: string[]) => void;
-  handleSelectItem: (id: string) => void;
+  handleSelectTask: (id: string) => void;
   handleUpdateItem: (id: string, key: UpdateKey, val: any) => void;
   setEditable: (id: string) => void;
   handleDeleteItem: (id: string) => void;
@@ -21,7 +21,7 @@ const DraggableList: React.FC<DraggableListProps> = (props) => {
     listData: { items, selected, sort },
     handleReorder,
     editable,
-    handleSelectItem,
+    handleSelectTask,
     handleUpdateItem,
     setEditable,
     handleDeleteItem,
@@ -47,7 +47,7 @@ const DraggableList: React.FC<DraggableListProps> = (props) => {
                 key={id}
                 isSelected={isSelected}
                 isEditable={isEditable}
-                handleSelectItem={handleSelectItem}
+                handleSelectTask={handleSelectTask}
                 handleUpdateItem={handleUpdateItem}
                 setEditable={setEditable}
                 handleDeleteItem={handleDeleteItem}
@@ -64,7 +64,7 @@ const DraggableList: React.FC<DraggableListProps> = (props) => {
               key={id}
               isSelected={isSelected}
               isEditable={isEditable}
-              handleSelectItem={handleSelectItem}
+              handleSelectTask={handleSelectTask}
               handleUpdateItem={handleUpdateItem}
               setEditable={setEditable}
               handleDeleteItem={handleDeleteItem}

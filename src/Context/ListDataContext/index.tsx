@@ -5,7 +5,8 @@ type ActionType =
   | "ADD_DAY"
   | "ADD_TASK"
   | "UPDATE_TASK"
-  | "SET_ACTIVE"
+  | "SET_SELECTED_DAY"
+  | "SET_SELECTED_TASK"
   | "DELETE_TASK"
   | "REORDER_TASKS";
 
@@ -43,7 +44,7 @@ export const dayReducer = (state: DayData, action: Action): DayData => {
         },
         sort: [...state.sort, payload.id],
       };
-    case "SET_ACTIVE":
+    case "SET_SELECTED_DAY":
       // payload is id string
       return {
         ...state,
@@ -62,7 +63,6 @@ export const dayReducer = (state: DayData, action: Action): DayData => {
       };
     case "REORDER_TASKS":
       // payload is new sort
-      console.log(payload);
       selectedDay.sort = payload;
       return {
         ...state,
@@ -100,6 +100,13 @@ export const dayReducer = (state: DayData, action: Action): DayData => {
         ...state,
         items: { ...state.items, [state.selected]: selectedDay },
       };
+    case "SET_SELECTED_TASK": {
+      selectedDay.selected = payload;
+      return {
+        ...state,
+        items: { ...state.items, [state.selected]: selectedDay },
+      };
+    }
     default:
       console.error("Unexpected action type: ", action.type);
       return { ...state };
