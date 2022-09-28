@@ -101,11 +101,8 @@ const List: React.FC<ListProps> = () => {
   };
 
   const handleDeselectItem = () => {
-    // todo fix for nested data
-    // if (daySelected && daySelected !== "") {
     setEditable("");
     handleSelectTask("");
-    // }
   };
 
   const handleToggleCategorize = (payload: boolean) => {
@@ -142,7 +139,6 @@ const List: React.FC<ListProps> = () => {
   };
 
   const handleReorder = (payload: string[]) => {
-    console.log(payload);
     dayDispatch({ type: "REORDER_TASKS", payload });
   };
 

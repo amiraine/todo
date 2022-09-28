@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { DayData, ListData } from "../../types";
+import { DayData, ListData, ListItem } from "../../types";
 
 type ActionType =
   | "ADD_DAY"
@@ -45,14 +45,14 @@ export const dayReducer = (state: DayData, action: Action): DayData => {
         sort: [...state.sort, payload.id],
       };
     case "SET_SELECTED_DAY":
-      // payload is id string
+      // payload: id string
       return {
         ...state,
         selected: payload,
       };
     // Task Level
     case "ADD_TASK":
-      // payload ListItem
+      // payload: ListItem
       selectedDay.items = { ...selectedDay.items, [payload.id]: payload };
       selectedDay.sort = [...selectedDay.sort, payload.id];
       selectedDay.selected = payload.id;
@@ -62,29 +62,29 @@ export const dayReducer = (state: DayData, action: Action): DayData => {
         items: { ...state.items, [state.selected]: selectedDay },
       };
     case "REORDER_TASKS":
-      // payload is new sort
+      // payload: array of id strings
       selectedDay.sort = payload;
       return {
         ...state,
         items: { ...state.items, [state.selected]: selectedDay },
       };
     case "UPDATE_TASK":
-      //  list item
-      // todo doublecheck this, items from different days that share a title are both getting changed
-      const todayItems = { ...state.items[state.selected].items };
+      //  payload: list item
+      const todayItems: { [key: string]: ListItem } = {
+        ...state.items[state.selected].items,
+      };
       todayItems[payload.id] = payload;
       const updatedList: ListData = {
         items: todayItems,
         sort: selectedDay.sort,
         selected: selectedDay.selected,
       };
-
       return {
         ...state,
         items: { ...state.items, [state.selected]: updatedList },
       };
     case "DELETE_TASK":
-      // takes id
+      // payload: string id
       const newSort = selectedDay.sort.filter((id) => {
         return id !== payload;
       });
