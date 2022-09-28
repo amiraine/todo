@@ -138,6 +138,7 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
     }
     close();
   };
+
   return (
     <MenuItemContainer onClick={handleClick}>
       {icon && icon}
