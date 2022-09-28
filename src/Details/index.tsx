@@ -25,7 +25,7 @@ const Details: React.FC = () => {
   const [day, dayDispatch] = useDayData();
   const { items: dayItems, selected: daySelected } = day;
   const listData = dayItems[daySelected];
-  const { items: taskItems, selected: taskSelected, sort: taskSort } = listData;
+  const { items: taskItems, selected: taskSelected } = listData;
   const listItem = taskItems[taskSelected];
 
   // helpers

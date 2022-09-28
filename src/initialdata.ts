@@ -129,7 +129,7 @@ export const tomorrowData: ListData = {
 
 const yesterday = moment().subtract(1, "day").format("L");
 const today = moment().format("L");
-const tomorrow = moment().add(1, "day").format("L");
+// const tomorrow = moment().add(1, "day").format("L");
 
 export const initialData: DayData = {
   items: {
