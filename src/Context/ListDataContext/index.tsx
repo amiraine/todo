@@ -70,6 +70,7 @@ export const dayReducer = (state: DayData, action: Action): DayData => {
       };
     case "UPDATE_TASK":
       //  list item
+      // todo doublecheck this, items from different days that share a title are both getting changed
       const todayItems = { ...state.items[state.selected].items };
       todayItems[payload.id] = payload;
       const updatedList: ListData = {
