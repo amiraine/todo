@@ -12,13 +12,16 @@ export const InfoLine = styled.div<{ label: string }>`
   margin: 28px 0 0 0;
   position: relative;
   font-size: 12px;
-
+  z-index: 10;
   &:before {
     position: absolute;
     content: "${({ label }) => label}";
     top: -10px;
     font-size: 10px;
     left: 5px;
+  }
+  &:hover {
+    cursor: pointer;
   }
 `;
 
@@ -49,6 +52,7 @@ export const Input = styled.input`
 
 export const Title = styled.span`
   padding: 4px 8px;
+  user-select: none;
 `;
 
 export const ButtonContainer = styled.div`

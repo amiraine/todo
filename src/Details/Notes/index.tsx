@@ -4,12 +4,12 @@ import { ListItem } from "../../types";
 import { Container, Input } from "./styled";
 
 interface NotesProps {
-  listItem: ListItem;
+  listItem?: ListItem;
   handleUpdateNote: (value: string) => void;
 }
 const Notes: React.FC<NotesProps> = (props) => {
   const {
-    listItem: { id, note = "" },
+    // listItem: { id = "", note = "" },
     // handleUpdateNote,
   } = props;
 
@@ -30,9 +30,7 @@ const Notes: React.FC<NotesProps> = (props) => {
   // }, [note, setLocalValue]);
 
   return (
-    <Container>
-      <Input id={`textarea-${id}`} note={note} />
-    </Container>
+    <Container>{/* <Input id={`textarea-${id}`} note={note} /> */}</Container>
   );
 };
 

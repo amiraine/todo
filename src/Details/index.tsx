@@ -6,6 +6,7 @@ import { TabProps, TabWindow } from "../Components";
 import Summary from "./Summary";
 import { BookOpen, Edit3 } from "react-feather";
 import Notes from "./Notes";
+import { ListItem } from "../types";
 
 export enum TabType {
   "Summary" = "Summary",
@@ -22,34 +23,36 @@ const Details: React.FC = () => {
   ];
   const [tab, setTab] = useState<string>(TabType.Summary);
   const [day, dayDispatch] = useDayData();
-  const { items, selected } = day;
-  const listItem = items[selected];
+  const { items: dayItems, selected: daySelected } = day;
+  const listData = dayItems[daySelected];
+  const { items: taskItems, selected: taskSelected, sort: taskSort } = listData;
+  const listItem = taskItems[taskSelected];
 
-  // // helpers
-  // const handleSaveTitle = (value: string) => {
-  //   const payload = {
-  //     ...items[selected],
-  //     value,
-  //   };
+  // helpers
+  const handleSaveTitle = (value: string) => {
+    const payload: ListItem = {
+      ...listItem,
+      value,
+    };
+    dayDispatch({ type: "UPDATE_TASK", payload });
+  };
 
-  //   listDispatch({ type: "UPDATE", payload });
-  // };
+  // todo fix
+  const handleUpdateNote = (note: string) => {
+    const payload: ListItem = {
+      ...listItem,
+      note,
+    };
 
-  // // todo fix
-  // const handleUpdateNote = (note: string) => {
-  //   const payload = {
-  //     ...items[selected],
-  //     note,
-  //   };
-
-  //   listDispatch({ type: "UPDATE", payload });
-  // };
+    dayDispatch({ type: "UPDATE_TASK", payload });
+  };
 
   useEffect(() => {
-    if (selected === "") {
+    if (taskSelected === "") {
       setTab(TabType.Summary);
     }
-  }, [selected]);
+  }, [taskSelected]);
+
   // conditional render
   const RenderedContent = () => {
     if (!listItem) {
@@ -57,11 +60,13 @@ const Details: React.FC = () => {
     }
     switch (tab) {
       case TabType.Summary:
-        return null;
-        // <Summary listItem={listItem} handleSaveTitle={handleSaveTitle} />
+        return (
+          <Summary listItem={listItem} handleSaveTitle={handleSaveTitle} />
+        );
       case TabType.Notes:
-        return null;
-        // <Notes listItem={listItem} handleUpdateNote={handleUpdateNote} />
+        return (
+          <Notes listItem={listItem} handleUpdateNote={handleUpdateNote} />
+        );
       default:
         return null;
     }

@@ -69,7 +69,7 @@ export const dayReducer = (state: DayData, action: Action): DayData => {
         items: { ...state.items, [state.selected]: selectedDay },
       };
     case "UPDATE_TASK":
-      //  task item
+      //  list item
       const todayItems = { ...state.items[state.selected].items };
       todayItems[payload.id] = payload;
       const updatedList: ListData = {

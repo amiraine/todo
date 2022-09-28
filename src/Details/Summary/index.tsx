@@ -36,8 +36,10 @@ const Summary: React.FC<SummaryProps> = (props) => {
       const input = document.getElementById(id);
       if (!input) return;
       setEditingTitle(true);
+      console.log(editingTitle);
       input.focus();
     } else {
+      console.log("what");
       setEditingTitle(false);
       setLocalTitle(title);
     }
@@ -63,7 +65,7 @@ const Summary: React.FC<SummaryProps> = (props) => {
     ? `${moment(created).format("LL")} - ${moment(due).fromNow()}`
     : "No due date set. Double-click to add one.";
   // todo add tooltip component
-
+  console.log(editingTitle);
   return (
     <Container>
       <InfoLine onDoubleClick={handleToggleTitleEdit} label="Task">
@@ -85,7 +87,7 @@ const Summary: React.FC<SummaryProps> = (props) => {
       </InfoLine>
       <InfoLine label="Created on">{creationDate}</InfoLine>
       <InfoLine onDoubleClick={handleToggleDateEdit} label="Due on">
-        {dueDate}
+        <Title>{dueDate}</Title>
       </InfoLine>
     </Container>
   );
