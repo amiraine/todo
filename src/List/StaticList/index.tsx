@@ -1,6 +1,6 @@
 import React from "react";
 import { UpdateKey } from "..";
-import { ListData, ListItem as ListItemType } from "../../types";
+import { ListData } from "../../types";
 import ListItem from "../ListItem";
 import { categorizeListItems } from "../utils";
 import { GroupWrapper, CategoryTitle } from "./styled";
@@ -49,6 +49,7 @@ const StaticList: React.FC<StaticListProps> = (props) => {
               const { id } = task;
               const isSelected = id === listSelected;
               const isEditable = id === editable;
+
               return (
                 <ListItem
                   key={id}
@@ -64,26 +65,6 @@ const StaticList: React.FC<StaticListProps> = (props) => {
                 />
               );
             })}
-            {/* {categoryListMap[key].map((listItem) => {
-              const { id } = listItem;
-              const isSelected = id === selected;
-              const isEditable = id === editable;
-
-              return (
-                <ListItem
-                  key={id}
-                  isDraggable={false}
-                  isSelected={isSelected}
-                  isEditable={isEditable}
-                  handleSelectTask={handleSelectTask}
-                  handleUpdateItem={handleUpdateItem}
-                  setEditable={setEditable}
-                  handleDeleteItem={handleDeleteItem}
-                  handleCopyItem={handleCopyItem}
-                  listItem={listItem}
-                />
-              );
-            })} */}
           </GroupWrapper>
         );
       })}
@@ -92,38 +73,3 @@ const StaticList: React.FC<StaticListProps> = (props) => {
 };
 
 export default StaticList;
-// {
-/* {localKeys.map((key) => {
-        const showTitle = localKeys.length > 1;
-
-        return (
-          <GroupWrapper key={key}>
-            {/* {categoryListMap[key].map((listItem) => {
-              const { id } = listItem;
-              const isSelected = id === selected;
-              const isEditable = id === editable;
-
-              return (
-                <ListItem
-                  key={id}
-                  isDraggable={false}
-                  isSelected={isSelected}
-                  isEditable={isEditable}
-                  handleSelectTask={handleSelectTask}
-                  handleUpdateItem={handleUpdateItem}
-                  setEditable={setEditable}
-                  handleDeleteItem={handleDeleteItem}
-                  handleCopyItem={handleCopyItem}
-                  listItem={listItem}
-                />
-              );
-            })} */
-// }
-// {
-/* </GroupWrapper> */
-// }
-// {
-/* ); */
-// }
-// })} */}
-//

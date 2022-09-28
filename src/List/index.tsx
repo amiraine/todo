@@ -70,7 +70,7 @@ const List: React.FC<ListProps> = () => {
     payload.sort = [...todaySort].filter((id) =>
       Object.keys(newItems).includes(id)
     );
-    payload.selected = daySelected;
+    payload.selected = payload.sort[0];
 
     dayDispatch({
       type: "ADD_DAY",
@@ -147,6 +147,16 @@ const List: React.FC<ListProps> = () => {
     if (currentIdx + 1 === daySort.length) {
       handleAddNewDay();
     } else {
+      // if editing, unfocus text input and clear editable
+      if (editable !== "") {
+        const activeEl = document.activeElement;
+        // unfocus text input
+        if (activeEl && activeEl instanceof HTMLElement) {
+          activeEl.blur();
+        }
+        setEditable("");
+      }
+      // then update state
       dayDispatch({
         type: "SET_SELECTED_DAY",
         payload: daySort[currentIdx + 1],
@@ -156,7 +166,18 @@ const List: React.FC<ListProps> = () => {
 
   const handleGoBack = () => {
     const currentIdx = daySort.indexOf(daySelected);
+    // do nothing if at the beginning of the list
     if (currentIdx === 0) return;
+    // if editing, unfocus text input and clear editable
+    if (editable !== "") {
+      const activeEl = document.activeElement;
+      // unfocus text input
+      if (activeEl && activeEl instanceof HTMLElement) {
+        activeEl.blur();
+      }
+      setEditable("");
+    }
+    // then update state
     dayDispatch({ type: "SET_SELECTED_DAY", payload: daySort[currentIdx - 1] });
   };
 
@@ -191,6 +212,7 @@ const List: React.FC<ListProps> = () => {
       }
     }
   };
+
   // applies to tab and spacebar
   const handleLineChange = () => {
     // do nothing if not editing
@@ -245,6 +267,7 @@ const List: React.FC<ListProps> = () => {
   useKeyboardShortcut({ key: "ArrowDown" }, handleDownArrow);
   useKeyboardShortcut({ key: "ArrowUp" }, handleUpArrow);
 
+  // memos
   const disableNext = useMemo(() => {
     const tomorrow = moment().add(1, "day").format("L");
     return daySelected === tomorrow;
