@@ -7,5 +7,6 @@ export const GroupWrapper = styled.div`
 `;
 
 export const CategoryTitle = styled(motion.span)`
+  display: block;
   user-select: none;
 `;

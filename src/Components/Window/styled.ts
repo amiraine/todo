@@ -6,8 +6,8 @@ export const Container = styled.div<{
 }>`
   box-sizing: border-box;
   height: 100%;
-  width: 100%;
   display: flex;
+  width: 100%;
   flex-direction: column;
   border: 2px solid white;
   color: white;
@@ -56,10 +56,7 @@ export const Content = styled.div`
   padding: 32px;
   max-width: 50vw;
   box-sizing: border-box;
-  position: relative;
-  height: inherit;
-  grid-area: body;
-  max-height: calc(40vh - 38px);
+  height: -webkit-fill-available;
 `;
 
 export const Text = styled.span`

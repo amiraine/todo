@@ -36,7 +36,7 @@ interface IIndicatorContainerProps {
   hasLabel: boolean;
 }
 export const IndicatorContainer = styled.div<IIndicatorContainerProps>`
-  margin: 0 10px;
+  margin: 0 10px 0 0;
   display: flex;
   align-items: center;
   border: 2px solid #171717;

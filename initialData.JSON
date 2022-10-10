@@ -1,0 +1,120 @@
+{
+  "items": {
+    "09/27/2022": {
+      "items": {
+        "a711664b-e246-4108-a058-84fe00fb98a1": {
+          "id": "a711664b-e246-4108-a058-84fe00fb98a1",
+          "value": "Water plants",
+          "status": "Not Started",
+          "category": "Home",
+          "created": "2022-09-20T00:00:00-07:00"
+        },
+        "648ff21c-16c3-4e9d-b67a-97a78f8acaca": {
+          "id": "648ff21c-16c3-4e9d-b67a-97a78f8acaca",
+          "value": "Feed cats",
+          "status": "Complete",
+          "category": "Home",
+          "created": "2022-09-28T11:22:18-07:00"
+        },
+        "21e7fd54-1d90-4322-9d13-7b10296eea19": {
+          "id": "21e7fd54-1d90-4322-9d13-7b10296eea19",
+          "value": "Send cousin birthday card",
+          "created": "Wed Sep 28 2022",
+          "status": "Not Started",
+          "category": "Urgent",
+          "due": "2022-09-30T11:22:18-07:00"
+        }
+      },
+      "sort": [
+        "a711664b-e246-4108-a058-84fe00fb98a1",
+        "648ff21c-16c3-4e9d-b67a-97a78f8acaca",
+        "21e7fd54-1d90-4322-9d13-7b10296eea19"
+      ],
+      "selected": "a711664b-e246-4108-a058-84fe00fb98a1"
+    },
+    "09/28/2022": {
+      "items": {
+        "a711664b-e246-4108-a058-84fe00fb98a1": {
+          "id": "a711664b-e246-4108-a058-84fe00fb98a1",
+          "value": "Water plants",
+          "category": "Home",
+          "created": "2022-09-20T00:00:00-07:00"
+        },
+        "21e7fd54-1d90-4322-9d13-7b10296eea19": {
+          "id": "21e7fd54-1d90-4322-9d13-7b10296eea19",
+          "value": "Send cousin birthday card",
+          "created": "2022-09-28T11:22:18-07:00",
+          "status": "Complete",
+          "category": "Urgent",
+          "due": "2022-09-30T11:22:18-07:00"
+        },
+        "b2e4fa15-81cf-4f67-b85d-86c90dcb9f54": {
+          "id": "b2e4fa15-81cf-4f67-b85d-86c90dcb9f54",
+          "value": "Meal prep",
+          "created": "2022-09-28T11:22:18-07:00",
+          "status": "Complete",
+          "category": "Home",
+          "due": "2022-09-29T11:22:18-07:00"
+        },
+        "17746fec-3a20-4395-a6f5-457569d17b2a": {
+          "id": "17746fec-3a20-4395-a6f5-457569d17b2a",
+          "value": "Take out trash",
+          "created": "2022-09-28T11:22:18-07:00",
+          "status": "Not Started",
+          "category": "Home"
+        },
+        "93596b9f-8bbb-412b-86b1-4800d6787586": {
+          "id": "93596b9f-8bbb-412b-86b1-4800d6787586",
+          "value": "Work on ticket 17465",
+          "created": "2022-09-28T11:22:18-07:00",
+          "status": "In Progress",
+          "category": "Work",
+          "due": "2022-10-01T11:22:18-07:00"
+        }
+      },
+      "sort": [
+        "a711664b-e246-4108-a058-84fe00fb98a1",
+        "21e7fd54-1d90-4322-9d13-7b10296eea19",
+        "b2e4fa15-81cf-4f67-b85d-86c90dcb9f54",
+        "17746fec-3a20-4395-a6f5-457569d17b2a",
+        "93596b9f-8bbb-412b-86b1-4800d6787586"
+      ],
+      "selected": "a711664b-e246-4108-a058-84fe00fb98a1"
+    },
+    "09/29/2022": {
+      "id": "09/29/2022",
+      "items": {
+        "a711664b-e246-4108-a058-84fe00fb98a1": {
+          "id": "a711664b-e246-4108-a058-84fe00fb98a1",
+          "value": "Water plants",
+          "category": "Home",
+          "created": "2022-09-20T00:00:00-07:00"
+        },
+        "17746fec-3a20-4395-a6f5-457569d17b2a": {
+          "id": "17746fec-3a20-4395-a6f5-457569d17b2a",
+          "value": "Take out trash",
+          "created": "2022-09-28T11:22:18-07:00",
+          "status": "Not Started",
+          "category": "Home"
+        },
+        "93596b9f-8bbb-412b-86b1-4800d6787586": {
+          "id": "93596b9f-8bbb-412b-86b1-4800d6787586",
+          "value": "Work on ticket 17465",
+          "created": "2022-09-28T11:22:18-07:00",
+          "status": "In Progress",
+          "category": "Work",
+          "due": "2022-10-01T11:22:18-07:00"
+        }
+      },
+      "sort": [
+        "a711664b-e246-4108-a058-84fe00fb98a1",
+        "17746fec-3a20-4395-a6f5-457569d17b2a",
+        "93596b9f-8bbb-412b-86b1-4800d6787586"
+      ],
+      "selected": "a711664b-e246-4108-a058-84fe00fb98a1"
+    }
+  },
+  "sort": ["09/27/2022", "09/28/2022", "09/29/2022"],
+  "selected": "09/28/2022",
+  "categories": ["Home", "Work", "Hobby", "Urgent", "Cleaning"]
+}

@@ -16,7 +16,7 @@ export const yesterdayData: ListData = {
       value: "Water plants",
       status: TaskState["Not Started"],
       category: initialCategories[0],
-      created: moment("2022-09-20", "YYYY-MM-DD").format(),
+      created: moment().subtract(1, "day").format(),
     },
     "648ff21c-16c3-4e9d-b67a-97a78f8acaca": {
       id: "648ff21c-16c3-4e9d-b67a-97a78f8acaca",
@@ -28,7 +28,7 @@ export const yesterdayData: ListData = {
     "21e7fd54-1d90-4322-9d13-7b10296eea19": {
       id: "21e7fd54-1d90-4322-9d13-7b10296eea19",
       value: "Send cousin birthday card",
-      created: new Date().toDateString(),
+      created: moment().format(),
       status: TaskState["Not Started"],
       category: initialCategories[3],
       due: moment().add(2, "day").format(),
@@ -49,7 +49,7 @@ export const todayData: ListData = {
       value: "Water plants",
       status: TaskState["Done"],
       category: initialCategories[0],
-      created: moment("2022-09-20", "YYYY-MM-DD").format(),
+      created: moment().subtract(1, "day").format(),
     },
     "21e7fd54-1d90-4322-9d13-7b10296eea19": {
       id: "21e7fd54-1d90-4322-9d13-7b10296eea19",
@@ -127,9 +127,9 @@ export const tomorrowData: ListData = {
   selected: "b2e4fa15-81cf-4f67-b85d-86c90dcb9f54",
 };
 
-const yesterday = moment().subtract(1, "day").format("L");
-const today = moment().format("L");
-// const tomorrow = moment().add(1, "day").format("L");
+const yesterday = moment().subtract(1, "day").format("MM-DD-YYYY");
+const today = moment().format("MM-DD-YYYY");
+const tomorrow = moment().add(1, "day").format("MM-DD-YYYY");
 
 export const initialData: DayData = {
   items: {
@@ -137,7 +137,7 @@ export const initialData: DayData = {
     [today]: todayData,
     // [tomorrow]: tomorrowData,
   },
-  sort: [yesterday, today],
+  sort: [yesterday, today, tomorrow],
   selected: today,
 };
 

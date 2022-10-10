@@ -31,6 +31,7 @@ const StaticList: React.FC<StaticListProps> = (props) => {
   const listItemsByCategory = categorizeListItems(listItems);
 
   // todo make this a collapsible drawer
+  // todo fix the combo of "group by category" and "hide completed"
   return (
     <>
       {Object.keys(listItemsByCategory).map((key, i) => {
@@ -38,8 +39,8 @@ const StaticList: React.FC<StaticListProps> = (props) => {
           <GroupWrapper key={key}>
             {Object.keys(listItemsByCategory).length > 1 && (
               <CategoryTitle
-                initial={{ opacity: 0, height: "0px" }}
-                animate={{ opacity: 1, height: "12px" }}
+                initial={{ opacity: 0, height: "0px", marginTop: "0" }}
+                animate={{ opacity: 1, height: "12px", marginTop: "15px" }}
                 exit={{ opacity: 0, height: "0px" }}
               >
                 {key}
