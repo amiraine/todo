@@ -245,6 +245,7 @@ const List: React.FC<ListProps> = () => {
   };
 
   const handleUpArrow = () => {
+    // todo fix but with "hidecompletedtasks" (you can select a task that has been filtered out)
     const selectedIndex = taskSort.indexOf(taskSelected);
     if (selectedIndex === -1 || selectedIndex === 0) {
       handleSelectTask(taskSort[taskSort.length - 1]);

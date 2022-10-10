@@ -7,6 +7,7 @@ export const categorizeListItems = (
   return listItems.reduce((acc, next) => {
     const { category, status } = next;
 
+    // short circuit here if needed
     if (hideCompleted && status === TaskState.Complete) {
       return acc;
     }
