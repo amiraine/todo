@@ -10,6 +10,4 @@ export const Container = styled.div`
   }
 `;
 
-export const ListWrapper = styled.div`
-  padding: 32px 0;
-`;
+export const ListWrapper = styled.div``;

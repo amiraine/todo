@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { ListItem } from "../../types";
-import { Container, Input } from "./styled";
+import { Container } from "./styled";
 
 interface NotesProps {
-  listItem: ListItem;
+  listItem?: ListItem;
   handleUpdateNote: (value: string) => void;
 }
 const Notes: React.FC<NotesProps> = (props) => {
-  const {
-    listItem: { id, note = "" },
-    // handleUpdateNote,
-  } = props;
+  // const {
+  //   // listItem: { id = "", note = "" },
+  //   // handleUpdateNote,
+  // } = props;
 
   // todo debug later
   // const [localValue, setLocalValue] = useState<string>("");
@@ -30,9 +30,7 @@ const Notes: React.FC<NotesProps> = (props) => {
   // }, [note, setLocalValue]);
 
   return (
-    <Container>
-      <Input id={`textarea-${id}`} note={note} />
-    </Container>
+    <Container>{/* <Input id={`textarea-${id}`} note={note} /> */}</Container>
   );
 };
 

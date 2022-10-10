@@ -1,15 +1,15 @@
 import React from "react";
 import { UpdateKey } from "..";
-import { ListItem as ListItemType } from "../../types";
+import { ListData } from "../../types";
 import ListItem from "../ListItem";
+import { categorizeListItems } from "../utils";
 import { GroupWrapper, CategoryTitle } from "./styled";
 
 interface StaticListProps {
-  localKeys: string[];
-  categoryListMap: { [category: string]: ListItemType[] };
-  selected: string;
+  listData: ListData;
   editable: string;
-  handleSelectItem: (id: string) => void;
+  filterCompleteItems: boolean;
+  handleSelectTask: (id: string) => void;
   handleUpdateItem: (id: string, key: UpdateKey, val: any) => void;
   setEditable: (id: string) => void;
   handleDeleteItem: (id: string) => void;
@@ -18,36 +18,37 @@ interface StaticListProps {
 
 const StaticList: React.FC<StaticListProps> = (props) => {
   const {
-    localKeys,
-    categoryListMap,
+    listData: { sort, items, selected: listSelected },
     handleCopyItem,
-    handleSelectItem,
+    handleSelectTask,
     handleUpdateItem,
     setEditable,
     handleDeleteItem,
-    selected,
     editable,
   } = props;
+
+  const listItems = sort.map((id) => items[id]);
+  const listItemsByCategory = categorizeListItems(listItems);
+
+  // todo make this a collapsible drawer
+  // todo fix the combo of "group by category" and "hide completed"
   return (
     <>
-      {localKeys.map((key) => {
-        const showTitle = localKeys.length > 1;
-
+      {Object.keys(listItemsByCategory).map((key, i) => {
         return (
           <GroupWrapper key={key}>
-            {showTitle && (
+            {Object.keys(listItemsByCategory).length > 1 && (
               <CategoryTitle
-                initial={{ opacity: 0, height: "0px" }}
-                animate={{ opacity: 1, height: "12px" }}
+                initial={{ opacity: 0, height: "0px", marginTop: "0" }}
+                animate={{ opacity: 1, height: "12px", marginTop: "15px" }}
                 exit={{ opacity: 0, height: "0px" }}
               >
                 {key}
               </CategoryTitle>
             )}
-
-            {categoryListMap[key].map((listItem) => {
-              const { id } = listItem;
-              const isSelected = id === selected;
+            {listItemsByCategory[key].map((task) => {
+              const { id } = task;
+              const isSelected = id === listSelected;
               const isEditable = id === editable;
 
               return (
@@ -56,12 +57,12 @@ const StaticList: React.FC<StaticListProps> = (props) => {
                   isDraggable={false}
                   isSelected={isSelected}
                   isEditable={isEditable}
-                  handleSelectItem={handleSelectItem}
+                  handleSelectTask={handleSelectTask}
                   handleUpdateItem={handleUpdateItem}
                   setEditable={setEditable}
                   handleDeleteItem={handleDeleteItem}
                   handleCopyItem={handleCopyItem}
-                  listItem={listItem}
+                  listItem={task}
                 />
               );
             })}

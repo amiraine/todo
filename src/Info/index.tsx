@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Globe, Settings, Star, Zap } from "react-feather";
+import { BarChart2, Settings, Star, Zap } from "react-feather";
 import { TabProps, TabWindow } from "../Components";
 import Credits from "./Credits";
 import Quickstart from "./Quickstart";
@@ -15,7 +15,7 @@ const Info: React.FC = () => {
   const [tab, setTab] = useState<string>(TabType.Quickstart);
   const tabs: TabProps[] = [
     { name: TabType.Quickstart, icon: <Zap size={18} /> },
-    { name: TabType.Stats, icon: <Globe size={18} /> },
+    { name: TabType.Stats, icon: <BarChart2 size={18} /> },
     {
       name: TabType.Credits,
       icon: <Star size={18} />,

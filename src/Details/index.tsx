@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 // Context
-import { useListData } from "../Context/ListDataContext";
+import { useDayData } from "../Context";
 // Components
 import { TabProps, TabWindow } from "../Components";
 import Summary from "./Summary";
 import { BookOpen, Edit3 } from "react-feather";
 import Notes from "./Notes";
+import { ListItem } from "../types";
 
 export enum TabType {
   "Summary" = "Summary",
@@ -21,35 +22,37 @@ const Details: React.FC = () => {
     { name: TabType.Notes, icon: <Edit3 size={18} /> },
   ];
   const [tab, setTab] = useState<string>(TabType.Summary);
-  const [listData, listDispatch] = useListData();
-  const { items, selected } = listData;
-  const listItem = items[selected];
+  const [day, dayDispatch] = useDayData();
+  const { items: dayItems, selected: daySelected } = day;
+  const listData = dayItems[daySelected];
+  const { items: taskItems, selected: taskSelected } = listData;
+  const listItem = taskItems[taskSelected];
 
   // helpers
   const handleSaveTitle = (value: string) => {
-    const payload = {
-      ...items[selected],
+    const payload: ListItem = {
+      ...listItem,
       value,
     };
-
-    listDispatch({ type: "UPDATE", payload });
+    dayDispatch({ type: "UPDATE_TASK", payload });
   };
 
   // todo fix
   const handleUpdateNote = (note: string) => {
-    const payload = {
-      ...items[selected],
+    const payload: ListItem = {
+      ...listItem,
       note,
     };
 
-    listDispatch({ type: "UPDATE", payload });
+    dayDispatch({ type: "UPDATE_TASK", payload });
   };
 
   useEffect(() => {
-    if (selected === "") {
+    if (taskSelected === "") {
       setTab(TabType.Summary);
     }
-  }, [selected]);
+  }, [taskSelected]);
+
   // conditional render
   const RenderedContent = () => {
     if (!listItem) {

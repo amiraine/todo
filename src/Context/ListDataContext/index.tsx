@@ -1,98 +1,132 @@
 import React, { createContext, useContext } from "react";
-import { ListData } from "../../types";
-// types
+import { DayData, ListData, ListItem } from "../../types";
 
-type ActionType = "ADD" | "REMOVE" | "UPDATE" | "SETACTIVE" | "REORDER";
+type ActionType =
+  | "ADD_DAY"
+  | "ADD_TASK"
+  | "UPDATE_TASK"
+  | "SET_SELECTED_DAY"
+  | "SET_SELECTED_TASK"
+  | "DELETE_TASK"
+  | "REORDER_TASKS";
 
-export const ListActions: { [key in string]: ActionType } = {
-  ADD: "ADD",
-  UPDATE: "UPDATE",
-  REMOVE: "REMOVE",
-  SETACTIVE: "SETACTIVE",
-  REORDER: "REORDER",
-};
-
-type ListAction = {
+type Action = {
   type: ActionType;
-  payload?: any;
+  payload: any;
 };
 
-type UseListSignature = () => [ListData, React.Dispatch<ListAction>];
+type UseDataSignature = () => [DayData, React.Dispatch<Action>];
 
-export const listContext = createContext<
+export const DayContext = createContext<
   | {
-      todoList: ListData;
-      updateTodoList: React.Dispatch<ListAction>;
+      data: DayData;
+      updateData: React.Dispatch<Action>;
     }
   | undefined
 >(undefined);
 
-export const listReducer = (state: ListData, action: ListAction) => {
+export const dayReducer = (state: DayData, action: Action): DayData => {
+  const { payload } = action;
+  const selectedDay = { ...state.items[state.selected] };
+
   switch (action.type) {
-    case "REORDER": {
-      // payload is string[]
+    // Day Level
+    case "ADD_DAY":
+      // takes a ListData obk
       return {
         ...state,
-        sort: [...action.payload],
-      };
-    }
-    case "ADD":
-      // payload is ListItem
-      return {
-        ...state,
-        selected: action.payload.id,
+        selected: payload.id,
         items: {
           ...state.items,
-          [action.payload.id]: {
-            ...action.payload,
+          [payload.id]: {
+            ...payload,
           },
         },
-        sort: [...state.sort, action.payload.id],
+        sort: [...state.sort, payload.id],
       };
-    case "UPDATE": {
-      // payload is ListItem
-      const copy = { ...state.items };
-      copy[action.payload.id] = action.payload;
+    case "SET_SELECTED_DAY":
+      // payload: id string
       return {
         ...state,
-        items: { ...copy },
+        selected: payload,
+      };
+    // Task Level
+    case "ADD_TASK":
+      // payload: ListItem
+      selectedDay.items = { ...selectedDay.items, [payload.id]: payload };
+      selectedDay.sort = [...selectedDay.sort, payload.id];
+      selectedDay.selected = payload.id;
+
+      return {
+        ...state,
+        items: { ...state.items, [state.selected]: selectedDay },
+      };
+    case "REORDER_TASKS":
+      // payload: array of id strings
+      selectedDay.sort = payload;
+      return {
+        ...state,
+        items: { ...state.items, [state.selected]: selectedDay },
+      };
+    case "UPDATE_TASK":
+      //  payload: list item
+      const todayItems: { [key: string]: ListItem } = {
+        ...state.items[state.selected].items,
+      };
+      todayItems[payload.id] = payload;
+      const updatedList: ListData = {
+        items: todayItems,
+        sort: selectedDay.sort,
+        selected: selectedDay.selected,
+      };
+      return {
+        ...state,
+        items: { ...state.items, [state.selected]: updatedList },
+      };
+    case "DELETE_TASK":
+      // payload: string id
+      const newSort = selectedDay.sort.filter((id) => {
+        return id !== payload;
+      });
+      selectedDay.sort = newSort;
+      const newItems = newSort.reduce((acc, next) => {
+        const task = selectedDay.items[next];
+        return {
+          ...acc,
+          [task.id]: task,
+        };
+      }, {});
+      selectedDay.items = newItems;
+      return {
+        ...state,
+        items: { ...state.items, [state.selected]: selectedDay },
+      };
+    case "SET_SELECTED_TASK": {
+      selectedDay.selected = payload;
+      return {
+        ...state,
+        items: { ...state.items, [state.selected]: selectedDay },
       };
     }
-    case "REMOVE":
-      // payload is listItem id
-      const copy = { ...state.items };
-      delete copy[action.payload];
-      const activeId = Object.keys(copy)[Object.keys(copy).length - 1];
-      const sortCopy = [...state.sort];
-      const itemIndex = sortCopy.findIndex((id) => id === action.payload);
-      sortCopy.splice(itemIndex, 1);
-      return {
-        ...state,
-        items: { ...copy },
-        selected: activeId,
-        sort: sortCopy,
-      };
-    case "SETACTIVE":
-      // payload is listItem id
-      return { ...state, selected: action.payload };
     default:
+      console.error("Unexpected action type: ", action.type);
       return { ...state };
   }
 };
 
-export const useListData: UseListSignature = () => {
-  const context = useContext(listContext);
+export const useDayData: UseDataSignature = () => {
+  const context = useContext(DayContext);
 
   if (context) {
     const {
-      todoList = {
+      data = {
         selected: "",
         items: {},
         sort: [],
       },
-      updateTodoList,
+      updateData,
     } = context;
-    return [todoList, updateTodoList];
+    return [data, updateData];
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   return [

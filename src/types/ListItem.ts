@@ -13,6 +13,7 @@ export interface ListItem {
   due?: string;
   category: string | null;
   note?: string;
+  effort?: number;
 }
 
 export interface ListData extends BaseMap<ListItem> {}

@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const InfoLine = styled.div<{ label: string }>`
+export const InfoLine = styled.div<{
+  label: string;
+  onClick?: any;
+  onDoubleClick?: any;
+}>`
   width: 100%;
   box-sizing: border-box;
   border-bottom: 2px solid #1e1e1e;
@@ -12,6 +16,7 @@ export const InfoLine = styled.div<{ label: string }>`
   margin: 28px 0 0 0;
   position: relative;
   font-size: 12px;
+  z-index: 50;
 
   &:before {
     position: absolute;
@@ -20,10 +25,26 @@ export const InfoLine = styled.div<{ label: string }>`
     font-size: 10px;
     left: 5px;
   }
+
+  cursor: ${({ onClick, onDoubleClick }) =>
+    onClick !== undefined || onDoubleClick !== undefined
+      ? "pointer"
+      : "default"};
+  input {
+    &:hover {
+      cursor: inherit;
+    }
+    &:active,
+    &:focus {
+      cursor: text;
+    }
+  }
 `;
 
 export const Container = styled.div`
   padding: 24px;
+  position: relative;
+  z-index: 20;
 
   ${InfoLine} {
     &:first-of-type {
@@ -44,16 +65,25 @@ export const Input = styled.input`
   padding: 4px 8px 0;
   margin: 0 8px 4px 0;
 
-  background: #debcfa50;
+  &:active {
+    background: #debcfa50;
+  }
+  &:disabled {
+    user-select: none;
+  }
 `;
 
 export const Title = styled.span`
   padding: 4px 8px;
+  user-select: none;
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
+  button:first-of-type {
+    margin-right: 5px;
+  }
 `;
 
 export const IconButton = styled.button`
@@ -63,4 +93,7 @@ export const IconButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  &:hover {
+    color: pink;
+  }
 `;
