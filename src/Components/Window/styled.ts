@@ -61,4 +61,5 @@ export const Content = styled.div`
 
 export const Text = styled.span`
   font-family: "Press Start 2P", sans-serif;
+  user-select: none;
 `;

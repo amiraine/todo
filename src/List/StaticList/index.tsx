@@ -25,13 +25,16 @@ const StaticList: React.FC<StaticListProps> = (props) => {
     setEditable,
     handleDeleteItem,
     editable,
+    filterCompleteItems,
   } = props;
 
   const listItems = sort.map((id) => items[id]);
-  const listItemsByCategory = categorizeListItems(listItems);
+  const listItemsByCategory = categorizeListItems(
+    listItems,
+    filterCompleteItems
+  );
 
   // todo make this a collapsible drawer
-  // todo fix the combo of "group by category" and "hide completed"
   return (
     <>
       {Object.keys(listItemsByCategory).map((key, i) => {

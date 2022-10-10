@@ -1,10 +1,15 @@
-import { ListItem } from "../types";
+import { ListItem, TaskState } from "../types";
 
 export const categorizeListItems = (
-  listItems: ListItem[]
+  listItems: ListItem[],
+  hideCompleted: boolean
 ): { [category: string]: ListItem[] } => {
   return listItems.reduce((acc, next) => {
-    const { category } = next;
+    const { category, status } = next;
+
+    if (hideCompleted && status === TaskState.Complete) {
+      return acc;
+    }
 
     if (!category) {
       // check if there is already an array for items with no categories
