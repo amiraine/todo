@@ -29,3 +29,9 @@ export const categorizeListItems = (
     };
   }, {});
 };
+
+export const stateColorMap = {
+  [TaskState.Complete]: "#7DD181",
+  [TaskState["In Progress"]]: "#5AD2F4",
+  [TaskState["Not Started"]]: "#1e1e1e",
+};
