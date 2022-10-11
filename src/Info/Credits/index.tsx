@@ -1,6 +1,7 @@
 import React from "react";
 import { GitHub } from "../../assets/GitHub";
 import { LinkedIn } from "../../assets/LinkedIn";
+import { palette } from "../../utils";
 import {
   Account,
   AccountName,
@@ -24,11 +25,11 @@ const Credits: React.FC = () => {
       </HeaderGroup>
       <InfoGroup>
         <Account href="https://github.com/amiraine">
-          <GitHub color="#1e1e1e" />
+          <GitHub color={palette.darkText} />
           <AccountName>/amiraine</AccountName>
         </Account>
         <Account href="https://linkedin.com/in/ameliah-rc">
-          <LinkedIn color="#1e1e1e" />
+          <LinkedIn color={palette.darkText} />
           <AccountName>/ameliah-rc</AccountName>
         </Account>
       </InfoGroup>

@@ -23,4 +23,5 @@ export const palette = {
   notStarted: colors.eerieBlack,
   inProgress: colors.vividSkyBlue,
   completed: colors.mantis,
+  focusOutline: colors.cyberYellow,
 };
