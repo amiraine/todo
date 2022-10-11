@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { palette } from "../../utils";
 
 type CheckedProps = {
   disabled: boolean;
@@ -10,7 +11,7 @@ export const Container = styled.div<CheckedProps>`
   cursor: pointer;
   user-select: none;
   align-items: center;
-  border: 2px solid #1e1e1e;
+  border: 2px solid ${palette.darkText};
   border-radius: 3px;
   transition: 0.2s all ease-in;
   width: min-content;
@@ -44,7 +45,7 @@ export const PseudoCheckbox = styled.button`
 `;
 
 export const IconWrapper = styled.div`
-  border: 2px solid #1e1e1e;
+  border: 2px solid ${palette.darkText};
   border-radius: 3px;
   display: flex;
   align-items: center;

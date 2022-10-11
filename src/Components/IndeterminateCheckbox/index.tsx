@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Check, Minus } from "react-feather";
 import { TaskState } from "../../types";
+import { palette } from "../../utils";
 import { Item, Menu } from "../Menu";
 
 import { Container, IconWrapper, PseudoCheckbox } from "./styled";
@@ -50,7 +51,7 @@ export const IndeterminateCheckbox: React.FC<IndeterminateCheckboxProps> = (
       <Menu
         backgroundColor="#fff"
         items={items}
-        color="#1e1e1e"
+        color={palette.darkText}
         placement="TOP_CENTER"
         arrow
       >
