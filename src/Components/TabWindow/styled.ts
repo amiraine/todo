@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { palette } from "../../utils";
 
 export const Container = styled.div`
   height: 100%;
@@ -56,7 +57,7 @@ export const Tab = styled.button<{
   padding: 0.3em 1.5em 0;
   display: flex;
   align-items: center;
-  color: ${({ selected }) => (selected ? "#FFF" : "#1e1e1e")};
+  color: ${({ selected }) => (selected ? palette.lightText : palette.darkText)};
   svg {
     display: block;
     max-width: 18px;
