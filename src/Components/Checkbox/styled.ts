@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { palette } from "../../utils";
 
 type CheckedProps = {
   checked: boolean;
@@ -11,7 +12,7 @@ export const Container = styled.label<CheckedProps>`
   cursor: pointer;
   user-select: none;
   align-items: center;
-  color: #171717;
+  color: ${palette.darkText};
   transition: 0.2s all ease-in;
   ${({ disabled }) =>
     disabled
@@ -39,7 +40,7 @@ export const IndicatorContainer = styled.div<IIndicatorContainerProps>`
   margin: 0 10px 0 0;
   display: flex;
   align-items: center;
-  border: 2px solid #171717;
+  border: 2px solid ${palette.darkText};
   height: 18px;
   width: 18px;
   border-radius: 3px;
