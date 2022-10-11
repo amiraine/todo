@@ -1,4 +1,24 @@
 import styled from "styled-components";
+import { stateColorMap } from "../../List/utils";
+import { TaskState } from "../../types";
+import { palette } from "../../utils";
+
+export const TitleGroup = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ${TitleGroup} {
+    &:first-of-type {
+      flex: 2;
+      margin-right: 10px;
+    }
+  }
+`;
 
 export const InfoLine = styled.div<{
   label: string;
@@ -7,8 +27,8 @@ export const InfoLine = styled.div<{
 }>`
   width: 100%;
   box-sizing: border-box;
-  border-bottom: 2px solid #1e1e1e;
-  color: #1e1e1e;
+  border-bottom: 2px solid ${palette.darkText};
+  color: ${palette.darkText};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -62,20 +82,26 @@ export const Input = styled.input`
   height: 100%;
   width: 100%;
   background: transparent;
-  padding: 4px 8px 0;
-  margin: 0 8px 4px 0;
+  margin: 0 15px 0 0;
+  font-weight: bold;
+  font-size: 1.1rem;
 
-  &:active {
+  &:active,
+  &:focus {
     background: #debcfa50;
   }
   &:disabled {
     user-select: none;
+    color: palette.darkText;
   }
 `;
 
-export const Title = styled.span`
+export const Text = styled.span<{ state?: TaskState }>`
   padding: 4px 8px;
   user-select: none;
+  color: ${({ state }) => (!!state ? "#FFF" : palette.darkText)};
+  background: ${({ state }) =>
+    !!state ? stateColorMap[state] : "transparent"};
 `;
 
 export const ButtonContainer = styled.div`
@@ -93,7 +119,40 @@ export const IconButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   &:hover {
-    color: pink;
+    color: ${palette.iconHover};
+  }
+  &:active {
+    &:before {
+      content: "";
+      position: absolute;
+      height: calc(100% + 4px);
+      width: calc(100% + 4px);
+      left: -4px;
+      top: -4px;
+      border: 2px solid ${palette.focusOutline};
+      border-radius: 3px;
+    }
+  }
+`;
+
+export const StatusText = styled.span<{ state: TaskState }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 8px;
+  user-select: none;
+  color: ${({ state }) => (!!state ? palette.lightText : palette.darkText)};
+  background: ${({ state }) =>
+    !!state ? stateColorMap[state] : "transparent"};
+  border-radius: 3px;
+
+  > div {
+    margin-left: 10px;
+    border-color: #fff;
+    svg {
+      stroke: white;
+    }
   }
 `;

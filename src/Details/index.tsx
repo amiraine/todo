@@ -6,7 +6,7 @@ import { TabProps, TabWindow } from "../Components";
 import Summary from "./Summary";
 import { BookOpen, Edit3 } from "react-feather";
 import Notes from "./Notes";
-import { ListItem } from "../types";
+import { ListItem, TaskState } from "../types";
 
 export enum TabType {
   "Summary" = "Summary",
@@ -25,6 +25,7 @@ const Details: React.FC = () => {
   const [day, dayDispatch] = useDayData();
   const { items: dayItems, selected: daySelected } = day;
   const listData = dayItems[daySelected];
+  // todo: investigate why "NotStarted" sometimes comes in as undefined.
   const { items: taskItems, selected: taskSelected } = listData;
   const listItem = taskItems[taskSelected];
 
@@ -47,6 +48,14 @@ const Details: React.FC = () => {
     dayDispatch({ type: "UPDATE_TASK", payload });
   };
 
+  const handleUpdateTaskState = (state: TaskState) => {
+    const payload = {
+      ...listItem,
+      status: state,
+    };
+    dayDispatch({ type: "UPDATE_TASK", payload });
+  };
+
   useEffect(() => {
     if (taskSelected === "") {
       setTab(TabType.Summary);
@@ -61,7 +70,11 @@ const Details: React.FC = () => {
     switch (tab) {
       case TabType.Summary:
         return (
-          <Summary listItem={listItem} handleSaveTitle={handleSaveTitle} />
+          <Summary
+            listItem={listItem}
+            handleSaveTitle={handleSaveTitle}
+            handleUpdateStatus={handleUpdateTaskState}
+          />
         );
       case TabType.Notes:
         return (

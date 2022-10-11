@@ -1,24 +1,36 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Save, Slash } from "react-feather";
-import { ListItem } from "../../types";
+import { IndeterminateCheckbox } from "../../Components";
+import { ListItem, TaskState } from "../../types";
 import {
   ButtonContainer,
   Container,
   IconButton,
   InfoLine,
   Input,
-  Title,
+  StatusText,
+  Text,
+  TitleContainer,
+  TitleGroup,
 } from "./styled";
 
 interface SummaryProps {
   listItem: ListItem;
   handleSaveTitle: (value: string) => void;
+  handleUpdateStatus: (state: TaskState) => void;
 }
 const Summary: React.FC<SummaryProps> = (props) => {
   const {
-    listItem: { value: title, id, created, due },
+    listItem: {
+      value: title,
+      id,
+      created,
+      due,
+      status = TaskState["Not Started"],
+    },
     handleSaveTitle,
+    handleUpdateStatus,
   } = props;
 
   const [localTitle, setLocalTitle] = useState<string>("");
@@ -62,33 +74,44 @@ const Summary: React.FC<SummaryProps> = (props) => {
   const dueDate = due
     ? `${moment(created).format("LL")} - ${moment(due).fromNow()}`
     : "No due date set. Double-click to add one.";
-  // todo add tooltip component
 
+  // todo add tooltip component
   return (
     <Container>
-      <InfoLine onDoubleClick={handleToggleTitleEdit} label="Task">
-        <Input
-          id={id}
-          value={localTitle}
-          onChange={updateLocalTitle}
-          disabled={!editingTitle}
-        />
-        {editingTitle && (
-          <ButtonContainer>
-            <IconButton onClick={() => handleSaveTitle(localTitle)}>
-              <Save />
-            </IconButton>
-            <IconButton onClick={handleCancelEdit}>
-              <Slash />
-            </IconButton>
-          </ButtonContainer>
-        )}
-      </InfoLine>
+      <TitleContainer>
+        <TitleGroup onDoubleClick={handleToggleTitleEdit}>
+          <Input
+            id={id}
+            value={localTitle}
+            onChange={updateLocalTitle}
+            disabled={!editingTitle}
+          />
+          {editingTitle && (
+            <ButtonContainer>
+              <IconButton onClick={() => handleSaveTitle(localTitle)}>
+                <Save />
+              </IconButton>
+              <IconButton onClick={handleCancelEdit}>
+                <Slash />
+              </IconButton>
+            </ButtonContainer>
+          )}
+        </TitleGroup>
+        <TitleGroup>
+          <StatusText state={status}>
+            {status}
+            <IndeterminateCheckbox
+              value={status}
+              onChange={handleUpdateStatus}
+            />
+          </StatusText>
+        </TitleGroup>
+      </TitleContainer>
       <InfoLine label="Created on">
-        <Title>{creationDate}</Title>
+        <Text>{creationDate}</Text>
       </InfoLine>
       <InfoLine onDoubleClick={handleToggleDateEdit} label="Due on">
-        <Title>{dueDate}</Title>
+        <Text>{dueDate}</Text>
       </InfoLine>
     </Container>
   );

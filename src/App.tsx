@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
-import { initializeApp } from "firebase/app";
-import { ref } from "firebase/database";
+// import { initializeApp } from "firebase/app";
+// import { ref } from "firebase/database";
 import { Info as InfoIcon, CheckSquare, BookOpen } from "react-feather";
 import {
   dayReducer,
@@ -25,20 +25,19 @@ const App = () => {
 
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyClwCPIPkLcI5WopGNWI_s38XfvPbxg5PQ",
-    authDomain: "todo-50827.firebaseapp.com",
-    databaseURL: "https://todo-50827-default-rtdb.firebaseio.com",
-    projectId: "todo-50827",
-    storageBucket: "todo-50827.appspot.com",
-    messagingSenderId: "268950198509",
-    appId: "1:268950198509:web:de7d4dd926b1b481b554e4",
-    measurementId: "G-5HJWRXMCL0",
-  };
+  // const firebaseConfig = {
+  //   apiKey: "AIzaSyClwCPIPkLcI5WopGNWI_s38XfvPbxg5PQ",
+  //   authDomain: "todo-50827.firebaseapp.com",
+  //   databaseURL: "https://todo-50827-default-rtdb.firebaseio.com",
+  //   projectId: "todo-50827",
+  //   storageBucket: "todo-50827.appspot.com",
+  //   messagingSenderId: "268950198509",
+  //   appId: "1:268950198509:web:de7d4dd926b1b481b554e4",
+  //   measurementId: "G-5HJWRXMCL0",
+  // };
 
   // Initialize Firebase
   // const app = initializeApp(firebaseConfig);
-
   const [data, updateData] = useReducer(dayReducer, {
     ...initialData,
   });
