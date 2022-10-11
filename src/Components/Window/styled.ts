@@ -24,6 +24,7 @@ export const TitleBar = styled.div`
   background: linear-gradient(90deg, #93f1fd, #ffb8dd);
   padding: 0 0 0 8px;
   height: 32px;
+  min-height: 32px;
 `;
 
 export const TitleGroup = styled.div`

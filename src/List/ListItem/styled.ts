@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { palette } from "../../utils";
 
 export const IconContainer = styled.div<{ isEditable: boolean }>`
   display: grid;
@@ -19,7 +20,7 @@ export const StyledListItem = styled.div<{ selected: boolean }>`
     ${({ selected }) => (selected ? "#debcfa75" : "#ffffff75")};
   border-bottom: 3px dashed
     ${({ selected }) => (selected ? "#debcfa75" : "#ffffff75")};
-  color: ${({ selected }) => (selected ? "white" : "#1e1e1e")};
+  color: ${({ selected }) => (selected ? "white" : palette.darkText)};
   z-index: 2;
   border-radius: 5px;
   font-size: 14px;

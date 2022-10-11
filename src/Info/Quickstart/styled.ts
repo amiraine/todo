@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { palette } from "../../utils";
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  color: #1e1e1e;
+  color: ${palette.darkText};
   padding: 8px 16px 24px;
   max-height: 100%;
 `;

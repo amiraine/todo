@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { palette } from "../../utils";
 
 export const Header = styled.h1`
   font-size: 1rem;
@@ -18,7 +19,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  color: #1e1e1e;
+  color: ${palette.darkText};
 
   ${Header} {
     &:first-of-type {
@@ -35,7 +36,7 @@ export const Account = styled.a`
   flex-direction: row;
   align-items: center;
   text-decoration: none;
-  color: #1e1e1e;
+  color: ${palette.darkText};
   > svg {
     height: 32px;
     width: 32px;

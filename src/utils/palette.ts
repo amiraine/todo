@@ -18,5 +18,9 @@ export const palette = {
   lightText: colors.white,
   warning: colors.cyberYellow,
   danger: colors.paradisePink,
+  iconHover: colors.brightLilac,
   success: colors.mantis,
+  notStarted: colors.eerieBlack,
+  inProgress: colors.vividSkyBlue,
+  completed: colors.mantis,
 };

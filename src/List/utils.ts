@@ -1,4 +1,5 @@
 import { ListItem, TaskState } from "../types";
+import { palette } from "../utils";
 
 export const categorizeListItems = (
   listItems: ListItem[],
@@ -31,7 +32,7 @@ export const categorizeListItems = (
 };
 
 export const stateColorMap = {
-  [TaskState.Complete]: "#7DD181",
-  [TaskState["In Progress"]]: "#5AD2F4",
-  [TaskState["Not Started"]]: "#1e1e1e",
+  [TaskState.Complete]: palette.completed,
+  [TaskState["In Progress"]]: palette.inProgress,
+  [TaskState["Not Started"]]: palette.notStarted,
 };
